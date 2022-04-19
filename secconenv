@@ -1,0 +1,4 @@
+export SECCON_PATH=`pwd`/divCon/
+export SECCONEXP_PATH=`pwd`
+#export MINIZINC_PATH=${HOME}/repo/minizinc/MiniZincIDE-2.2.3-bundle-linux/bin/
+
