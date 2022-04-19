@@ -1,0 +1,4 @@
+[submodule "divCon"]
+	path = divCon
+	url = https://github.com/romits800/divCon.git
+	branch = secdivcon
