@@ -1,0 +1,8 @@
+Public t0;
+Secret t1;
+Random t2;
+Public t3;
+Public t4;
+Public t5;
+Public t6;
+Public t7

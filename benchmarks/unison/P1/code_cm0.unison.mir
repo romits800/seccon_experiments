@@ -1,0 +1,34 @@
+--- |
+  ; ModuleID = 'code_cm0.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "thumbv6m--"
+  ; Function Attrs: nounwind
+  define arm_aapcscc i32 @_Z7computejjjj(i32 %r1, i32 %r2, i32 %st2_orig, i32 %st10_orig) #0 {
+  %1 = xor i32 %st10_orig, %r1
+  %2 = xor i32 %st2_orig, %r1
+  %3 = xor i32 %2, 0
+  %4 = xor i32 %1, 0
+  %5 = xor i32 %4, 0
+  %6 = xor i32 %3, 0
+  %7 = sub i32 %5, %6
+  ret i32 %7
+  }
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="cortex-m0" "target-features"="+soft-float,+strict-align,-crypto,-neon" "unsafe-fp-math"="false" "use-soft-float"="true" }
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0-2ubuntu4 (tags/RELEASE_380/final)"}
+
+...
+---
+name:            _Z7computejjjj
+body:             |
+  bb.0 (freq 1):
+  
+    %r3, %cpsr = tEOR %r3, %r0, 14, _
+    %r0, %cpsr = tEOR %r0, %r2, 14, _
+    %r0, %cpsr = tSUBrr %r3, %r0, 14, _
+    tBX_RET 14, _
+
+...

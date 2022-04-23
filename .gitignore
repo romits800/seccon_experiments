@@ -1,0 +1,9 @@
+*.uni
+*.json
+*.out
+*out*
+*.mzn
+*.dzn
+.chuffed
+.gecode
+*.fzn
