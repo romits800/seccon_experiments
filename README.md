@@ -1,6 +1,8 @@
 # SecConCG : Secure by construction code generation
 
-To use SecConCG, clone the repo
+
+## Compile the code
+To use SecConCG, clone this repo.
 
 Then, enter to the `src` directory in `divCon`:
 
@@ -31,3 +33,13 @@ And run the `run.sh` script:
 ```bash
 $ bash run.sh
 ```
+
+Alternatively, enter each benchmark directory:
+
+```bash
+$ cd benchmarks/secunison/P1
+```
+
+and run the `run.sh` script or the `compile_secunison.sh` script.
+The latter requires some input parameters.
+
