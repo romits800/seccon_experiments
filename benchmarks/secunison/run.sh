@@ -4,7 +4,7 @@ pushd ../..
 . secconenv
 popd
 
-for i in P{1..9}
+for i in P{0..9}
 do
     pushd $i
     bash -x run.sh &> out
