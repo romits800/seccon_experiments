@@ -1,0 +1,326 @@
+--- |
+  ; ModuleID = 'code_int_mips.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips"
+  
+  ; Function Attrs: nounwind
+  define i32 @_Z7computejjj(i32 signext %R, i32 signext %x, i32 signext %rx) #0 {
+    %1 = alloca i32, align 4
+    %2 = alloca i32, align 4
+    %3 = alloca i32, align 4
+    %T1 = alloca i32, align 4
+    %T2 = alloca i32, align 4
+    %T3 = alloca i32, align 4
+    %R2 = alloca i32, align 4
+    %A1 = alloca i32, align 4
+    %A2 = alloca i32, align 4
+    %A3 = alloca i32, align 4
+    %X = alloca i32, align 4
+    store i32 %R, i32* %1, align 4
+    store i32 %x, i32* %2, align 4
+    store i32 %rx, i32* %3, align 4
+    %4 = load i32, i32* %2, align 4
+    %5 = load i32, i32* %3, align 4
+    %6 = xor i32 %4, %5
+    store i32 %6, i32* %X, align 4
+    %7 = load i32, i32* %X, align 4
+    %8 = load i32, i32* %1, align 4
+    %9 = xor i32 %7, %8
+    store i32 %9, i32* %T1, align 4
+    %10 = load i32, i32* %T1, align 4
+    %11 = load i32, i32* %1, align 4
+    %12 = xor i32 %10, %11
+    store i32 %12, i32* %T2, align 4
+    %13 = load i32, i32* %T2, align 4
+    %14 = load i32, i32* %X, align 4
+    %15 = xor i32 %13, %14
+    store i32 %15, i32* %T3, align 4
+    %16 = load i32, i32* %1, align 4
+    %17 = load i32, i32* %3, align 4
+    %18 = xor i32 %16, %17
+    store i32 %18, i32* %R2, align 4
+    %19 = load i32, i32* %X, align 4
+    %20 = load i32, i32* %R2, align 4
+    %21 = xor i32 %19, %20
+    store i32 %21, i32* %A1, align 4
+    %22 = load i32, i32* %A1, align 4
+    %23 = load i32, i32* %R2, align 4
+    %24 = xor i32 %22, %23
+    store i32 %24, i32* %A2, align 4
+    %25 = load i32, i32* %A2, align 4
+    %26 = load i32, i32* %T3, align 4
+    %27 = xor i32 %25, %26
+    store i32 %27, i32* %A3, align 4
+    %28 = load i32, i32* %A3, align 4
+    ret i32 %28
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32,+soft-float" "unsafe-fp-math"="false" "use-soft-float"="true" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0-2ubuntu4 (tags/RELEASE_380/final)"}
+
+...
+---
+name:            _Z7computejjj
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+  - { id: 8, class: gpr32 }
+  - { id: 9, class: gpr32 }
+  - { id: 10, class: gpr32 }
+  - { id: 11, class: gpr32 }
+  - { id: 12, class: gpr32 }
+  - { id: 13, class: gpr32 }
+  - { id: 14, class: gpr32 }
+  - { id: 15, class: gpr32 }
+  - { id: 16, class: gpr32 }
+  - { id: 17, class: gpr32 }
+  - { id: 18, class: gpr32 }
+  - { id: 19, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%0' }
+  - { reg: '%a1', virtual-reg: '%1' }
+  - { reg: '%a2', virtual-reg: '%2' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+stack:           
+  - { id: 0, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 1, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 2, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 3, name: T1, offset: 0, size: 4, alignment: 4 }
+  - { id: 4, name: T2, offset: 0, size: 4, alignment: 4 }
+  - { id: 5, name: T3, offset: 0, size: 4, alignment: 4 }
+  - { id: 6, name: R2, offset: 0, size: 4, alignment: 4 }
+  - { id: 7, name: A1, offset: 0, size: 4, alignment: 4 }
+  - { id: 8, name: A2, offset: 0, size: 4, alignment: 4 }
+  - { id: 9, name: A3, offset: 0, size: 4, alignment: 4 }
+  - { id: 10, name: X, offset: 0, size: 4, alignment: 4 }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %a0, %a1, %a2
+    liveouts: %v0
+  
+    %2 = COPY %a2
+    %1 = COPY %a1
+    %0 = COPY %a0
+    SW %0, %stack.0.<unnamed alloca>, 0, <0x31fbfd0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.1)
+    SW %1, %stack.1.<unnamed alloca>, 0, <0x31ff730> = !{!"unison-memory-partition", i32 1} :: (store 4 into %ir.2)
+    SW %2, %stack.2.<unnamed alloca>, 0, <0x31ff840> = !{!"unison-memory-partition", i32 2} :: (store 4 into %ir.3)
+    %3 = LW %stack.1.<unnamed alloca>, 0, <0x31ff730> = !{!"unison-memory-partition", i32 1} :: (load 4 from %ir.2)
+    %4 = XOR killed %3, %2
+    SW %4, %stack.10.X, 0, <0x31ff950> = !{!"unison-memory-partition", i32 3} :: (store 4 into %ir.X)
+    %5 = LW %stack.0.<unnamed alloca>, 0, <0x31fbfd0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %6 = XOR %4, killed %5
+    SW %6, %stack.3.T1, 0, <0x31ffa60> = !{!"unison-memory-partition", i32 4} :: (store 4 into %ir.T1)
+    %7 = LW %stack.0.<unnamed alloca>, 0, <0x31fbfd0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %8 = XOR %6, killed %7
+    SW %8, %stack.4.T2, 0, <0x31ffb70> = !{!"unison-memory-partition", i32 5} :: (store 4 into %ir.T2)
+    %9 = LW %stack.10.X, 0, <0x31ff950> = !{!"unison-memory-partition", i32 3} :: (load 4 from %ir.X)
+    %10 = XOR %8, killed %9
+    SW killed %10, %stack.5.T3, 0, <0x31ffc80> = !{!"unison-memory-partition", i32 6} :: (store 4 into %ir.T3)
+    %11 = LW %stack.2.<unnamed alloca>, 0, <0x31ff840> = !{!"unison-memory-partition", i32 2} :: (load 4 from %ir.3)
+    %12 = LW %stack.0.<unnamed alloca>, 0, <0x31fbfd0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %13 = XOR killed %12, killed %11
+    SW %13, %stack.6.R2, 0, <0x31ffd90> = !{!"unison-memory-partition", i32 7} :: (store 4 into %ir.R2)
+    %14 = LW %stack.10.X, 0, <0x31ff950> = !{!"unison-memory-partition", i32 3} :: (load 4 from %ir.X)
+    %15 = XOR killed %14, %13
+    SW %15, %stack.7.A1, 0, <0x31ffea0> = !{!"unison-memory-partition", i32 8} :: (store 4 into %ir.A1)
+    %16 = LW %stack.6.R2, 0, <0x31ffd90> = !{!"unison-memory-partition", i32 7} :: (load 4 from %ir.R2)
+    %17 = XOR %15, killed %16
+    SW %17, %stack.8.A2, 0, <0x31fffb0> = !{!"unison-memory-partition", i32 9} :: (store 4 into %ir.A2)
+    %18 = LW %stack.5.T3, 0, <0x31ffc80> = !{!"unison-memory-partition", i32 6} :: (load 4 from %ir.T3)
+    %19 = XOR %17, killed %18
+    SW %19, %stack.9.A3, 0, <0x32000c0> = !{!"unison-memory-partition", i32 10} :: (store 4 into %ir.A3)
+    %v0 = COPY %19
+    RetRA implicit %v0
+
+...
+--- |
+  ; ModuleID = 'code_int_mips.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips"
+  
+  ; Function Attrs: nounwind
+  define i32 @_Z7computejjj(i32 signext %R, i32 signext %x, i32 signext %rx) #0 {
+    %1 = alloca i32, align 4
+    %2 = alloca i32, align 4
+    %3 = alloca i32, align 4
+    %T1 = alloca i32, align 4
+    %T2 = alloca i32, align 4
+    %T3 = alloca i32, align 4
+    %R2 = alloca i32, align 4
+    %A1 = alloca i32, align 4
+    %A2 = alloca i32, align 4
+    %A3 = alloca i32, align 4
+    %X = alloca i32, align 4
+    store i32 %R, i32* %1, align 4
+    store i32 %x, i32* %2, align 4
+    store i32 %rx, i32* %3, align 4
+    %4 = load i32, i32* %2, align 4
+    %5 = load i32, i32* %3, align 4
+    %6 = xor i32 %4, %5
+    store i32 %6, i32* %X, align 4
+    %7 = load i32, i32* %X, align 4
+    %8 = load i32, i32* %1, align 4
+    %9 = xor i32 %7, %8
+    store i32 %9, i32* %T1, align 4
+    %10 = load i32, i32* %T1, align 4
+    %11 = load i32, i32* %1, align 4
+    %12 = xor i32 %10, %11
+    store i32 %12, i32* %T2, align 4
+    %13 = load i32, i32* %T2, align 4
+    %14 = load i32, i32* %X, align 4
+    %15 = xor i32 %13, %14
+    store i32 %15, i32* %T3, align 4
+    %16 = load i32, i32* %1, align 4
+    %17 = load i32, i32* %3, align 4
+    %18 = xor i32 %16, %17
+    store i32 %18, i32* %R2, align 4
+    %19 = load i32, i32* %X, align 4
+    %20 = load i32, i32* %R2, align 4
+    %21 = xor i32 %19, %20
+    store i32 %21, i32* %A1, align 4
+    %22 = load i32, i32* %A1, align 4
+    %23 = load i32, i32* %R2, align 4
+    %24 = xor i32 %22, %23
+    store i32 %24, i32* %A2, align 4
+    %25 = load i32, i32* %A2, align 4
+    %26 = load i32, i32* %T3, align 4
+    %27 = xor i32 %25, %26
+    store i32 %27, i32* %A3, align 4
+    %28 = load i32, i32* %A3, align 4
+    ret i32 %28
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32,+soft-float" "unsafe-fp-math"="false" "use-soft-float"="true" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0-2ubuntu4 (tags/RELEASE_380/final)"}
+
+...
+---
+name:            _Z7computejjj
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+  - { id: 8, class: gpr32 }
+  - { id: 9, class: gpr32 }
+  - { id: 10, class: gpr32 }
+  - { id: 11, class: gpr32 }
+  - { id: 12, class: gpr32 }
+  - { id: 13, class: gpr32 }
+  - { id: 14, class: gpr32 }
+  - { id: 15, class: gpr32 }
+  - { id: 16, class: gpr32 }
+  - { id: 17, class: gpr32 }
+  - { id: 18, class: gpr32 }
+  - { id: 19, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%0' }
+  - { reg: '%a1', virtual-reg: '%1' }
+  - { reg: '%a2', virtual-reg: '%2' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+stack:           
+  - { id: 0, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 1, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 2, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 3, name: T1, offset: 0, size: 4, alignment: 4 }
+  - { id: 4, name: T2, offset: 0, size: 4, alignment: 4 }
+  - { id: 5, name: T3, offset: 0, size: 4, alignment: 4 }
+  - { id: 6, name: R2, offset: 0, size: 4, alignment: 4 }
+  - { id: 7, name: A1, offset: 0, size: 4, alignment: 4 }
+  - { id: 8, name: A2, offset: 0, size: 4, alignment: 4 }
+  - { id: 9, name: A3, offset: 0, size: 4, alignment: 4 }
+  - { id: 10, name: X, offset: 0, size: 4, alignment: 4 }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %a0, %a1, %a2
+    liveouts: %v0
+  
+    %2 = COPY %a2
+    %1 = COPY %a1
+    %0 = COPY %a0
+    SW %0, %stack.0.<unnamed alloca>, 0, <0x31fbfd0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.1)
+    SW %1, %stack.1.<unnamed alloca>, 0, <0x31ff730> = !{!"unison-memory-partition", i32 1} :: (store 4 into %ir.2)
+    SW %2, %stack.2.<unnamed alloca>, 0, <0x31ff840> = !{!"unison-memory-partition", i32 2} :: (store 4 into %ir.3)
+    %3 = LW %stack.1.<unnamed alloca>, 0, <0x31ff730> = !{!"unison-memory-partition", i32 1} :: (load 4 from %ir.2)
+    %4 = XOR killed %3, %2
+    SW %4, %stack.10.X, 0, <0x31ff950> = !{!"unison-memory-partition", i32 3} :: (store 4 into %ir.X)
+    %5 = LW %stack.0.<unnamed alloca>, 0, <0x31fbfd0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %6 = XOR %4, killed %5
+    SW %6, %stack.3.T1, 0, <0x31ffa60> = !{!"unison-memory-partition", i32 4} :: (store 4 into %ir.T1)
+    %7 = LW %stack.0.<unnamed alloca>, 0, <0x31fbfd0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %8 = XOR %6, killed %7
+    SW %8, %stack.4.T2, 0, <0x31ffb70> = !{!"unison-memory-partition", i32 5} :: (store 4 into %ir.T2)
+    %9 = LW %stack.10.X, 0, <0x31ff950> = !{!"unison-memory-partition", i32 3} :: (load 4 from %ir.X)
+    %10 = XOR %8, killed %9
+    SW killed %10, %stack.5.T3, 0, <0x31ffc80> = !{!"unison-memory-partition", i32 6} :: (store 4 into %ir.T3)
+    %11 = LW %stack.2.<unnamed alloca>, 0, <0x31ff840> = !{!"unison-memory-partition", i32 2} :: (load 4 from %ir.3)
+    %12 = LW %stack.0.<unnamed alloca>, 0, <0x31fbfd0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %13 = XOR killed %12, killed %11
+    SW %13, %stack.6.R2, 0, <0x31ffd90> = !{!"unison-memory-partition", i32 7} :: (store 4 into %ir.R2)
+    %14 = LW %stack.10.X, 0, <0x31ff950> = !{!"unison-memory-partition", i32 3} :: (load 4 from %ir.X)
+    %15 = XOR killed %14, %13
+    SW %15, %stack.7.A1, 0, <0x31ffea0> = !{!"unison-memory-partition", i32 8} :: (store 4 into %ir.A1)
+    %16 = LW %stack.6.R2, 0, <0x31ffd90> = !{!"unison-memory-partition", i32 7} :: (load 4 from %ir.R2)
+    %17 = XOR %15, killed %16
+    SW %17, %stack.8.A2, 0, <0x31fffb0> = !{!"unison-memory-partition", i32 9} :: (store 4 into %ir.A2)
+    %18 = LW %stack.5.T3, 0, <0x31ffc80> = !{!"unison-memory-partition", i32 6} :: (load 4 from %ir.T3)
+    %19 = XOR %17, killed %18
+    SW %19, %stack.9.A3, 0, <0x32000c0> = !{!"unison-memory-partition", i32 10} :: (store 4 into %ir.A3)
+    %v0 = COPY %19
+    RetRA implicit %v0
+
+...

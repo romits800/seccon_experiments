@@ -1,0 +1,262 @@
+--- |
+  ; ModuleID = 'SecMultLinear_wires_1_mips.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips"
+  
+  ; Function Attrs: nounwind
+  define i32 @_Z7SecMultiiiii(i32 signext %a, i32 signext %b, i32 signext %a0, i32 signext %r0_01, i32 signext %p0_01) #0 {
+    %1 = alloca i32, align 4
+    %2 = alloca i32, align 4
+    %3 = alloca i32, align 4
+    %4 = alloca i32, align 4
+    %5 = alloca i32, align 4
+    %a1 = alloca i32, align 4
+    %b0 = alloca i32, align 4
+    %b1 = alloca i32, align 4
+    %t0 = alloca i32, align 4
+    %t0_prime = alloca i32, align 4
+    %r0_10 = alloca i32, align 4
+    store i32 %a, i32* %1, align 4
+    store i32 %b, i32* %2, align 4
+    store i32 %a0, i32* %3, align 4
+    store i32 %r0_01, i32* %4, align 4
+    store i32 %p0_01, i32* %5, align 4
+    %6 = load i32, i32* %1, align 4
+    %7 = load i32, i32* %3, align 4
+    %8 = xor i32 %6, %7
+    store i32 %8, i32* %a1, align 4
+    %9 = load i32, i32* %5, align 4
+    store i32 %9, i32* %t0, align 4
+    %10 = load i32, i32* %3, align 4
+    %11 = load i32, i32* %t0, align 4
+    %12 = mul nsw i32 %10, %11
+    store i32 %12, i32* %t0, align 4
+    %13 = load i32, i32* %4, align 4
+    %14 = load i32, i32* %t0, align 4
+    %15 = xor i32 %13, %14
+    store i32 %15, i32* %r0_10, align 4
+    %16 = load i32, i32* %3, align 4
+    store i32 %16, i32* %t0, align 4
+    %17 = load i32, i32* %5, align 4
+    %18 = load i32, i32* %t0, align 4
+    %19 = mul nsw i32 %17, %18
+    store i32 %19, i32* %t0, align 4
+    %20 = load i32, i32* %r0_10, align 4
+    %21 = load i32, i32* %t0, align 4
+    %22 = xor i32 %20, %21
+    store i32 %22, i32* %r0_10, align 4
+    %23 = load i32, i32* %a1, align 4
+    %24 = load i32, i32* %5, align 4
+    %25 = xor i32 %23, %24
+    store i32 %25, i32* %t0, align 4
+    %26 = load i32, i32* %3, align 4
+    %27 = load i32, i32* %t0, align 4
+    %28 = mul nsw i32 %26, %27
+    store i32 %28, i32* %t0, align 4
+    %29 = load i32, i32* %r0_10, align 4
+    %30 = load i32, i32* %t0, align 4
+    %31 = xor i32 %29, %30
+    store i32 %31, i32* %r0_10, align 4
+    %32 = load i32, i32* %3, align 4
+    store i32 %32, i32* %t0, align 4
+    %33 = load i32, i32* %a1, align 4
+    %34 = load i32, i32* %5, align 4
+    %35 = xor i32 %33, %34
+    store i32 %35, i32* %t0_prime, align 4
+    %36 = load i32, i32* %t0_prime, align 4
+    %37 = load i32, i32* %t0, align 4
+    %38 = mul nsw i32 %36, %37
+    store i32 %38, i32* %t0, align 4
+    %39 = load i32, i32* %r0_10, align 4
+    %40 = load i32, i32* %t0, align 4
+    %41 = xor i32 %39, %40
+    store i32 %41, i32* %r0_10, align 4
+    %42 = load i32, i32* %3, align 4
+    %43 = load i32, i32* %3, align 4
+    %44 = mul nsw i32 %42, %43
+    store i32 %44, i32* %t0, align 4
+    %45 = load i32, i32* %t0, align 4
+    %46 = load i32, i32* %4, align 4
+    %47 = xor i32 %45, %46
+    store i32 %47, i32* %b0, align 4
+    %48 = load i32, i32* %a1, align 4
+    %49 = load i32, i32* %a1, align 4
+    %50 = mul nsw i32 %48, %49
+    store i32 %50, i32* %t0, align 4
+    %51 = load i32, i32* %t0, align 4
+    %52 = load i32, i32* %r0_10, align 4
+    %53 = xor i32 %51, %52
+    store i32 %53, i32* %b1, align 4
+    %54 = load i32, i32* %b0, align 4
+    %55 = load i32, i32* %b1, align 4
+    %56 = xor i32 %54, %55
+    ret i32 %56
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32,+soft-float" "unsafe-fp-math"="false" "use-soft-float"="true" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0-2ubuntu4 (tags/RELEASE_380/final)"}
+
+...
+---
+name:            _Z7SecMultiiiii
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+  - { id: 8, class: gpr32 }
+  - { id: 9, class: gpr32 }
+  - { id: 10, class: gpr32 }
+  - { id: 11, class: gpr32 }
+  - { id: 12, class: gpr32 }
+  - { id: 13, class: gpr32 }
+  - { id: 14, class: gpr32 }
+  - { id: 15, class: gpr32 }
+  - { id: 16, class: gpr32 }
+  - { id: 17, class: gpr32 }
+  - { id: 18, class: gpr32 }
+  - { id: 19, class: gpr32 }
+  - { id: 20, class: gpr32 }
+  - { id: 21, class: gpr32 }
+  - { id: 22, class: gpr32 }
+  - { id: 23, class: gpr32 }
+  - { id: 24, class: gpr32 }
+  - { id: 25, class: gpr32 }
+  - { id: 26, class: gpr32 }
+  - { id: 27, class: gpr32 }
+  - { id: 28, class: gpr32 }
+  - { id: 29, class: gpr32 }
+  - { id: 30, class: gpr32 }
+  - { id: 31, class: gpr32 }
+  - { id: 32, class: gpr32 }
+  - { id: 33, class: gpr32 }
+  - { id: 34, class: gpr32 }
+  - { id: 35, class: gpr32 }
+  - { id: 36, class: gpr32 }
+  - { id: 37, class: gpr32 }
+  - { id: 38, class: gpr32 }
+  - { id: 39, class: gpr32 }
+  - { id: 40, class: gpr32 }
+  - { id: 41, class: gpr32 }
+  - { id: 42, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%0' }
+  - { reg: '%a1', virtual-reg: '%1' }
+  - { reg: '%a2', virtual-reg: '%2' }
+  - { reg: '%a3', virtual-reg: '%3' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+fixedStack:      
+  - { id: 0, offset: 16, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+stack:           
+  - { id: 0, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 1, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 2, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 3, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 4, name: '<unnamed alloca>', offset: 0, size: 4, alignment: 4 }
+  - { id: 5, name: a1, offset: 0, size: 4, alignment: 4 }
+  - { id: 6, name: b0, offset: 0, size: 4, alignment: 4 }
+  - { id: 7, name: b1, offset: 0, size: 4, alignment: 4 }
+  - { id: 8, name: t0, offset: 0, size: 4, alignment: 4 }
+  - { id: 9, name: t0_prime, offset: 0, size: 4, alignment: 4 }
+  - { id: 10, name: r0_10, offset: 0, size: 4, alignment: 4 }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %a0, %a1, %a2, %a3
+    liveouts: %v0
+  
+    %3 = COPY %a3
+    %2 = COPY %a2
+    %1 = COPY %a1
+    %0 = COPY %a0
+    %4 = LW %fixed-stack.0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    SW %0, %stack.0.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.1)
+    SW %1, %stack.1.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2)
+    SW %2, %stack.2.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.3)
+    SW %3, %stack.3.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.4)
+    SW killed %4, %stack.4.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.5)
+    %5 = LW %stack.2.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.3)
+    %6 = LW %stack.0.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %7 = XOR killed %6, killed %5
+    SW killed %7, %stack.5.a1, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.a1)
+    %8 = LW %stack.4.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.5)
+    SW %8, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %9 = LW %stack.2.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.3)
+    %10 = MUL killed %9, %8, implicit-def dead %hi0, implicit-def dead %lo0
+    SW %10, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %11 = LW %stack.3.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.4)
+    %12 = XOR killed %11, %10
+    SW killed %12, %stack.10.r0_10, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.r0_10)
+    %13 = LW %stack.2.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.3)
+    SW %13, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %14 = LW %stack.4.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.5)
+    %15 = MUL killed %14, %13, implicit-def dead %hi0, implicit-def dead %lo0
+    SW %15, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %16 = LW %stack.10.r0_10, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.r0_10)
+    %17 = XOR killed %16, %15
+    SW killed %17, %stack.10.r0_10, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.r0_10)
+    %18 = LW %stack.4.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.5)
+    %19 = LW %stack.5.a1, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.a1)
+    %20 = XOR killed %19, killed %18
+    SW %20, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %21 = LW %stack.2.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.3)
+    %22 = MUL killed %21, %20, implicit-def dead %hi0, implicit-def dead %lo0
+    SW %22, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %23 = LW %stack.10.r0_10, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.r0_10)
+    %24 = XOR killed %23, %22
+    SW killed %24, %stack.10.r0_10, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.r0_10)
+    %25 = LW %stack.2.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.3)
+    SW killed %25, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %26 = LW %stack.4.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.5)
+    %27 = LW %stack.5.a1, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.a1)
+    %28 = XOR killed %27, killed %26
+    SW %28, %stack.9.t0_prime, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0_prime)
+    %29 = LW %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.t0)
+    %30 = MUL %28, killed %29, implicit-def dead %hi0, implicit-def dead %lo0
+    SW %30, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %31 = LW %stack.10.r0_10, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.r0_10)
+    %32 = XOR killed %31, %30
+    SW killed %32, %stack.10.r0_10, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.r0_10)
+    %33 = LW %stack.2.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.3)
+    %34 = MUL %33, %33, implicit-def dead %hi0, implicit-def dead %lo0
+    SW %34, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %35 = LW %stack.3.<unnamed alloca>, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.4)
+    %36 = XOR %34, killed %35
+    SW killed %36, %stack.6.b0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.b0)
+    %37 = LW %stack.5.a1, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.a1)
+    %38 = MUL %37, %37, implicit-def dead %hi0, implicit-def dead %lo0
+    SW %38, %stack.8.t0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.t0)
+    %39 = LW %stack.10.r0_10, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.r0_10)
+    %40 = XOR %38, killed %39
+    SW %40, %stack.7.b1, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.b1)
+    %41 = LW %stack.6.b0, 0, <0x4d2caf0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.b0)
+    %42 = XOR killed %41, %40
+    %v0 = COPY %42
+    RetRA implicit %v0
+
+...

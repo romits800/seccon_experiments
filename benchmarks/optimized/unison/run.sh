@@ -1,10 +1,6 @@
 #!/bin/bash
 
-pushd ../..
-. secconenv
-popd
-
-for i in P{4..6}
+for i in P{0..9}
 do
     pushd $i
     bash -x run.sh &> out

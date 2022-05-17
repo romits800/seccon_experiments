@@ -1,5 +1,9 @@
 #!/bin/bash
 
+pushd ../../../
+. secconenv
+popd
+
 for i in P{4..6}
 do
     pushd $i
