@@ -1,0 +1,8 @@
+*.log
+res.txt
+*.smt2
+id.txt
+key.txt
+*.ll
+forBackend.txt
+shared_variable.txt

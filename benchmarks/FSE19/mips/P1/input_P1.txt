@@ -1,0 +1,8 @@
+RAND r1
+RAND r2
+KEY st2_orig
+KEY st10_orig
+RAND %1
+RAND %2
+KEY %3
+KEY %4

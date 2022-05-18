@@ -1,0 +1,6 @@
+KEY x
+RAND C
+RAND rx
+KEY %3
+RAND %1
+RAND %2

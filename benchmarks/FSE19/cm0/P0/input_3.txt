@@ -1,0 +1,6 @@
+CONSTANT %1
+KEY %3
+RAND %2
+CONSTANT pub
+KEY sec
+RAND rand
