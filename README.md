@@ -2,12 +2,12 @@
 
 
 ## Compile the code
-To use SecConCG, clone this repo.
+To use SecConCG, clone this repo, recursively to clone the submodules.
 
-Then, enter to the `src` directory in `divCon`:
+Then, enter to the `src` directory in `secConCG`:
 
 ```bash
-$ cd divCon/src
+$ cd secConCG/src
 ```
 
 and compile the code:
