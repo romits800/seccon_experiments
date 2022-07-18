@@ -20,10 +20,12 @@ export UNISON_DIR=${SECCON_PATH}
 
 echo "MINIZINC_PATH:" ${MINIZINC_PATH}
 echo "SECCON_PATH:" ${SECCON_PATH}
+echo "which gecode-solver:" `which gecode-solver`
 
 
 #UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
 UNI=${SECCON_PATH}/src/unison/build/uni
+GEC=${SECCON_PATH}/src/solvers/gecode/
 flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"
 flags="$flags --sec-implementation sec_reg_2_mem_2"
 
@@ -33,10 +35,9 @@ $UNI extend --target=$target ${aflags} $name.lssa.uni -o $name.ext.uni
 $UNI augment --target=$target ${aflags} $name.ext.uni -o $name.alt.uni
 $UNI secaugment --target=$target ${aflags} --policy $input $name.alt.uni -o $name.sec.uni
 $UNI model  --target=$target ${aflags}   $name.sec.uni -o $name.json --policy $input
-gecode-presolver -nogoods false -tabling false -o $name.ext.json --dzn ${name}.dzn  -verbose $name.json
+$GEC/gecode-presolver -nogoods false -tabling false -o $name.ext.json --dzn ${name}.dzn  -verbose $name.json
  
-
-gecode-secsolver --step-aggressiveness 0.5 --global-budget 500 --local-limit 50000 $flags -o $name.out.json --verbose $name.ext.json
+$GEC/gecode-secsolver --step-aggressiveness 0.5 --global-budget 500 --local-limit 50000 $flags -o $name.out.json --verbose $name.ext.json
 #${SECCON_PATH}/src/solvers/multi_backend/portfolio-solver --timeout 5400 --gecodeflags "--global-budget 500 --local-limit 50000 $flags" -o $name.out.json --verbose $name.ext.json
 #$UNI export --keepnops --target=$target ${aflags} $name.sec.uni -o $name.unison.mir --solfile=$name.out.json;
 #llc $name.unison.mir  -march=thumb -mcpu=cortex-m0 -disable-post-ra -disable-tail-duplicate -disable-branch-fold -disable-block-placement -start-after livedebugvars -o ${name}_sec.s
