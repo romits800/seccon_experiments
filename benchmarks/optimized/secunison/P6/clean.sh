@@ -1,2 +1,2 @@
 #!/bin/bash
-rm *.json *.uni *.out out* *.last *.gecode *.mzn *.dzn
+rm *.ext.json *.uni out* *.last *.gecode *.mzn *.dzn

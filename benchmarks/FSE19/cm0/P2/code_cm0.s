@@ -17,44 +17,67 @@
 	.eabi_attribute	26, 2	@ Tag_ABI_enum_size
 	.eabi_attribute	14, 0	@ Tag_ABI_PCS_R9_use
 	.file	"code.ll"
-	.globl	_Z7computejjj
+	.globl	_Z7computeccc
 	.align	1
-	.type	_Z7computejjj,%function
-	.code	16                      @ @_Z7computejjj
+	.type	_Z7computeccc,%function
+	.code	16                      @ @_Z7computeccc
 	.thumb_func
-_Z7computejjj:
+_Z7computeccc:
 	.fnstart
 .Leh_func_begin0:
 @ BB#0:
-	sub	sp, #36
-	mov	r3, sp
-	str	r2, [r3, #24]
-	str	r1, [r3, #28]
-	str	r0, [r3, #32]
-	ldr	r0, [r3, #28]
+	push	{r4, lr}
+	sub	sp, #12
+	mov	r4, r2
+	mov	r3, r1
+	add	r2, sp, #8
+	adds	r2, #3
+	strb	r0, [r2]
+	add	r1, sp, #8
+	adds	r1, #2
+	strb	r3, [r1]
+	add	r0, sp, #8
+	adds	r0, #1
+	strb	r4, [r0]
+	ldrb	r3, [r1]
+	ldrb	r0, [r0]
+	eors	r0, r3
+	mov	r4, sp
+	adds	r4, #3
+	strb	r0, [r4]
+	ldrb	r1, [r1]
+	ldrb	r0, [r2]
+	eors	r0, r1
+	add	r3, sp, #8
+	strb	r0, [r3]
+	ldrb	r1, [r4]
+	ldrb	r0, [r2]
+	eors	r0, r1
+	add	r1, sp, #4
+	adds	r1, #3
+	strb	r0, [r1]
+	ldrb	r3, [r3]
+	ldrb	r0, [r1]
+	eors	r0, r3
+	add	r1, sp, #4
+	adds	r1, #2
+	strb	r0, [r1]
+	ldrb	r3, [r2]
+	ldrb	r0, [r1]
+	eors	r0, r3
+	add	r1, sp, #4
+	adds	r1, #1
+	strb	r0, [r1]
+	ldrb	r2, [r2]
+	ldrb	r0, [r1]
 	eors	r0, r2
-	str	r0, [r3]
-	ldr	r1, [r3, #28]
-	ldr	r0, [r3, #32]
-	eors	r0, r1
-	str	r0, [r3, #20]
-	ldr	r1, [r3]
-	ldr	r0, [r3, #32]
-	eors	r0, r1
-	str	r0, [r3, #16]
-	ldr	r2, [r3, #20]
-	eors	r2, r0
-	str	r2, [r3, #12]
-	ldr	r1, [r3, #32]
-	eors	r1, r2
-	str	r1, [r3, #8]
-	ldr	r0, [r3, #32]
-	eors	r0, r1
-	str	r0, [r3, #4]
-	add	sp, #36
-	bx	lr
+	add	r1, sp, #4
+	strb	r0, [r1]
+	ldrb	r0, [r1]
+	add	sp, #12
+	pop	{r4, pc}
 .Ltmp0:
-	.size	_Z7computejjj, .Ltmp0-_Z7computejjj
+	.size	_Z7computeccc, .Ltmp0-_Z7computeccc
 	.cantunwind
 	.fnend
 

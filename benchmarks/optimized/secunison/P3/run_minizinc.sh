@@ -4,6 +4,7 @@ name=$1
 func=$2
 bsize=$3
 arch=$4
+iter=$5
 
 case $arch in
     mips)
@@ -37,4 +38,4 @@ gecode-presolver -nogoods false -tabling false -o $name.ext.json --dzn ${name}.d
  
 minizinc-solver --setuponly --topdown --chuffed --no-diffn --free --rnd -l .chuffed -dzn ${name}.dzn ${name}.ext.json
 
-mzn-crippled-chuffed --fzn-flag --verbosity --fzn-flag 3 --fzn-flag -f --fzn-flag --rnd-seed --fzn-flag 123456 --fzn-flag --time-out --fzn-flag 5400000 -a -s -D good_cumulative=true -D good_diffn=false -D good_member=true ${name}.mzn ${name}.dzn -o ${name}.out #&& cat ${name}.out
+mzn-crippled-chuffed --fzn-flag --verbosity --fzn-flag 3 --fzn-flag -f --fzn-flag --rnd-seed --fzn-flag 123456 --fzn-flag --time-out --fzn-flag 5400000 -a -s -D good_cumulative=true -D good_diffn=false -D good_member=true ${name}.mzn ${name}.dzn -o ${name}.$iter.out #&& cat ${name}.out

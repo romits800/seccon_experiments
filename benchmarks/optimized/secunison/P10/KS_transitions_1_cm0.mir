@@ -1,0 +1,3636 @@
+--- |
+  ; ModuleID = 'KS_transitions_1_cm0.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "thumbv6m--"
+  
+  ; Function Attrs: nounwind
+  define arm_aapcscc i32 @_Z2ksiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii(i32 %mk00, i32 %mk01, i32 %mk02, i32 %mk03, i32 %mk04, i32 %mk05, i32 %mk06, i32 %mk07, i32 %mk08, i32 %mk09, i32 %mk10, i32 %mk11, i32 %mk12, i32 %mk13, i32 %mk14, i32 %mk15, i32 %k0000, i32 %k0001, i32 %k0010, i32 %k0011, i32 %k0020, i32 %k0021, i32 %k0030, i32 %k0031, i32 %k0040, i32 %k0041, i32 %k0050, i32 %k0051, i32 %k0060, i32 %k0061, i32 %k0070, i32 %k0071, i32 %k0080, i32 %k0081, i32 %k0090, i32 %k0091, i32 %k0100, i32 %k0101, i32 %k0110, i32 %k0111, i32 %k0120, i32 %k0121, i32 %k0130, i32 %k0131, i32 %k0140, i32 %k0141, i32 %k0150, i32 %k0151, i32 %Ox01) #0 {
+    %k1720 = alloca i32, align 4
+    %k1721 = alloca i32, align 4
+    %k1722 = alloca i32, align 4
+    %k1730 = alloca i32, align 4
+    %k1731 = alloca i32, align 4
+    %k1732 = alloca i32, align 4
+    %k1740 = alloca i32, align 4
+    %k1741 = alloca i32, align 4
+    %k1742 = alloca i32, align 4
+    %k1750 = alloca i32, align 4
+    %k1751 = alloca i32, align 4
+    %k1752 = alloca i32, align 4
+    %1 = xor i32 %mk00, %k0000
+    %2 = xor i32 %1, %k0001
+    %3 = xor i32 %mk01, %k0010
+    %4 = xor i32 %3, %k0011
+    %5 = xor i32 %mk02, %k0020
+    %6 = xor i32 %5, %k0021
+    %7 = xor i32 %mk03, %k0030
+    %8 = xor i32 %7, %k0031
+    %9 = xor i32 %mk04, %k0040
+    %10 = xor i32 %9, %k0041
+    %11 = xor i32 %mk05, %k0050
+    %12 = xor i32 %11, %k0051
+    %13 = xor i32 %mk06, %k0060
+    %14 = xor i32 %13, %k0061
+    %15 = xor i32 %mk07, %k0070
+    %16 = xor i32 %15, %k0071
+    %17 = xor i32 %mk08, %k0080
+    %18 = xor i32 %17, %k0081
+    %19 = xor i32 %mk09, %k0090
+    %20 = xor i32 %19, %k0091
+    %21 = xor i32 %mk10, %k0100
+    %22 = xor i32 %21, %k0101
+    %23 = xor i32 %mk11, %k0110
+    %24 = xor i32 %23, %k0111
+    %25 = xor i32 %mk12, %k0120
+    %26 = xor i32 %25, %k0121
+    %27 = xor i32 %mk13, %k0130
+    %28 = xor i32 %27, %k0131
+    %29 = xor i32 %mk14, %k0140
+    %30 = xor i32 %29, %k0141
+    %31 = xor i32 %mk15, %k0150
+    %32 = xor i32 %31, %k0151
+    %33 = xor i32 %k0130, %k0000
+    %34 = xor i32 %k0131, %k0001
+    %35 = xor i32 %28, %2
+    %36 = xor i32 %k0140, %k0010
+    %37 = xor i32 %k0141, %k0011
+    %38 = xor i32 %30, %4
+    %39 = xor i32 %k0150, %k0020
+    %40 = xor i32 %k0151, %k0021
+    %41 = xor i32 %32, %6
+    %42 = xor i32 %k0120, %k0030
+    %43 = xor i32 %k0121, %k0031
+    %44 = xor i32 %26, %8
+    %45 = xor i32 %33, %Ox01
+    %46 = xor i32 %45, %k0040
+    %47 = xor i32 %36, %k0050
+    %48 = xor i32 %39, %k0060
+    %49 = xor i32 %42, %k0070
+    %50 = xor i32 %46, %k0080
+    %51 = xor i32 %47, %k0090
+    %52 = xor i32 %48, %k0100
+    %53 = xor i32 %49, %k0110
+    %54 = xor i32 %50, %k0120
+    %55 = xor i32 %51, %k0130
+    %56 = xor i32 %52, %k0140
+    %57 = xor i32 %53, %k0150
+    %58 = xor i32 %34, %k0041
+    %59 = xor i32 %37, %k0051
+    %60 = xor i32 %40, %k0061
+    %61 = xor i32 %43, %k0071
+    %62 = xor i32 %58, %k0081
+    %63 = xor i32 %59, %k0091
+    %64 = xor i32 %60, %k0101
+    %65 = xor i32 %61, %k0111
+    %66 = xor i32 %62, %k0121
+    %67 = xor i32 %63, %k0131
+    %68 = xor i32 %64, %k0141
+    %69 = xor i32 %65, %k0151
+    %70 = xor i32 %35, %10
+    %71 = xor i32 %38, %12
+    %72 = xor i32 %41, %14
+    %73 = xor i32 %44, %16
+    %74 = xor i32 %70, %18
+    %75 = xor i32 %71, %20
+    %76 = xor i32 %72, %22
+    %77 = xor i32 %73, %24
+    %78 = xor i32 %74, %26
+    %79 = xor i32 %75, %28
+    %80 = xor i32 %76, %30
+    %81 = xor i32 %77, %32
+    %82 = xor i32 %55, %45
+    %83 = xor i32 %67, %34
+    %84 = xor i32 %79, %35
+    %85 = xor i32 %56, %36
+    %86 = xor i32 %68, %37
+    %87 = xor i32 %80, %38
+    %88 = xor i32 %57, %39
+    %89 = xor i32 %69, %40
+    %90 = xor i32 %81, %41
+    %91 = xor i32 %54, %42
+    %92 = xor i32 %66, %43
+    %93 = xor i32 %78, %44
+    %94 = xor i32 %82, %Ox01
+    %95 = xor i32 %94, %46
+    %96 = xor i32 %85, %47
+    %97 = xor i32 %88, %48
+    %98 = xor i32 %91, %49
+    %99 = xor i32 %95, %50
+    %100 = xor i32 %96, %51
+    %101 = xor i32 %97, %52
+    %102 = xor i32 %98, %53
+    %103 = xor i32 %99, %54
+    %104 = xor i32 %100, %55
+    %105 = xor i32 %101, %56
+    %106 = xor i32 %102, %57
+    %107 = xor i32 %83, %58
+    %108 = xor i32 %86, %59
+    %109 = xor i32 %89, %60
+    %110 = xor i32 %92, %61
+    %111 = xor i32 %107, %62
+    %112 = xor i32 %108, %63
+    %113 = xor i32 %109, %64
+    %114 = xor i32 %110, %65
+    %115 = xor i32 %111, %66
+    %116 = xor i32 %112, %67
+    %117 = xor i32 %113, %68
+    %118 = xor i32 %114, %69
+    %119 = xor i32 %84, %70
+    %120 = xor i32 %87, %71
+    %121 = xor i32 %90, %72
+    %122 = xor i32 %93, %73
+    %123 = xor i32 %119, %74
+    %124 = xor i32 %120, %75
+    %125 = xor i32 %121, %76
+    %126 = xor i32 %122, %77
+    %127 = xor i32 %123, %78
+    %128 = xor i32 %124, %79
+    %129 = xor i32 %125, %80
+    %130 = xor i32 %126, %81
+    %131 = xor i32 %104, %94
+    %132 = xor i32 %116, %83
+    %133 = xor i32 %128, %84
+    %134 = xor i32 %105, %85
+    %135 = xor i32 %117, %86
+    %136 = xor i32 %129, %87
+    %137 = xor i32 %106, %88
+    %138 = xor i32 %118, %89
+    %139 = xor i32 %130, %90
+    %140 = xor i32 %103, %91
+    %141 = xor i32 %115, %92
+    %142 = xor i32 %127, %93
+    %143 = xor i32 %131, %Ox01
+    %144 = xor i32 %143, %95
+    %145 = xor i32 %134, %96
+    %146 = xor i32 %137, %97
+    %147 = xor i32 %140, %98
+    %148 = xor i32 %144, %99
+    %149 = xor i32 %145, %100
+    %150 = xor i32 %146, %101
+    %151 = xor i32 %147, %102
+    %152 = xor i32 %148, %103
+    %153 = xor i32 %149, %104
+    %154 = xor i32 %150, %105
+    %155 = xor i32 %151, %106
+    %156 = xor i32 %132, %107
+    %157 = xor i32 %135, %108
+    %158 = xor i32 %138, %109
+    %159 = xor i32 %141, %110
+    %160 = xor i32 %156, %111
+    %161 = xor i32 %157, %112
+    %162 = xor i32 %158, %113
+    %163 = xor i32 %159, %114
+    %164 = xor i32 %160, %115
+    %165 = xor i32 %161, %116
+    %166 = xor i32 %162, %117
+    %167 = xor i32 %163, %118
+    %168 = xor i32 %133, %119
+    %169 = xor i32 %136, %120
+    %170 = xor i32 %139, %121
+    %171 = xor i32 %142, %122
+    %172 = xor i32 %168, %123
+    %173 = xor i32 %169, %124
+    %174 = xor i32 %170, %125
+    %175 = xor i32 %171, %126
+    %176 = xor i32 %172, %127
+    %177 = xor i32 %173, %128
+    %178 = xor i32 %174, %129
+    %179 = xor i32 %175, %130
+    %180 = xor i32 %153, %143
+    %181 = xor i32 %165, %132
+    %182 = xor i32 %177, %133
+    %183 = xor i32 %154, %134
+    %184 = xor i32 %166, %135
+    %185 = xor i32 %178, %136
+    %186 = xor i32 %155, %137
+    %187 = xor i32 %167, %138
+    %188 = xor i32 %179, %139
+    %189 = xor i32 %152, %140
+    %190 = xor i32 %164, %141
+    %191 = xor i32 %176, %142
+    %192 = xor i32 %180, %Ox01
+    %193 = xor i32 %192, %144
+    %194 = xor i32 %183, %145
+    %195 = xor i32 %186, %146
+    %196 = xor i32 %189, %147
+    %197 = xor i32 %193, %148
+    %198 = xor i32 %194, %149
+    %199 = xor i32 %195, %150
+    %200 = xor i32 %196, %151
+    %201 = xor i32 %197, %152
+    %202 = xor i32 %198, %153
+    %203 = xor i32 %199, %154
+    %204 = xor i32 %200, %155
+    %205 = xor i32 %181, %156
+    %206 = xor i32 %184, %157
+    %207 = xor i32 %187, %158
+    %208 = xor i32 %190, %159
+    %209 = xor i32 %205, %160
+    %210 = xor i32 %206, %161
+    %211 = xor i32 %207, %162
+    %212 = xor i32 %208, %163
+    %213 = xor i32 %209, %164
+    %214 = xor i32 %210, %165
+    %215 = xor i32 %211, %166
+    %216 = xor i32 %212, %167
+    %217 = xor i32 %182, %168
+    %218 = xor i32 %185, %169
+    %219 = xor i32 %188, %170
+    %220 = xor i32 %191, %171
+    %221 = xor i32 %217, %172
+    %222 = xor i32 %218, %173
+    %223 = xor i32 %219, %174
+    %224 = xor i32 %220, %175
+    %225 = xor i32 %221, %176
+    %226 = xor i32 %222, %177
+    %227 = xor i32 %223, %178
+    %228 = xor i32 %224, %179
+    %229 = xor i32 %202, %192
+    %230 = xor i32 %214, %181
+    %231 = xor i32 %226, %182
+    %232 = xor i32 %203, %183
+    %233 = xor i32 %215, %184
+    %234 = xor i32 %227, %185
+    %235 = xor i32 %204, %186
+    %236 = xor i32 %216, %187
+    %237 = xor i32 %228, %188
+    %238 = xor i32 %201, %189
+    %239 = xor i32 %213, %190
+    %240 = xor i32 %225, %191
+    %241 = xor i32 %229, %Ox01
+    %242 = xor i32 %241, %193
+    %243 = xor i32 %232, %194
+    %244 = xor i32 %235, %195
+    %245 = xor i32 %238, %196
+    %246 = xor i32 %242, %197
+    %247 = xor i32 %243, %198
+    %248 = xor i32 %244, %199
+    %249 = xor i32 %245, %200
+    %250 = xor i32 %246, %201
+    %251 = xor i32 %247, %202
+    %252 = xor i32 %248, %203
+    %253 = xor i32 %249, %204
+    %254 = xor i32 %230, %205
+    %255 = xor i32 %233, %206
+    %256 = xor i32 %236, %207
+    %257 = xor i32 %239, %208
+    %258 = xor i32 %254, %209
+    %259 = xor i32 %255, %210
+    %260 = xor i32 %256, %211
+    %261 = xor i32 %257, %212
+    %262 = xor i32 %258, %213
+    %263 = xor i32 %259, %214
+    %264 = xor i32 %260, %215
+    %265 = xor i32 %261, %216
+    %266 = xor i32 %231, %217
+    %267 = xor i32 %234, %218
+    %268 = xor i32 %237, %219
+    %269 = xor i32 %240, %220
+    %270 = xor i32 %266, %221
+    %271 = xor i32 %267, %222
+    %272 = xor i32 %268, %223
+    %273 = xor i32 %269, %224
+    %274 = xor i32 %270, %225
+    %275 = xor i32 %271, %226
+    %276 = xor i32 %272, %227
+    %277 = xor i32 %273, %228
+    %278 = xor i32 %251, %241
+    %279 = xor i32 %263, %230
+    %280 = xor i32 %275, %231
+    %281 = xor i32 %252, %232
+    %282 = xor i32 %264, %233
+    %283 = xor i32 %276, %234
+    %284 = xor i32 %253, %235
+    %285 = xor i32 %265, %236
+    %286 = xor i32 %277, %237
+    %287 = xor i32 %250, %238
+    %288 = xor i32 %262, %239
+    %289 = xor i32 %274, %240
+    %290 = xor i32 %278, %Ox01
+    %291 = xor i32 %290, %242
+    %292 = xor i32 %281, %243
+    %293 = xor i32 %284, %244
+    %294 = xor i32 %287, %245
+    %295 = xor i32 %291, %246
+    %296 = xor i32 %292, %247
+    %297 = xor i32 %293, %248
+    %298 = xor i32 %294, %249
+    %299 = xor i32 %295, %250
+    %300 = xor i32 %296, %251
+    %301 = xor i32 %297, %252
+    %302 = xor i32 %298, %253
+    %303 = xor i32 %279, %254
+    %304 = xor i32 %282, %255
+    %305 = xor i32 %285, %256
+    %306 = xor i32 %288, %257
+    %307 = xor i32 %303, %258
+    %308 = xor i32 %304, %259
+    %309 = xor i32 %305, %260
+    %310 = xor i32 %306, %261
+    %311 = xor i32 %307, %262
+    %312 = xor i32 %308, %263
+    %313 = xor i32 %309, %264
+    %314 = xor i32 %310, %265
+    %315 = xor i32 %280, %266
+    %316 = xor i32 %283, %267
+    %317 = xor i32 %286, %268
+    %318 = xor i32 %289, %269
+    %319 = xor i32 %315, %270
+    %320 = xor i32 %316, %271
+    %321 = xor i32 %317, %272
+    %322 = xor i32 %318, %273
+    %323 = xor i32 %319, %274
+    %324 = xor i32 %320, %275
+    %325 = xor i32 %321, %276
+    %326 = xor i32 %322, %277
+    %327 = xor i32 %300, %290
+    %328 = xor i32 %312, %279
+    %329 = xor i32 %324, %280
+    %330 = xor i32 %301, %281
+    %331 = xor i32 %313, %282
+    %332 = xor i32 %325, %283
+    %333 = xor i32 %302, %284
+    %334 = xor i32 %314, %285
+    %335 = xor i32 %326, %286
+    %336 = xor i32 %299, %287
+    %337 = xor i32 %311, %288
+    %338 = xor i32 %323, %289
+    %339 = xor i32 %327, %Ox01
+    %340 = xor i32 %339, %291
+    %341 = xor i32 %330, %292
+    %342 = xor i32 %333, %293
+    %343 = xor i32 %336, %294
+    %344 = xor i32 %340, %295
+    %345 = xor i32 %341, %296
+    %346 = xor i32 %342, %297
+    %347 = xor i32 %343, %298
+    %348 = xor i32 %344, %299
+    %349 = xor i32 %345, %300
+    %350 = xor i32 %346, %301
+    %351 = xor i32 %347, %302
+    %352 = xor i32 %328, %303
+    %353 = xor i32 %331, %304
+    %354 = xor i32 %334, %305
+    %355 = xor i32 %337, %306
+    %356 = xor i32 %352, %307
+    %357 = xor i32 %353, %308
+    %358 = xor i32 %354, %309
+    %359 = xor i32 %355, %310
+    %360 = xor i32 %356, %311
+    %361 = xor i32 %357, %312
+    %362 = xor i32 %358, %313
+    %363 = xor i32 %359, %314
+    %364 = xor i32 %329, %315
+    %365 = xor i32 %332, %316
+    %366 = xor i32 %335, %317
+    %367 = xor i32 %338, %318
+    %368 = xor i32 %364, %319
+    %369 = xor i32 %365, %320
+    %370 = xor i32 %366, %321
+    %371 = xor i32 %367, %322
+    %372 = xor i32 %368, %323
+    %373 = xor i32 %369, %324
+    %374 = xor i32 %370, %325
+    %375 = xor i32 %371, %326
+    %376 = xor i32 %349, %339
+    %377 = xor i32 %361, %328
+    %378 = xor i32 %373, %329
+    %379 = xor i32 %350, %330
+    %380 = xor i32 %362, %331
+    %381 = xor i32 %374, %332
+    %382 = xor i32 %351, %333
+    %383 = xor i32 %363, %334
+    %384 = xor i32 %375, %335
+    %385 = xor i32 %348, %336
+    %386 = xor i32 %360, %337
+    %387 = xor i32 %372, %338
+    %388 = xor i32 %376, %Ox01
+    %389 = xor i32 %388, %340
+    %390 = xor i32 %379, %341
+    %391 = xor i32 %382, %342
+    %392 = xor i32 %385, %343
+    %393 = xor i32 %389, %344
+    %394 = xor i32 %390, %345
+    %395 = xor i32 %391, %346
+    %396 = xor i32 %392, %347
+    %397 = xor i32 %393, %348
+    %398 = xor i32 %394, %349
+    %399 = xor i32 %395, %350
+    %400 = xor i32 %396, %351
+    %401 = xor i32 %377, %352
+    %402 = xor i32 %380, %353
+    %403 = xor i32 %383, %354
+    %404 = xor i32 %386, %355
+    %405 = xor i32 %401, %356
+    %406 = xor i32 %402, %357
+    %407 = xor i32 %403, %358
+    %408 = xor i32 %404, %359
+    %409 = xor i32 %405, %360
+    %410 = xor i32 %406, %361
+    %411 = xor i32 %407, %362
+    %412 = xor i32 %408, %363
+    %413 = xor i32 %378, %364
+    %414 = xor i32 %381, %365
+    %415 = xor i32 %384, %366
+    %416 = xor i32 %387, %367
+    %417 = xor i32 %413, %368
+    %418 = xor i32 %414, %369
+    %419 = xor i32 %415, %370
+    %420 = xor i32 %416, %371
+    %421 = xor i32 %417, %372
+    %422 = xor i32 %418, %373
+    %423 = xor i32 %419, %374
+    %424 = xor i32 %420, %375
+    %425 = xor i32 %398, %388
+    %426 = xor i32 %410, %377
+    %427 = xor i32 %422, %378
+    %428 = xor i32 %399, %379
+    %429 = xor i32 %411, %380
+    %430 = xor i32 %423, %381
+    %431 = xor i32 %400, %382
+    %432 = xor i32 %412, %383
+    %433 = xor i32 %424, %384
+    %434 = xor i32 %397, %385
+    %435 = xor i32 %409, %386
+    %436 = xor i32 %421, %387
+    %437 = xor i32 %425, %Ox01
+    %438 = xor i32 %437, %389
+    %439 = xor i32 %428, %390
+    %440 = xor i32 %431, %391
+    %441 = xor i32 %434, %392
+    %442 = xor i32 %438, %393
+    %443 = xor i32 %439, %394
+    %444 = xor i32 %440, %395
+    %445 = xor i32 %441, %396
+    %446 = xor i32 %442, %397
+    %447 = xor i32 %443, %398
+    %448 = xor i32 %444, %399
+    %449 = xor i32 %445, %400
+    %450 = xor i32 %426, %401
+    %451 = xor i32 %429, %402
+    %452 = xor i32 %432, %403
+    %453 = xor i32 %435, %404
+    %454 = xor i32 %450, %405
+    %455 = xor i32 %451, %406
+    %456 = xor i32 %452, %407
+    %457 = xor i32 %453, %408
+    %458 = xor i32 %454, %409
+    %459 = xor i32 %455, %410
+    %460 = xor i32 %456, %411
+    %461 = xor i32 %457, %412
+    %462 = xor i32 %427, %413
+    %463 = xor i32 %430, %414
+    %464 = xor i32 %433, %415
+    %465 = xor i32 %436, %416
+    %466 = xor i32 %462, %417
+    %467 = xor i32 %463, %418
+    %468 = xor i32 %464, %419
+    %469 = xor i32 %465, %420
+    %470 = xor i32 %466, %421
+    %471 = xor i32 %467, %422
+    %472 = xor i32 %468, %423
+    %473 = xor i32 %469, %424
+    %474 = xor i32 %447, %437
+    %475 = xor i32 %459, %426
+    %476 = xor i32 %471, %427
+    %477 = xor i32 %448, %428
+    %478 = xor i32 %460, %429
+    %479 = xor i32 %472, %430
+    %480 = xor i32 %449, %431
+    %481 = xor i32 %461, %432
+    %482 = xor i32 %473, %433
+    %483 = xor i32 %446, %434
+    %484 = xor i32 %458, %435
+    %485 = xor i32 %470, %436
+    %486 = xor i32 %474, %Ox01
+    %487 = xor i32 %486, %438
+    %488 = xor i32 %477, %439
+    %489 = xor i32 %480, %440
+    %490 = xor i32 %483, %441
+    %491 = xor i32 %487, %442
+    %492 = xor i32 %488, %443
+    %493 = xor i32 %489, %444
+    %494 = xor i32 %490, %445
+    %495 = xor i32 %491, %446
+    store volatile i32 %495, i32* %k1720, align 4
+    %496 = xor i32 %492, %447
+    store volatile i32 %496, i32* %k1730, align 4
+    %497 = xor i32 %493, %448
+    store volatile i32 %497, i32* %k1740, align 4
+    %498 = xor i32 %494, %449
+    store volatile i32 %498, i32* %k1750, align 4
+    %499 = xor i32 %475, %450
+    %500 = xor i32 %478, %451
+    %501 = xor i32 %481, %452
+    %502 = xor i32 %484, %453
+    %503 = xor i32 %499, %454
+    %504 = xor i32 %500, %455
+    %505 = xor i32 %501, %456
+    %506 = xor i32 %502, %457
+    %507 = xor i32 %503, %458
+    store volatile i32 %507, i32* %k1721, align 4
+    %508 = xor i32 %504, %459
+    store volatile i32 %508, i32* %k1731, align 4
+    %509 = xor i32 %505, %460
+    store volatile i32 %509, i32* %k1741, align 4
+    %510 = xor i32 %506, %461
+    store volatile i32 %510, i32* %k1751, align 4
+    %511 = xor i32 %476, %462
+    %512 = xor i32 %479, %463
+    %513 = xor i32 %482, %464
+    %514 = xor i32 %485, %465
+    %515 = xor i32 %511, %466
+    %516 = xor i32 %512, %467
+    %517 = xor i32 %513, %468
+    %518 = xor i32 %514, %469
+    %519 = xor i32 %515, %470
+    store volatile i32 %519, i32* %k1722, align 4
+    %520 = xor i32 %516, %471
+    store volatile i32 %520, i32* %k1732, align 4
+    %521 = xor i32 %517, %472
+    store volatile i32 %521, i32* %k1742, align 4
+    %522 = xor i32 %518, %473
+    store volatile i32 %522, i32* %k1752, align 4
+    ret i32 0
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="cortex-m0" "target-features"="+soft-float,+strict-align,-crypto,-neon" "unsafe-fp-math"="false" "use-soft-float"="true" }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0-2ubuntu4 (tags/RELEASE_380/final)"}
+
+...
+---
+name:            _Z2ksiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: tgpr }
+  - { id: 1, class: tgpr }
+  - { id: 2, class: tgpr }
+  - { id: 3, class: tgpr }
+  - { id: 4, class: tgpr }
+  - { id: 5, class: tgpr }
+  - { id: 6, class: tgpr }
+  - { id: 7, class: tgpr }
+  - { id: 8, class: tgpr }
+  - { id: 9, class: tgpr }
+  - { id: 10, class: tgpr }
+  - { id: 11, class: tgpr }
+  - { id: 12, class: tgpr }
+  - { id: 13, class: tgpr }
+  - { id: 14, class: tgpr }
+  - { id: 15, class: tgpr }
+  - { id: 16, class: tgpr }
+  - { id: 17, class: tgpr }
+  - { id: 18, class: tgpr }
+  - { id: 19, class: tgpr }
+  - { id: 20, class: tgpr }
+  - { id: 21, class: tgpr }
+  - { id: 22, class: tgpr }
+  - { id: 23, class: tgpr }
+  - { id: 24, class: tgpr }
+  - { id: 25, class: tgpr }
+  - { id: 26, class: tgpr }
+  - { id: 27, class: tgpr }
+  - { id: 28, class: tgpr }
+  - { id: 29, class: tgpr }
+  - { id: 30, class: tgpr }
+  - { id: 31, class: tgpr }
+  - { id: 32, class: tgpr }
+  - { id: 33, class: tgpr }
+  - { id: 34, class: tgpr }
+  - { id: 35, class: tgpr }
+  - { id: 36, class: tgpr }
+  - { id: 37, class: tgpr }
+  - { id: 38, class: tgpr }
+  - { id: 39, class: tgpr }
+  - { id: 40, class: tgpr }
+  - { id: 41, class: tgpr }
+  - { id: 42, class: tgpr }
+  - { id: 43, class: tgpr }
+  - { id: 44, class: tgpr }
+  - { id: 45, class: tgpr }
+  - { id: 46, class: tgpr }
+  - { id: 47, class: tgpr }
+  - { id: 48, class: tgpr }
+  - { id: 49, class: tgpr }
+  - { id: 50, class: tgpr }
+  - { id: 51, class: tgpr }
+  - { id: 52, class: tgpr }
+  - { id: 53, class: tgpr }
+  - { id: 54, class: tgpr }
+  - { id: 55, class: tgpr }
+  - { id: 56, class: tgpr }
+  - { id: 57, class: tgpr }
+  - { id: 58, class: tgpr }
+  - { id: 59, class: tgpr }
+  - { id: 60, class: tgpr }
+  - { id: 61, class: tgpr }
+  - { id: 62, class: tgpr }
+  - { id: 63, class: tgpr }
+  - { id: 64, class: tgpr }
+  - { id: 65, class: tgpr }
+  - { id: 66, class: tgpr }
+  - { id: 67, class: tgpr }
+  - { id: 68, class: tgpr }
+  - { id: 69, class: tgpr }
+  - { id: 70, class: tgpr }
+  - { id: 71, class: tgpr }
+  - { id: 72, class: tgpr }
+  - { id: 73, class: tgpr }
+  - { id: 74, class: tgpr }
+  - { id: 75, class: tgpr }
+  - { id: 76, class: tgpr }
+  - { id: 77, class: tgpr }
+  - { id: 78, class: tgpr }
+  - { id: 79, class: tgpr }
+  - { id: 80, class: tgpr }
+  - { id: 81, class: tgpr }
+  - { id: 82, class: tgpr }
+  - { id: 83, class: tgpr }
+  - { id: 84, class: tgpr }
+  - { id: 85, class: tgpr }
+  - { id: 86, class: tgpr }
+  - { id: 87, class: tgpr }
+  - { id: 88, class: tgpr }
+  - { id: 89, class: tgpr }
+  - { id: 90, class: tgpr }
+  - { id: 91, class: tgpr }
+  - { id: 92, class: tgpr }
+  - { id: 93, class: tgpr }
+  - { id: 94, class: tgpr }
+  - { id: 95, class: tgpr }
+  - { id: 96, class: tgpr }
+  - { id: 97, class: tgpr }
+  - { id: 98, class: tgpr }
+  - { id: 99, class: tgpr }
+  - { id: 100, class: tgpr }
+  - { id: 101, class: tgpr }
+  - { id: 102, class: tgpr }
+  - { id: 103, class: tgpr }
+  - { id: 104, class: tgpr }
+  - { id: 105, class: tgpr }
+  - { id: 106, class: tgpr }
+  - { id: 107, class: tgpr }
+  - { id: 108, class: tgpr }
+  - { id: 109, class: tgpr }
+  - { id: 110, class: tgpr }
+  - { id: 111, class: tgpr }
+  - { id: 112, class: tgpr }
+  - { id: 113, class: tgpr }
+  - { id: 114, class: tgpr }
+  - { id: 115, class: tgpr }
+  - { id: 116, class: tgpr }
+  - { id: 117, class: tgpr }
+  - { id: 118, class: tgpr }
+  - { id: 119, class: tgpr }
+  - { id: 120, class: tgpr }
+  - { id: 121, class: tgpr }
+  - { id: 122, class: tgpr }
+  - { id: 123, class: tgpr }
+  - { id: 124, class: tgpr }
+  - { id: 125, class: tgpr }
+  - { id: 126, class: tgpr }
+  - { id: 127, class: tgpr }
+  - { id: 128, class: tgpr }
+  - { id: 129, class: tgpr }
+  - { id: 130, class: tgpr }
+  - { id: 131, class: tgpr }
+  - { id: 132, class: tgpr }
+  - { id: 133, class: tgpr }
+  - { id: 134, class: tgpr }
+  - { id: 135, class: tgpr }
+  - { id: 136, class: tgpr }
+  - { id: 137, class: tgpr }
+  - { id: 138, class: tgpr }
+  - { id: 139, class: tgpr }
+  - { id: 140, class: tgpr }
+  - { id: 141, class: tgpr }
+  - { id: 142, class: tgpr }
+  - { id: 143, class: tgpr }
+  - { id: 144, class: tgpr }
+  - { id: 145, class: tgpr }
+  - { id: 146, class: tgpr }
+  - { id: 147, class: tgpr }
+  - { id: 148, class: tgpr }
+  - { id: 149, class: tgpr }
+  - { id: 150, class: tgpr }
+  - { id: 151, class: tgpr }
+  - { id: 152, class: tgpr }
+  - { id: 153, class: tgpr }
+  - { id: 154, class: tgpr }
+  - { id: 155, class: tgpr }
+  - { id: 156, class: tgpr }
+  - { id: 157, class: tgpr }
+  - { id: 158, class: tgpr }
+  - { id: 159, class: tgpr }
+  - { id: 160, class: tgpr }
+  - { id: 161, class: tgpr }
+  - { id: 162, class: tgpr }
+  - { id: 163, class: tgpr }
+  - { id: 164, class: tgpr }
+  - { id: 165, class: tgpr }
+  - { id: 166, class: tgpr }
+  - { id: 167, class: tgpr }
+  - { id: 168, class: tgpr }
+  - { id: 169, class: tgpr }
+  - { id: 170, class: tgpr }
+  - { id: 171, class: tgpr }
+  - { id: 172, class: tgpr }
+  - { id: 173, class: tgpr }
+  - { id: 174, class: tgpr }
+  - { id: 175, class: tgpr }
+  - { id: 176, class: tgpr }
+  - { id: 177, class: tgpr }
+  - { id: 178, class: tgpr }
+  - { id: 179, class: tgpr }
+  - { id: 180, class: tgpr }
+  - { id: 181, class: tgpr }
+  - { id: 182, class: tgpr }
+  - { id: 183, class: tgpr }
+  - { id: 184, class: tgpr }
+  - { id: 185, class: tgpr }
+  - { id: 186, class: tgpr }
+  - { id: 187, class: tgpr }
+  - { id: 188, class: tgpr }
+  - { id: 189, class: tgpr }
+  - { id: 190, class: tgpr }
+  - { id: 191, class: tgpr }
+  - { id: 192, class: tgpr }
+  - { id: 193, class: tgpr }
+  - { id: 194, class: tgpr }
+  - { id: 195, class: tgpr }
+  - { id: 196, class: tgpr }
+  - { id: 197, class: tgpr }
+  - { id: 198, class: tgpr }
+  - { id: 199, class: tgpr }
+  - { id: 200, class: tgpr }
+  - { id: 201, class: tgpr }
+  - { id: 202, class: tgpr }
+  - { id: 203, class: tgpr }
+  - { id: 204, class: tgpr }
+  - { id: 205, class: tgpr }
+  - { id: 206, class: tgpr }
+  - { id: 207, class: tgpr }
+  - { id: 208, class: tgpr }
+  - { id: 209, class: tgpr }
+  - { id: 210, class: tgpr }
+  - { id: 211, class: tgpr }
+  - { id: 212, class: tgpr }
+  - { id: 213, class: tgpr }
+  - { id: 214, class: tgpr }
+  - { id: 215, class: tgpr }
+  - { id: 216, class: tgpr }
+  - { id: 217, class: tgpr }
+  - { id: 218, class: tgpr }
+  - { id: 219, class: tgpr }
+  - { id: 220, class: tgpr }
+  - { id: 221, class: tgpr }
+  - { id: 222, class: tgpr }
+  - { id: 223, class: tgpr }
+  - { id: 224, class: tgpr }
+  - { id: 225, class: tgpr }
+  - { id: 226, class: tgpr }
+  - { id: 227, class: tgpr }
+  - { id: 228, class: tgpr }
+  - { id: 229, class: tgpr }
+  - { id: 230, class: tgpr }
+  - { id: 231, class: tgpr }
+  - { id: 232, class: tgpr }
+  - { id: 233, class: tgpr }
+  - { id: 234, class: tgpr }
+  - { id: 235, class: tgpr }
+  - { id: 236, class: tgpr }
+  - { id: 237, class: tgpr }
+  - { id: 238, class: tgpr }
+  - { id: 239, class: tgpr }
+  - { id: 240, class: tgpr }
+  - { id: 241, class: tgpr }
+  - { id: 242, class: tgpr }
+  - { id: 243, class: tgpr }
+  - { id: 244, class: tgpr }
+  - { id: 245, class: tgpr }
+  - { id: 246, class: tgpr }
+  - { id: 247, class: tgpr }
+  - { id: 248, class: tgpr }
+  - { id: 249, class: tgpr }
+  - { id: 250, class: tgpr }
+  - { id: 251, class: tgpr }
+  - { id: 252, class: tgpr }
+  - { id: 253, class: tgpr }
+  - { id: 254, class: tgpr }
+  - { id: 255, class: tgpr }
+  - { id: 256, class: tgpr }
+  - { id: 257, class: tgpr }
+  - { id: 258, class: tgpr }
+  - { id: 259, class: tgpr }
+  - { id: 260, class: tgpr }
+  - { id: 261, class: tgpr }
+  - { id: 262, class: tgpr }
+  - { id: 263, class: tgpr }
+  - { id: 264, class: tgpr }
+  - { id: 265, class: tgpr }
+  - { id: 266, class: tgpr }
+  - { id: 267, class: tgpr }
+  - { id: 268, class: tgpr }
+  - { id: 269, class: tgpr }
+  - { id: 270, class: tgpr }
+  - { id: 271, class: tgpr }
+  - { id: 272, class: tgpr }
+  - { id: 273, class: tgpr }
+  - { id: 274, class: tgpr }
+  - { id: 275, class: tgpr }
+  - { id: 276, class: tgpr }
+  - { id: 277, class: tgpr }
+  - { id: 278, class: tgpr }
+  - { id: 279, class: tgpr }
+  - { id: 280, class: tgpr }
+  - { id: 281, class: tgpr }
+  - { id: 282, class: tgpr }
+  - { id: 283, class: tgpr }
+  - { id: 284, class: tgpr }
+  - { id: 285, class: tgpr }
+  - { id: 286, class: tgpr }
+  - { id: 287, class: tgpr }
+  - { id: 288, class: tgpr }
+  - { id: 289, class: tgpr }
+  - { id: 290, class: tgpr }
+  - { id: 291, class: tgpr }
+  - { id: 292, class: tgpr }
+  - { id: 293, class: tgpr }
+  - { id: 294, class: tgpr }
+  - { id: 295, class: tgpr }
+  - { id: 296, class: tgpr }
+  - { id: 297, class: tgpr }
+  - { id: 298, class: tgpr }
+  - { id: 299, class: tgpr }
+  - { id: 300, class: tgpr }
+  - { id: 301, class: tgpr }
+  - { id: 302, class: tgpr }
+  - { id: 303, class: tgpr }
+  - { id: 304, class: tgpr }
+  - { id: 305, class: tgpr }
+  - { id: 306, class: tgpr }
+  - { id: 307, class: tgpr }
+  - { id: 308, class: tgpr }
+  - { id: 309, class: tgpr }
+  - { id: 310, class: tgpr }
+  - { id: 311, class: tgpr }
+  - { id: 312, class: tgpr }
+  - { id: 313, class: tgpr }
+  - { id: 314, class: tgpr }
+  - { id: 315, class: tgpr }
+  - { id: 316, class: tgpr }
+  - { id: 317, class: tgpr }
+  - { id: 318, class: tgpr }
+  - { id: 319, class: tgpr }
+  - { id: 320, class: tgpr }
+  - { id: 321, class: tgpr }
+  - { id: 322, class: tgpr }
+  - { id: 323, class: tgpr }
+  - { id: 324, class: tgpr }
+  - { id: 325, class: tgpr }
+  - { id: 326, class: tgpr }
+  - { id: 327, class: tgpr }
+  - { id: 328, class: tgpr }
+  - { id: 329, class: tgpr }
+  - { id: 330, class: tgpr }
+  - { id: 331, class: tgpr }
+  - { id: 332, class: tgpr }
+  - { id: 333, class: tgpr }
+  - { id: 334, class: tgpr }
+  - { id: 335, class: tgpr }
+  - { id: 336, class: tgpr }
+  - { id: 337, class: tgpr }
+  - { id: 338, class: tgpr }
+  - { id: 339, class: tgpr }
+  - { id: 340, class: tgpr }
+  - { id: 341, class: tgpr }
+  - { id: 342, class: tgpr }
+  - { id: 343, class: tgpr }
+  - { id: 344, class: tgpr }
+  - { id: 345, class: tgpr }
+  - { id: 346, class: tgpr }
+  - { id: 347, class: tgpr }
+  - { id: 348, class: tgpr }
+  - { id: 349, class: tgpr }
+  - { id: 350, class: tgpr }
+  - { id: 351, class: tgpr }
+  - { id: 352, class: tgpr }
+  - { id: 353, class: tgpr }
+  - { id: 354, class: tgpr }
+  - { id: 355, class: tgpr }
+  - { id: 356, class: tgpr }
+  - { id: 357, class: tgpr }
+  - { id: 358, class: tgpr }
+  - { id: 359, class: tgpr }
+  - { id: 360, class: tgpr }
+  - { id: 361, class: tgpr }
+  - { id: 362, class: tgpr }
+  - { id: 363, class: tgpr }
+  - { id: 364, class: tgpr }
+  - { id: 365, class: tgpr }
+  - { id: 366, class: tgpr }
+  - { id: 367, class: tgpr }
+  - { id: 368, class: tgpr }
+  - { id: 369, class: tgpr }
+  - { id: 370, class: tgpr }
+  - { id: 371, class: tgpr }
+  - { id: 372, class: tgpr }
+  - { id: 373, class: tgpr }
+  - { id: 374, class: tgpr }
+  - { id: 375, class: tgpr }
+  - { id: 376, class: tgpr }
+  - { id: 377, class: tgpr }
+  - { id: 378, class: tgpr }
+  - { id: 379, class: tgpr }
+  - { id: 380, class: tgpr }
+  - { id: 381, class: tgpr }
+  - { id: 382, class: tgpr }
+  - { id: 383, class: tgpr }
+  - { id: 384, class: tgpr }
+  - { id: 385, class: tgpr }
+  - { id: 386, class: tgpr }
+  - { id: 387, class: tgpr }
+  - { id: 388, class: tgpr }
+  - { id: 389, class: tgpr }
+  - { id: 390, class: tgpr }
+  - { id: 391, class: tgpr }
+  - { id: 392, class: tgpr }
+  - { id: 393, class: tgpr }
+  - { id: 394, class: tgpr }
+  - { id: 395, class: tgpr }
+  - { id: 396, class: tgpr }
+  - { id: 397, class: tgpr }
+  - { id: 398, class: tgpr }
+  - { id: 399, class: tgpr }
+  - { id: 400, class: tgpr }
+  - { id: 401, class: tgpr }
+  - { id: 402, class: tgpr }
+  - { id: 403, class: tgpr }
+  - { id: 404, class: tgpr }
+  - { id: 405, class: tgpr }
+  - { id: 406, class: tgpr }
+  - { id: 407, class: tgpr }
+  - { id: 408, class: tgpr }
+  - { id: 409, class: tgpr }
+  - { id: 410, class: tgpr }
+  - { id: 411, class: tgpr }
+  - { id: 412, class: tgpr }
+  - { id: 413, class: tgpr }
+  - { id: 414, class: tgpr }
+  - { id: 415, class: tgpr }
+  - { id: 416, class: tgpr }
+  - { id: 417, class: tgpr }
+  - { id: 418, class: tgpr }
+  - { id: 419, class: tgpr }
+  - { id: 420, class: tgpr }
+  - { id: 421, class: tgpr }
+  - { id: 422, class: tgpr }
+  - { id: 423, class: tgpr }
+  - { id: 424, class: tgpr }
+  - { id: 425, class: tgpr }
+  - { id: 426, class: tgpr }
+  - { id: 427, class: tgpr }
+  - { id: 428, class: tgpr }
+  - { id: 429, class: tgpr }
+  - { id: 430, class: tgpr }
+  - { id: 431, class: tgpr }
+  - { id: 432, class: tgpr }
+  - { id: 433, class: tgpr }
+  - { id: 434, class: tgpr }
+  - { id: 435, class: tgpr }
+  - { id: 436, class: tgpr }
+  - { id: 437, class: tgpr }
+  - { id: 438, class: tgpr }
+  - { id: 439, class: tgpr }
+  - { id: 440, class: tgpr }
+  - { id: 441, class: tgpr }
+  - { id: 442, class: tgpr }
+  - { id: 443, class: tgpr }
+  - { id: 444, class: tgpr }
+  - { id: 445, class: tgpr }
+  - { id: 446, class: tgpr }
+  - { id: 447, class: tgpr }
+  - { id: 448, class: tgpr }
+  - { id: 449, class: tgpr }
+  - { id: 450, class: tgpr }
+  - { id: 451, class: tgpr }
+  - { id: 452, class: tgpr }
+  - { id: 453, class: tgpr }
+  - { id: 454, class: tgpr }
+  - { id: 455, class: tgpr }
+  - { id: 456, class: tgpr }
+  - { id: 457, class: tgpr }
+  - { id: 458, class: tgpr }
+  - { id: 459, class: tgpr }
+  - { id: 460, class: tgpr }
+  - { id: 461, class: tgpr }
+  - { id: 462, class: tgpr }
+  - { id: 463, class: tgpr }
+  - { id: 464, class: tgpr }
+  - { id: 465, class: tgpr }
+  - { id: 466, class: tgpr }
+  - { id: 467, class: tgpr }
+  - { id: 468, class: tgpr }
+  - { id: 469, class: tgpr }
+  - { id: 470, class: tgpr }
+  - { id: 471, class: tgpr }
+  - { id: 472, class: tgpr }
+  - { id: 473, class: tgpr }
+  - { id: 474, class: tgpr }
+  - { id: 475, class: tgpr }
+  - { id: 476, class: tgpr }
+  - { id: 477, class: tgpr }
+  - { id: 478, class: tgpr }
+  - { id: 479, class: tgpr }
+  - { id: 480, class: tgpr }
+  - { id: 481, class: tgpr }
+  - { id: 482, class: tgpr }
+  - { id: 483, class: tgpr }
+  - { id: 484, class: tgpr }
+  - { id: 485, class: tgpr }
+  - { id: 486, class: tgpr }
+  - { id: 487, class: tgpr }
+  - { id: 488, class: tgpr }
+  - { id: 489, class: tgpr }
+  - { id: 490, class: tgpr }
+  - { id: 491, class: tgpr }
+  - { id: 492, class: tgpr }
+  - { id: 493, class: tgpr }
+  - { id: 494, class: tgpr }
+  - { id: 495, class: tgpr }
+  - { id: 496, class: tgpr }
+  - { id: 497, class: tgpr }
+  - { id: 498, class: tgpr }
+  - { id: 499, class: tgpr }
+  - { id: 500, class: tgpr }
+  - { id: 501, class: tgpr }
+  - { id: 502, class: tgpr }
+  - { id: 503, class: tgpr }
+  - { id: 504, class: tgpr }
+  - { id: 505, class: tgpr }
+  - { id: 506, class: tgpr }
+  - { id: 507, class: tgpr }
+  - { id: 508, class: tgpr }
+  - { id: 509, class: tgpr }
+  - { id: 510, class: tgpr }
+  - { id: 511, class: tgpr }
+  - { id: 512, class: tgpr }
+  - { id: 513, class: tgpr }
+  - { id: 514, class: tgpr }
+  - { id: 515, class: tgpr }
+  - { id: 516, class: tgpr }
+  - { id: 517, class: tgpr }
+  - { id: 518, class: tgpr }
+  - { id: 519, class: tgpr }
+  - { id: 520, class: tgpr }
+  - { id: 521, class: tgpr }
+  - { id: 522, class: tgpr }
+  - { id: 523, class: tgpr }
+  - { id: 524, class: tgpr }
+  - { id: 525, class: tgpr }
+  - { id: 526, class: tgpr }
+  - { id: 527, class: tgpr }
+  - { id: 528, class: tgpr }
+  - { id: 529, class: tgpr }
+  - { id: 530, class: tgpr }
+  - { id: 531, class: tgpr }
+  - { id: 532, class: tgpr }
+  - { id: 533, class: tgpr }
+  - { id: 534, class: tgpr }
+  - { id: 535, class: tgpr }
+  - { id: 536, class: tgpr }
+  - { id: 537, class: tgpr }
+  - { id: 538, class: tgpr }
+  - { id: 539, class: tgpr }
+  - { id: 540, class: tgpr }
+  - { id: 541, class: tgpr }
+  - { id: 542, class: tgpr }
+  - { id: 543, class: tgpr }
+  - { id: 544, class: tgpr }
+  - { id: 545, class: tgpr }
+  - { id: 546, class: tgpr }
+  - { id: 547, class: tgpr }
+  - { id: 548, class: tgpr }
+  - { id: 549, class: tgpr }
+  - { id: 550, class: tgpr }
+  - { id: 551, class: tgpr }
+  - { id: 552, class: tgpr }
+  - { id: 553, class: tgpr }
+  - { id: 554, class: tgpr }
+  - { id: 555, class: tgpr }
+  - { id: 556, class: tgpr }
+  - { id: 557, class: tgpr }
+  - { id: 558, class: tgpr }
+  - { id: 559, class: tgpr }
+  - { id: 560, class: tgpr }
+  - { id: 561, class: tgpr }
+  - { id: 562, class: tgpr }
+  - { id: 563, class: tgpr }
+  - { id: 564, class: tgpr }
+  - { id: 565, class: tgpr }
+  - { id: 566, class: tgpr }
+  - { id: 567, class: tgpr }
+  - { id: 568, class: tgpr }
+  - { id: 569, class: tgpr }
+  - { id: 570, class: tgpr }
+  - { id: 571, class: tgpr }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%0' }
+  - { reg: '%r1', virtual-reg: '%1' }
+  - { reg: '%r2', virtual-reg: '%2' }
+  - { reg: '%r3', virtual-reg: '%3' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+fixedStack:      
+  - { id: 0, offset: 176, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 1, offset: 172, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 2, offset: 168, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 3, offset: 164, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 4, offset: 160, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 5, offset: 156, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 6, offset: 152, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 7, offset: 148, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 8, offset: 144, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 9, offset: 140, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 10, offset: 136, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 11, offset: 132, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 12, offset: 128, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 13, offset: 124, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 14, offset: 120, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 15, offset: 116, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 16, offset: 112, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 17, offset: 108, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 18, offset: 104, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 19, offset: 100, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 20, offset: 96, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 21, offset: 92, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 22, offset: 88, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 23, offset: 84, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 24, offset: 80, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 25, offset: 76, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 26, offset: 72, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 27, offset: 68, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 28, offset: 64, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 29, offset: 60, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 30, offset: 56, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 31, offset: 52, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 32, offset: 48, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 33, offset: 44, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 34, offset: 40, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 35, offset: 36, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 36, offset: 32, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 37, offset: 28, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 38, offset: 24, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 39, offset: 20, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 40, offset: 16, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 41, offset: 12, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 42, offset: 8, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 43, offset: 4, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 44, offset: 0, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+stack:           
+  - { id: 0, name: k1720, offset: 0, size: 4, alignment: 4, local-offset: -4 }
+  - { id: 1, name: k1721, offset: 0, size: 4, alignment: 4, local-offset: -8 }
+  - { id: 2, name: k1722, offset: 0, size: 4, alignment: 4, local-offset: -12 }
+  - { id: 3, name: k1730, offset: 0, size: 4, alignment: 4, local-offset: -16 }
+  - { id: 4, name: k1731, offset: 0, size: 4, alignment: 4, local-offset: -20 }
+  - { id: 5, name: k1732, offset: 0, size: 4, alignment: 4, local-offset: -24 }
+  - { id: 6, name: k1740, offset: 0, size: 4, alignment: 4, local-offset: -28 }
+  - { id: 7, name: k1741, offset: 0, size: 4, alignment: 4, local-offset: -32 }
+  - { id: 8, name: k1742, offset: 0, size: 4, alignment: 4, local-offset: -36 }
+  - { id: 9, name: k1750, offset: 0, size: 4, alignment: 4, local-offset: -40 }
+  - { id: 10, name: k1751, offset: 0, size: 4, alignment: 4, local-offset: -44 }
+  - { id: 11, name: k1752, offset: 0, size: 4, alignment: 4, local-offset: -48 }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0, %r1, %r2, %r3
+    liveouts: %r0
+  
+    %3 = COPY %r3
+    %2 = COPY %r2
+    %1 = COPY %r1
+    %0 = COPY %r0
+    %4 = tLDRspi %fixed-stack.32, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %5 = tLDRspi %fixed-stack.6, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %6, %cpsr = tEOR %5, %4, 14, _
+    %7 = tLDRspi %fixed-stack.0, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %8, %cpsr = tEOR %6, %7, 14, _
+    %9 = tLDRspi %fixed-stack.30, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %10 = tLDRspi %fixed-stack.4, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %11, %cpsr = tEOR %10, %9, 14, _
+    %12 = tLDRspi %fixed-stack.22, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %13, %cpsr = tEOR %11, %12, 14, _
+    %14 = tLDRspi %fixed-stack.14, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %15, %cpsr = tEOR %13, %14, 14, _
+    %16, %cpsr = tEOR %15, %5, 14, _
+    %17, %cpsr = tEOR %16, %8, 14, _
+    %18, %cpsr = tEOR %17, %7, 14, _
+    %19 = tLDRspi %fixed-stack.28, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %20 = tLDRspi %fixed-stack.2, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %21, %cpsr = tEOR %20, %19, 14, _
+    %22 = tLDRspi %fixed-stack.20, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %23, %cpsr = tEOR %21, %22, 14, _
+    %24 = tLDRspi %fixed-stack.12, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %25, %cpsr = tEOR %23, %24, 14, _
+    %26, %cpsr = tEOR %25, %10, 14, _
+    %27, %cpsr = tEOR %26, %11, 14, _
+    %28, %cpsr = tEOR %27, %13, 14, _
+    %29, %cpsr = tEOR %28, %15, 14, _
+    %30, %cpsr = tEOR %29, %16, 14, _
+    %31, %cpsr = tEOR %30, %18, 14, _
+    %32, %cpsr = tEOR %31, %7, 14, _
+    %33 = tLDRspi %fixed-stack.26, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %34 = tLDRspi %fixed-stack.8, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %35, %cpsr = tEOR %34, %33, 14, _
+    %36 = tLDRspi %fixed-stack.18, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %37, %cpsr = tEOR %35, %36, 14, _
+    %38 = tLDRspi %fixed-stack.10, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %39, %cpsr = tEOR %37, %38, 14, _
+    %40, %cpsr = tEOR %39, %20, 14, _
+    %41, %cpsr = tEOR %40, %21, 14, _
+    %42, %cpsr = tEOR %41, %23, 14, _
+    %43, %cpsr = tEOR %42, %25, 14, _
+    %44, %cpsr = tEOR %43, %26, 14, _
+    %45, %cpsr = tEOR %44, %27, 14, _
+    %46, %cpsr = tEOR %45, %28, 14, _
+    %47, %cpsr = tEOR %46, %29, 14, _
+    %48, %cpsr = tEOR %47, %30, 14, _
+    %49, %cpsr = tEOR %48, %32, 14, _
+    %50, %cpsr = tEOR %49, %7, 14, _
+    %51 = tLDRspi %fixed-stack.24, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %52, %cpsr = tEOR %8, %51, 14, _
+    %53 = tLDRspi %fixed-stack.16, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %54, %cpsr = tEOR %52, %53, 14, _
+    %55, %cpsr = tEOR %54, %34, 14, _
+    %56, %cpsr = tEOR %55, %35, 14, _
+    %57, %cpsr = tEOR %56, %37, 14, _
+    %58, %cpsr = tEOR %57, %39, 14, _
+    %59, %cpsr = tEOR %58, %40, 14, _
+    %60, %cpsr = tEOR %59, %41, 14, _
+    %61, %cpsr = tEOR %60, %42, 14, _
+    %62, %cpsr = tEOR %61, %43, 14, _
+    %63, %cpsr = tEOR %62, %44, 14, _
+    %64, %cpsr = tEOR %63, %45, 14, _
+    %65, %cpsr = tEOR %64, %46, 14, _
+    %66, %cpsr = tEOR %65, %47, 14, _
+    %67, %cpsr = tEOR %66, %48, 14, _
+    %68, %cpsr = tEOR %67, %50, 14, _
+    %69, %cpsr = tEOR %68, %7, 14, _
+    %70, %cpsr = tEOR %18, %52, 14, _
+    %71, %cpsr = tEOR %70, %54, 14, _
+    %72, %cpsr = tEOR %71, %55, 14, _
+    %73, %cpsr = tEOR %72, %56, 14, _
+    %74, %cpsr = tEOR %73, %57, 14, _
+    %75, %cpsr = tEOR %74, %58, 14, _
+    %76, %cpsr = tEOR %75, %59, 14, _
+    %77, %cpsr = tEOR %76, %60, 14, _
+    %78, %cpsr = tEOR %77, %61, 14, _
+    %79, %cpsr = tEOR %78, %62, 14, _
+    %80, %cpsr = tEOR %79, %63, 14, _
+    %81, %cpsr = tEOR %80, %64, 14, _
+    %82, %cpsr = tEOR %81, %65, 14, _
+    %83, %cpsr = tEOR %82, %66, 14, _
+    %84, %cpsr = tEOR %83, %67, 14, _
+    %85, %cpsr = tEOR %84, %69, 14, _
+    %86, %cpsr = tEOR %85, %7, 14, _
+    %87, %cpsr = tEOR %32, %70, 14, _
+    %88, %cpsr = tEOR %87, %71, 14, _
+    %89, %cpsr = tEOR %88, %72, 14, _
+    %90, %cpsr = tEOR %89, %73, 14, _
+    %91, %cpsr = tEOR %90, %74, 14, _
+    %92, %cpsr = tEOR %91, %75, 14, _
+    %93, %cpsr = tEOR %92, %76, 14, _
+    %94, %cpsr = tEOR %93, %77, 14, _
+    %95, %cpsr = tEOR %94, %78, 14, _
+    %96, %cpsr = tEOR %95, %79, 14, _
+    %97, %cpsr = tEOR %96, %80, 14, _
+    %98, %cpsr = tEOR %97, %81, 14, _
+    %99, %cpsr = tEOR %98, %82, 14, _
+    %100, %cpsr = tEOR %99, %83, 14, _
+    %101, %cpsr = tEOR %100, %84, 14, _
+    %102, %cpsr = tEOR %101, %86, 14, _
+    %103, %cpsr = tEOR %102, %7, 14, _
+    %104, %cpsr = tEOR %50, %87, 14, _
+    %105, %cpsr = tEOR %104, %88, 14, _
+    %106, %cpsr = tEOR %105, %89, 14, _
+    %107, %cpsr = tEOR %106, %90, 14, _
+    %108, %cpsr = tEOR %107, %91, 14, _
+    %109, %cpsr = tEOR %108, %92, 14, _
+    %110, %cpsr = tEOR %109, %93, 14, _
+    %111, %cpsr = tEOR %110, %94, 14, _
+    %112, %cpsr = tEOR %111, %95, 14, _
+    %113, %cpsr = tEOR %112, %96, 14, _
+    %114, %cpsr = tEOR %113, %97, 14, _
+    %115, %cpsr = tEOR %114, %98, 14, _
+    %116, %cpsr = tEOR %115, %99, 14, _
+    %117, %cpsr = tEOR %116, %100, 14, _
+    %118, %cpsr = tEOR %117, %101, 14, _
+    %119, %cpsr = tEOR %118, %103, 14, _
+    %120, %cpsr = tEOR %119, %7, 14, _
+    %121, %cpsr = tEOR %69, %104, 14, _
+    %122, %cpsr = tEOR %121, %105, 14, _
+    %123, %cpsr = tEOR %122, %106, 14, _
+    %124, %cpsr = tEOR %123, %107, 14, _
+    %125, %cpsr = tEOR %124, %108, 14, _
+    %126, %cpsr = tEOR %125, %109, 14, _
+    %127, %cpsr = tEOR %126, %110, 14, _
+    %128, %cpsr = tEOR %127, %111, 14, _
+    %129, %cpsr = tEOR %128, %112, 14, _
+    %130, %cpsr = tEOR %129, %113, 14, _
+    %131, %cpsr = tEOR %130, %114, 14, _
+    %132, %cpsr = tEOR %131, %115, 14, _
+    %133, %cpsr = tEOR %132, %116, 14, _
+    %134, %cpsr = tEOR %133, %117, 14, _
+    %135, %cpsr = tEOR %134, %118, 14, _
+    %136, %cpsr = tEOR %135, %120, 14, _
+    %137, %cpsr = tEOR %136, %7, 14, _
+    %138, %cpsr = tEOR %86, %121, 14, _
+    %139, %cpsr = tEOR %138, %122, 14, _
+    %140, %cpsr = tEOR %139, %123, 14, _
+    %141, %cpsr = tEOR %140, %124, 14, _
+    %142, %cpsr = tEOR %141, %125, 14, _
+    %143, %cpsr = tEOR %142, %126, 14, _
+    %144, %cpsr = tEOR %143, %127, 14, _
+    %145, %cpsr = tEOR %144, %128, 14, _
+    %146, %cpsr = tEOR %145, %129, 14, _
+    %147, %cpsr = tEOR %146, %130, 14, _
+    %148, %cpsr = tEOR %147, %131, 14, _
+    %149, %cpsr = tEOR %148, %132, 14, _
+    %150, %cpsr = tEOR %149, %133, 14, _
+    %151, %cpsr = tEOR %150, %134, 14, _
+    %152, %cpsr = tEOR %151, %135, 14, _
+    %153, %cpsr = tEOR %152, %137, 14, _
+    %154, %cpsr = tEOR %153, %7, 14, _
+    %155, %cpsr = tEOR %103, %138, 14, _
+    %156, %cpsr = tEOR %120, %155, 14, _
+    %157, %cpsr = tEOR %137, %156, 14, _
+    %158, %cpsr = tEOR %154, %157, 14, _
+    %159, %cpsr = tEOR %155, %139, 14, _
+    %160, %cpsr = tEOR %156, %159, 14, _
+    %161, %cpsr = tEOR %157, %160, 14, _
+    %162, %cpsr = tEOR %158, %161, 14, _
+    %163, %cpsr = tEOR %159, %140, 14, _
+    %164, %cpsr = tEOR %160, %163, 14, _
+    %165, %cpsr = tEOR %161, %164, 14, _
+    %166, %cpsr = tEOR %162, %165, 14, _
+    tSTRspi killed %166, %stack.0.k1720, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1720)
+    %167, %cpsr = tEOR %163, %141, 14, _
+    %168, %cpsr = tEOR %167, %142, 14, _
+    %169, %cpsr = tEOR %168, %143, 14, _
+    %170, %cpsr = tEOR %169, %144, 14, _
+    %171, %cpsr = tEOR %170, %145, 14, _
+    %172, %cpsr = tEOR %171, %146, 14, _
+    %173, %cpsr = tEOR %172, %147, 14, _
+    %174, %cpsr = tEOR %173, %148, 14, _
+    %175, %cpsr = tEOR %174, %149, 14, _
+    %176, %cpsr = tEOR %175, %150, 14, _
+    %177, %cpsr = tEOR %176, %151, 14, _
+    %178, %cpsr = tEOR %177, %152, 14, _
+    tSTRspi killed %178, %stack.3.k1730, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1730)
+    %179, %cpsr = tEOR %164, %167, 14, _
+    %180, %cpsr = tEOR %179, %168, 14, _
+    %181, %cpsr = tEOR %180, %169, 14, _
+    %182, %cpsr = tEOR %181, %170, 14, _
+    %183, %cpsr = tEOR %182, %171, 14, _
+    %184, %cpsr = tEOR %183, %172, 14, _
+    %185, %cpsr = tEOR %184, %173, 14, _
+    %186, %cpsr = tEOR %185, %174, 14, _
+    tSTRspi killed %186, %stack.6.k1740, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1740)
+    %187, %cpsr = tEOR %165, %179, 14, _
+    %188, %cpsr = tEOR %187, %180, 14, _
+    %189, %cpsr = tEOR %188, %181, 14, _
+    %190, %cpsr = tEOR %189, %182, 14, _
+    tSTRspi killed %190, %stack.9.k1750, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1750)
+    %191 = tLDRspi %fixed-stack.31, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %192 = tLDRspi %fixed-stack.5, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %193, %cpsr = tEOR %192, %191, 14, _
+    %194 = tLDRspi %fixed-stack.29, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %195 = tLDRspi %fixed-stack.3, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %196, %cpsr = tEOR %195, %194, 14, _
+    %197 = tLDRspi %fixed-stack.21, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %198, %cpsr = tEOR %196, %197, 14, _
+    %199 = tLDRspi %fixed-stack.13, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %200, %cpsr = tEOR %198, %199, 14, _
+    %201, %cpsr = tEOR %200, %192, 14, _
+    %202, %cpsr = tEOR %201, %193, 14, _
+    %203 = tLDRspi %fixed-stack.27, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %204 = tLDRspi %fixed-stack.1, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %205, %cpsr = tEOR %204, %203, 14, _
+    %206 = tLDRspi %fixed-stack.19, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %207, %cpsr = tEOR %205, %206, 14, _
+    %208 = tLDRspi %fixed-stack.11, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %209, %cpsr = tEOR %207, %208, 14, _
+    %210, %cpsr = tEOR %209, %195, 14, _
+    %211, %cpsr = tEOR %210, %196, 14, _
+    %212, %cpsr = tEOR %211, %198, 14, _
+    %213, %cpsr = tEOR %212, %200, 14, _
+    %214, %cpsr = tEOR %213, %201, 14, _
+    %215, %cpsr = tEOR %214, %202, 14, _
+    %216 = tLDRspi %fixed-stack.25, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %217 = tLDRspi %fixed-stack.7, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %218, %cpsr = tEOR %217, %216, 14, _
+    %219 = tLDRspi %fixed-stack.17, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %220, %cpsr = tEOR %218, %219, 14, _
+    %221 = tLDRspi %fixed-stack.9, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %222, %cpsr = tEOR %220, %221, 14, _
+    %223, %cpsr = tEOR %222, %204, 14, _
+    %224, %cpsr = tEOR %223, %205, 14, _
+    %225, %cpsr = tEOR %224, %207, 14, _
+    %226, %cpsr = tEOR %225, %209, 14, _
+    %227, %cpsr = tEOR %226, %210, 14, _
+    %228, %cpsr = tEOR %227, %211, 14, _
+    %229, %cpsr = tEOR %228, %212, 14, _
+    %230, %cpsr = tEOR %229, %213, 14, _
+    %231, %cpsr = tEOR %230, %214, 14, _
+    %232, %cpsr = tEOR %231, %215, 14, _
+    %233 = tLDRspi %fixed-stack.23, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %234, %cpsr = tEOR %193, %233, 14, _
+    %235 = tLDRspi %fixed-stack.15, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %236, %cpsr = tEOR %234, %235, 14, _
+    %237, %cpsr = tEOR %236, %217, 14, _
+    %238, %cpsr = tEOR %237, %218, 14, _
+    %239, %cpsr = tEOR %238, %220, 14, _
+    %240, %cpsr = tEOR %239, %222, 14, _
+    %241, %cpsr = tEOR %240, %223, 14, _
+    %242, %cpsr = tEOR %241, %224, 14, _
+    %243, %cpsr = tEOR %242, %225, 14, _
+    %244, %cpsr = tEOR %243, %226, 14, _
+    %245, %cpsr = tEOR %244, %227, 14, _
+    %246, %cpsr = tEOR %245, %228, 14, _
+    %247, %cpsr = tEOR %246, %229, 14, _
+    %248, %cpsr = tEOR %247, %230, 14, _
+    %249, %cpsr = tEOR %248, %231, 14, _
+    %250, %cpsr = tEOR %249, %232, 14, _
+    %251, %cpsr = tEOR %202, %234, 14, _
+    %252, %cpsr = tEOR %251, %236, 14, _
+    %253, %cpsr = tEOR %252, %237, 14, _
+    %254, %cpsr = tEOR %253, %238, 14, _
+    %255, %cpsr = tEOR %254, %239, 14, _
+    %256, %cpsr = tEOR %255, %240, 14, _
+    %257, %cpsr = tEOR %256, %241, 14, _
+    %258, %cpsr = tEOR %257, %242, 14, _
+    %259, %cpsr = tEOR %258, %243, 14, _
+    %260, %cpsr = tEOR %259, %244, 14, _
+    %261, %cpsr = tEOR %260, %245, 14, _
+    %262, %cpsr = tEOR %261, %246, 14, _
+    %263, %cpsr = tEOR %262, %247, 14, _
+    %264, %cpsr = tEOR %263, %248, 14, _
+    %265, %cpsr = tEOR %264, %249, 14, _
+    %266, %cpsr = tEOR %265, %250, 14, _
+    %267, %cpsr = tEOR %215, %251, 14, _
+    %268, %cpsr = tEOR %267, %252, 14, _
+    %269, %cpsr = tEOR %268, %253, 14, _
+    %270, %cpsr = tEOR %269, %254, 14, _
+    %271, %cpsr = tEOR %270, %255, 14, _
+    %272, %cpsr = tEOR %271, %256, 14, _
+    %273, %cpsr = tEOR %272, %257, 14, _
+    %274, %cpsr = tEOR %273, %258, 14, _
+    %275, %cpsr = tEOR %274, %259, 14, _
+    %276, %cpsr = tEOR %275, %260, 14, _
+    %277, %cpsr = tEOR %276, %261, 14, _
+    %278, %cpsr = tEOR %277, %262, 14, _
+    %279, %cpsr = tEOR %278, %263, 14, _
+    %280, %cpsr = tEOR %279, %264, 14, _
+    %281, %cpsr = tEOR %280, %265, 14, _
+    %282, %cpsr = tEOR %281, %266, 14, _
+    %283, %cpsr = tEOR %232, %267, 14, _
+    %284, %cpsr = tEOR %283, %268, 14, _
+    %285, %cpsr = tEOR %284, %269, 14, _
+    %286, %cpsr = tEOR %285, %270, 14, _
+    %287, %cpsr = tEOR %286, %271, 14, _
+    %288, %cpsr = tEOR %287, %272, 14, _
+    %289, %cpsr = tEOR %288, %273, 14, _
+    %290, %cpsr = tEOR %289, %274, 14, _
+    %291, %cpsr = tEOR %290, %275, 14, _
+    %292, %cpsr = tEOR %291, %276, 14, _
+    %293, %cpsr = tEOR %292, %277, 14, _
+    %294, %cpsr = tEOR %293, %278, 14, _
+    %295, %cpsr = tEOR %294, %279, 14, _
+    %296, %cpsr = tEOR %295, %280, 14, _
+    %297, %cpsr = tEOR %296, %281, 14, _
+    %298, %cpsr = tEOR %297, %282, 14, _
+    %299, %cpsr = tEOR %250, %283, 14, _
+    %300, %cpsr = tEOR %299, %284, 14, _
+    %301, %cpsr = tEOR %300, %285, 14, _
+    %302, %cpsr = tEOR %301, %286, 14, _
+    %303, %cpsr = tEOR %302, %287, 14, _
+    %304, %cpsr = tEOR %303, %288, 14, _
+    %305, %cpsr = tEOR %304, %289, 14, _
+    %306, %cpsr = tEOR %305, %290, 14, _
+    %307, %cpsr = tEOR %306, %291, 14, _
+    %308, %cpsr = tEOR %307, %292, 14, _
+    %309, %cpsr = tEOR %308, %293, 14, _
+    %310, %cpsr = tEOR %309, %294, 14, _
+    %311, %cpsr = tEOR %310, %295, 14, _
+    %312, %cpsr = tEOR %311, %296, 14, _
+    %313, %cpsr = tEOR %312, %297, 14, _
+    %314, %cpsr = tEOR %313, %298, 14, _
+    %315, %cpsr = tEOR %266, %299, 14, _
+    %316, %cpsr = tEOR %315, %300, 14, _
+    %317, %cpsr = tEOR %316, %301, 14, _
+    %318, %cpsr = tEOR %317, %302, 14, _
+    %319, %cpsr = tEOR %318, %303, 14, _
+    %320, %cpsr = tEOR %319, %304, 14, _
+    %321, %cpsr = tEOR %320, %305, 14, _
+    %322, %cpsr = tEOR %321, %306, 14, _
+    %323, %cpsr = tEOR %322, %307, 14, _
+    %324, %cpsr = tEOR %323, %308, 14, _
+    %325, %cpsr = tEOR %324, %309, 14, _
+    %326, %cpsr = tEOR %325, %310, 14, _
+    %327, %cpsr = tEOR %326, %311, 14, _
+    %328, %cpsr = tEOR %327, %312, 14, _
+    %329, %cpsr = tEOR %328, %313, 14, _
+    %330, %cpsr = tEOR %329, %314, 14, _
+    %331, %cpsr = tEOR %282, %315, 14, _
+    %332, %cpsr = tEOR %298, %331, 14, _
+    %333, %cpsr = tEOR %314, %332, 14, _
+    %334, %cpsr = tEOR %330, %333, 14, _
+    %335, %cpsr = tEOR %331, %316, 14, _
+    %336, %cpsr = tEOR %332, %335, 14, _
+    %337, %cpsr = tEOR %333, %336, 14, _
+    %338, %cpsr = tEOR %334, %337, 14, _
+    %339, %cpsr = tEOR %335, %317, 14, _
+    %340, %cpsr = tEOR %336, %339, 14, _
+    %341, %cpsr = tEOR %337, %340, 14, _
+    %342, %cpsr = tEOR %338, %341, 14, _
+    tSTRspi killed %342, %stack.1.k1721, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1721)
+    %343, %cpsr = tEOR %339, %318, 14, _
+    %344, %cpsr = tEOR %343, %319, 14, _
+    %345, %cpsr = tEOR %344, %320, 14, _
+    %346, %cpsr = tEOR %345, %321, 14, _
+    %347, %cpsr = tEOR %346, %322, 14, _
+    %348, %cpsr = tEOR %347, %323, 14, _
+    %349, %cpsr = tEOR %348, %324, 14, _
+    %350, %cpsr = tEOR %349, %325, 14, _
+    %351, %cpsr = tEOR %350, %326, 14, _
+    %352, %cpsr = tEOR %351, %327, 14, _
+    %353, %cpsr = tEOR %352, %328, 14, _
+    %354, %cpsr = tEOR %353, %329, 14, _
+    tSTRspi killed %354, %stack.4.k1731, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1731)
+    %355, %cpsr = tEOR %340, %343, 14, _
+    %356, %cpsr = tEOR %355, %344, 14, _
+    %357, %cpsr = tEOR %356, %345, 14, _
+    %358, %cpsr = tEOR %357, %346, 14, _
+    %359, %cpsr = tEOR %358, %347, 14, _
+    %360, %cpsr = tEOR %359, %348, 14, _
+    %361, %cpsr = tEOR %360, %349, 14, _
+    %362, %cpsr = tEOR %361, %350, 14, _
+    tSTRspi killed %362, %stack.7.k1741, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1741)
+    %363, %cpsr = tEOR %341, %355, 14, _
+    %364, %cpsr = tEOR %363, %356, 14, _
+    %365, %cpsr = tEOR %364, %357, 14, _
+    %366, %cpsr = tEOR %365, %358, 14, _
+    tSTRspi killed %366, %stack.10.k1751, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1751)
+    %367, %cpsr = tEOR %0, %4, 14, _
+    %368, %cpsr = tEOR %367, %191, 14, _
+    %369 = tLDRspi %fixed-stack.35, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %370, %cpsr = tEOR %369, %5, 14, _
+    %371, %cpsr = tEOR %370, %192, 14, _
+    %372, %cpsr = tEOR %371, killed %368, 14, _
+    %373, %cpsr = tEOR %1, %9, 14, _
+    %374, %cpsr = tEOR %373, %194, 14, _
+    %375 = tLDRspi %fixed-stack.34, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %376, %cpsr = tEOR %375, %10, 14, _
+    %377, %cpsr = tEOR %376, %195, 14, _
+    %378, %cpsr = tEOR %377, killed %374, 14, _
+    %379 = tLDRspi %fixed-stack.43, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %380, %cpsr = tEOR %379, %12, 14, _
+    %381, %cpsr = tEOR %380, %197, 14, _
+    %382, %cpsr = tEOR %378, killed %381, 14, _
+    %383 = tLDRspi %fixed-stack.39, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %384, %cpsr = tEOR %383, %14, 14, _
+    %385, %cpsr = tEOR %384, %199, 14, _
+    %386, %cpsr = tEOR %382, killed %385, 14, _
+    %387, %cpsr = tEOR %386, %371, 14, _
+    %388, %cpsr = tEOR %387, %372, 14, _
+    %389, %cpsr = tEOR %2, %19, 14, _
+    %390, %cpsr = tEOR %389, %203, 14, _
+    %391 = tLDRspi %fixed-stack.33, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %392, %cpsr = tEOR %391, %20, 14, _
+    %393, %cpsr = tEOR %392, %204, 14, _
+    %394, %cpsr = tEOR %393, killed %390, 14, _
+    %395 = tLDRspi %fixed-stack.42, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %396, %cpsr = tEOR %395, %22, 14, _
+    %397, %cpsr = tEOR %396, %206, 14, _
+    %398, %cpsr = tEOR %394, killed %397, 14, _
+    %399 = tLDRspi %fixed-stack.38, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %400, %cpsr = tEOR %399, %24, 14, _
+    %401, %cpsr = tEOR %400, %208, 14, _
+    %402, %cpsr = tEOR %398, killed %401, 14, _
+    %403, %cpsr = tEOR %402, %377, 14, _
+    %404, %cpsr = tEOR %403, %378, 14, _
+    %405, %cpsr = tEOR %404, %382, 14, _
+    %406, %cpsr = tEOR %405, %386, 14, _
+    %407, %cpsr = tEOR %406, %387, 14, _
+    %408, %cpsr = tEOR %407, %388, 14, _
+    %409, %cpsr = tEOR %3, %33, 14, _
+    %410, %cpsr = tEOR %409, %216, 14, _
+    %411 = tLDRspi %fixed-stack.36, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %412, %cpsr = tEOR %411, %34, 14, _
+    %413, %cpsr = tEOR %412, %217, 14, _
+    %414, %cpsr = tEOR %413, killed %410, 14, _
+    %415 = tLDRspi %fixed-stack.41, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %416, %cpsr = tEOR %415, %36, 14, _
+    %417, %cpsr = tEOR %416, %219, 14, _
+    %418, %cpsr = tEOR %414, killed %417, 14, _
+    %419 = tLDRspi %fixed-stack.37, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %420, %cpsr = tEOR %419, %38, 14, _
+    %421, %cpsr = tEOR %420, %221, 14, _
+    %422, %cpsr = tEOR %418, killed %421, 14, _
+    %423, %cpsr = tEOR %422, %393, 14, _
+    %424, %cpsr = tEOR %423, %394, 14, _
+    %425, %cpsr = tEOR %424, %398, 14, _
+    %426, %cpsr = tEOR %425, %402, 14, _
+    %427, %cpsr = tEOR %426, %403, 14, _
+    %428, %cpsr = tEOR %427, %404, 14, _
+    %429, %cpsr = tEOR %428, %405, 14, _
+    %430, %cpsr = tEOR %429, %406, 14, _
+    %431, %cpsr = tEOR %430, %407, 14, _
+    %432, %cpsr = tEOR %431, %408, 14, _
+    %433 = tLDRspi %fixed-stack.44, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %434, %cpsr = tEOR %433, %51, 14, _
+    %435, %cpsr = tEOR %434, %233, 14, _
+    %436, %cpsr = tEOR %372, killed %435, 14, _
+    %437 = tLDRspi %fixed-stack.40, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %438, %cpsr = tEOR %437, %53, 14, _
+    %439, %cpsr = tEOR %438, %235, 14, _
+    %440, %cpsr = tEOR %436, killed %439, 14, _
+    %441, %cpsr = tEOR %440, %413, 14, _
+    %442, %cpsr = tEOR %441, %414, 14, _
+    %443, %cpsr = tEOR %442, %418, 14, _
+    %444, %cpsr = tEOR %443, %422, 14, _
+    %445, %cpsr = tEOR %444, %423, 14, _
+    %446, %cpsr = tEOR %445, %424, 14, _
+    %447, %cpsr = tEOR %446, %425, 14, _
+    %448, %cpsr = tEOR %447, %426, 14, _
+    %449, %cpsr = tEOR %448, %427, 14, _
+    %450, %cpsr = tEOR %449, %428, 14, _
+    %451, %cpsr = tEOR %450, %429, 14, _
+    %452, %cpsr = tEOR %451, %430, 14, _
+    %453, %cpsr = tEOR %452, %431, 14, _
+    %454, %cpsr = tEOR %453, %432, 14, _
+    %455, %cpsr = tEOR %388, %436, 14, _
+    %456, %cpsr = tEOR %455, %440, 14, _
+    %457, %cpsr = tEOR %456, %441, 14, _
+    %458, %cpsr = tEOR %457, %442, 14, _
+    %459, %cpsr = tEOR %458, %443, 14, _
+    %460, %cpsr = tEOR %459, %444, 14, _
+    %461, %cpsr = tEOR %460, %445, 14, _
+    %462, %cpsr = tEOR %461, %446, 14, _
+    %463, %cpsr = tEOR %462, %447, 14, _
+    %464, %cpsr = tEOR %463, %448, 14, _
+    %465, %cpsr = tEOR %464, %449, 14, _
+    %466, %cpsr = tEOR %465, %450, 14, _
+    %467, %cpsr = tEOR %466, %451, 14, _
+    %468, %cpsr = tEOR %467, %452, 14, _
+    %469, %cpsr = tEOR %468, %453, 14, _
+    %470, %cpsr = tEOR %469, %454, 14, _
+    %471, %cpsr = tEOR %408, %455, 14, _
+    %472, %cpsr = tEOR %471, %456, 14, _
+    %473, %cpsr = tEOR %472, %457, 14, _
+    %474, %cpsr = tEOR %473, %458, 14, _
+    %475, %cpsr = tEOR %474, %459, 14, _
+    %476, %cpsr = tEOR %475, %460, 14, _
+    %477, %cpsr = tEOR %476, %461, 14, _
+    %478, %cpsr = tEOR %477, %462, 14, _
+    %479, %cpsr = tEOR %478, %463, 14, _
+    %480, %cpsr = tEOR %479, %464, 14, _
+    %481, %cpsr = tEOR %480, %465, 14, _
+    %482, %cpsr = tEOR %481, %466, 14, _
+    %483, %cpsr = tEOR %482, %467, 14, _
+    %484, %cpsr = tEOR %483, %468, 14, _
+    %485, %cpsr = tEOR %484, %469, 14, _
+    %486, %cpsr = tEOR %485, %470, 14, _
+    %487, %cpsr = tEOR %432, %471, 14, _
+    %488, %cpsr = tEOR %487, %472, 14, _
+    %489, %cpsr = tEOR %488, %473, 14, _
+    %490, %cpsr = tEOR %489, %474, 14, _
+    %491, %cpsr = tEOR %490, %475, 14, _
+    %492, %cpsr = tEOR %491, %476, 14, _
+    %493, %cpsr = tEOR %492, %477, 14, _
+    %494, %cpsr = tEOR %493, %478, 14, _
+    %495, %cpsr = tEOR %494, %479, 14, _
+    %496, %cpsr = tEOR %495, %480, 14, _
+    %497, %cpsr = tEOR %496, %481, 14, _
+    %498, %cpsr = tEOR %497, %482, 14, _
+    %499, %cpsr = tEOR %498, %483, 14, _
+    %500, %cpsr = tEOR %499, %484, 14, _
+    %501, %cpsr = tEOR %500, %485, 14, _
+    %502, %cpsr = tEOR %501, %486, 14, _
+    %503, %cpsr = tEOR %454, %487, 14, _
+    %504, %cpsr = tEOR %503, %488, 14, _
+    %505, %cpsr = tEOR %504, %489, 14, _
+    %506, %cpsr = tEOR %505, %490, 14, _
+    %507, %cpsr = tEOR %506, %491, 14, _
+    %508, %cpsr = tEOR %507, %492, 14, _
+    %509, %cpsr = tEOR %508, %493, 14, _
+    %510, %cpsr = tEOR %509, %494, 14, _
+    %511, %cpsr = tEOR %510, %495, 14, _
+    %512, %cpsr = tEOR %511, %496, 14, _
+    %513, %cpsr = tEOR %512, %497, 14, _
+    %514, %cpsr = tEOR %513, %498, 14, _
+    %515, %cpsr = tEOR %514, %499, 14, _
+    %516, %cpsr = tEOR %515, %500, 14, _
+    %517, %cpsr = tEOR %516, %501, 14, _
+    %518, %cpsr = tEOR %517, %502, 14, _
+    %519, %cpsr = tEOR %470, %503, 14, _
+    %520, %cpsr = tEOR %519, %504, 14, _
+    %521, %cpsr = tEOR %520, %505, 14, _
+    %522, %cpsr = tEOR %521, %506, 14, _
+    %523, %cpsr = tEOR %522, %507, 14, _
+    %524, %cpsr = tEOR %523, %508, 14, _
+    %525, %cpsr = tEOR %524, %509, 14, _
+    %526, %cpsr = tEOR %525, %510, 14, _
+    %527, %cpsr = tEOR %526, %511, 14, _
+    %528, %cpsr = tEOR %527, %512, 14, _
+    %529, %cpsr = tEOR %528, %513, 14, _
+    %530, %cpsr = tEOR %529, %514, 14, _
+    %531, %cpsr = tEOR %530, %515, 14, _
+    %532, %cpsr = tEOR %531, %516, 14, _
+    %533, %cpsr = tEOR %532, %517, 14, _
+    %534, %cpsr = tEOR %533, %518, 14, _
+    %535, %cpsr = tEOR %486, %519, 14, _
+    %536, %cpsr = tEOR %502, %535, 14, _
+    %537, %cpsr = tEOR %518, %536, 14, _
+    %538, %cpsr = tEOR %534, %537, 14, _
+    %539, %cpsr = tEOR %535, %520, 14, _
+    %540, %cpsr = tEOR %536, %539, 14, _
+    %541, %cpsr = tEOR %537, %540, 14, _
+    %542, %cpsr = tEOR %538, %541, 14, _
+    %543, %cpsr = tEOR %539, %521, 14, _
+    %544, %cpsr = tEOR %540, %543, 14, _
+    %545, %cpsr = tEOR %541, %544, 14, _
+    %546, %cpsr = tEOR %542, %545, 14, _
+    tSTRspi killed %546, %stack.2.k1722, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1722)
+    %547, %cpsr = tEOR %543, %522, 14, _
+    %548, %cpsr = tEOR %547, %523, 14, _
+    %549, %cpsr = tEOR %548, %524, 14, _
+    %550, %cpsr = tEOR %549, %525, 14, _
+    %551, %cpsr = tEOR %550, %526, 14, _
+    %552, %cpsr = tEOR %551, %527, 14, _
+    %553, %cpsr = tEOR %552, %528, 14, _
+    %554, %cpsr = tEOR %553, %529, 14, _
+    %555, %cpsr = tEOR %554, %530, 14, _
+    %556, %cpsr = tEOR %555, %531, 14, _
+    %557, %cpsr = tEOR %556, %532, 14, _
+    %558, %cpsr = tEOR %557, %533, 14, _
+    tSTRspi killed %558, %stack.5.k1732, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1732)
+    %559, %cpsr = tEOR %544, %547, 14, _
+    %560, %cpsr = tEOR %559, %548, 14, _
+    %561, %cpsr = tEOR %560, %549, 14, _
+    %562, %cpsr = tEOR %561, %550, 14, _
+    %563, %cpsr = tEOR %562, %551, 14, _
+    %564, %cpsr = tEOR %563, %552, 14, _
+    %565, %cpsr = tEOR %564, %553, 14, _
+    %566, %cpsr = tEOR %565, %554, 14, _
+    tSTRspi killed %566, %stack.8.k1742, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1742)
+    %567, %cpsr = tEOR %545, %559, 14, _
+    %568, %cpsr = tEOR %567, %560, 14, _
+    %569, %cpsr = tEOR %568, %561, 14, _
+    %570, %cpsr = tEOR %569, %562, 14, _
+    tSTRspi killed %570, %stack.11.k1752, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1752)
+    %571, %cpsr = tMOVi8 0, 14, _
+    %r0 = COPY %571
+    tBX_RET 14, _, implicit %r0
+
+...
+--- |
+  ; ModuleID = 'KS_transitions_1_cm0.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "thumbv6m--"
+  
+  ; Function Attrs: nounwind
+  define arm_aapcscc i32 @_Z2ksiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii(i32 %mk00, i32 %mk01, i32 %mk02, i32 %mk03, i32 %mk04, i32 %mk05, i32 %mk06, i32 %mk07, i32 %mk08, i32 %mk09, i32 %mk10, i32 %mk11, i32 %mk12, i32 %mk13, i32 %mk14, i32 %mk15, i32 %k0000, i32 %k0001, i32 %k0010, i32 %k0011, i32 %k0020, i32 %k0021, i32 %k0030, i32 %k0031, i32 %k0040, i32 %k0041, i32 %k0050, i32 %k0051, i32 %k0060, i32 %k0061, i32 %k0070, i32 %k0071, i32 %k0080, i32 %k0081, i32 %k0090, i32 %k0091, i32 %k0100, i32 %k0101, i32 %k0110, i32 %k0111, i32 %k0120, i32 %k0121, i32 %k0130, i32 %k0131, i32 %k0140, i32 %k0141, i32 %k0150, i32 %k0151, i32 %Ox01) #0 {
+    %k1720 = alloca i32, align 4
+    %k1721 = alloca i32, align 4
+    %k1722 = alloca i32, align 4
+    %k1730 = alloca i32, align 4
+    %k1731 = alloca i32, align 4
+    %k1732 = alloca i32, align 4
+    %k1740 = alloca i32, align 4
+    %k1741 = alloca i32, align 4
+    %k1742 = alloca i32, align 4
+    %k1750 = alloca i32, align 4
+    %k1751 = alloca i32, align 4
+    %k1752 = alloca i32, align 4
+    %1 = xor i32 %mk00, %k0000
+    %2 = xor i32 %1, %k0001
+    %3 = xor i32 %mk01, %k0010
+    %4 = xor i32 %3, %k0011
+    %5 = xor i32 %mk02, %k0020
+    %6 = xor i32 %5, %k0021
+    %7 = xor i32 %mk03, %k0030
+    %8 = xor i32 %7, %k0031
+    %9 = xor i32 %mk04, %k0040
+    %10 = xor i32 %9, %k0041
+    %11 = xor i32 %mk05, %k0050
+    %12 = xor i32 %11, %k0051
+    %13 = xor i32 %mk06, %k0060
+    %14 = xor i32 %13, %k0061
+    %15 = xor i32 %mk07, %k0070
+    %16 = xor i32 %15, %k0071
+    %17 = xor i32 %mk08, %k0080
+    %18 = xor i32 %17, %k0081
+    %19 = xor i32 %mk09, %k0090
+    %20 = xor i32 %19, %k0091
+    %21 = xor i32 %mk10, %k0100
+    %22 = xor i32 %21, %k0101
+    %23 = xor i32 %mk11, %k0110
+    %24 = xor i32 %23, %k0111
+    %25 = xor i32 %mk12, %k0120
+    %26 = xor i32 %25, %k0121
+    %27 = xor i32 %mk13, %k0130
+    %28 = xor i32 %27, %k0131
+    %29 = xor i32 %mk14, %k0140
+    %30 = xor i32 %29, %k0141
+    %31 = xor i32 %mk15, %k0150
+    %32 = xor i32 %31, %k0151
+    %33 = xor i32 %k0130, %k0000
+    %34 = xor i32 %k0131, %k0001
+    %35 = xor i32 %28, %2
+    %36 = xor i32 %k0140, %k0010
+    %37 = xor i32 %k0141, %k0011
+    %38 = xor i32 %30, %4
+    %39 = xor i32 %k0150, %k0020
+    %40 = xor i32 %k0151, %k0021
+    %41 = xor i32 %32, %6
+    %42 = xor i32 %k0120, %k0030
+    %43 = xor i32 %k0121, %k0031
+    %44 = xor i32 %26, %8
+    %45 = xor i32 %33, %Ox01
+    %46 = xor i32 %45, %k0040
+    %47 = xor i32 %36, %k0050
+    %48 = xor i32 %39, %k0060
+    %49 = xor i32 %42, %k0070
+    %50 = xor i32 %46, %k0080
+    %51 = xor i32 %47, %k0090
+    %52 = xor i32 %48, %k0100
+    %53 = xor i32 %49, %k0110
+    %54 = xor i32 %50, %k0120
+    %55 = xor i32 %51, %k0130
+    %56 = xor i32 %52, %k0140
+    %57 = xor i32 %53, %k0150
+    %58 = xor i32 %34, %k0041
+    %59 = xor i32 %37, %k0051
+    %60 = xor i32 %40, %k0061
+    %61 = xor i32 %43, %k0071
+    %62 = xor i32 %58, %k0081
+    %63 = xor i32 %59, %k0091
+    %64 = xor i32 %60, %k0101
+    %65 = xor i32 %61, %k0111
+    %66 = xor i32 %62, %k0121
+    %67 = xor i32 %63, %k0131
+    %68 = xor i32 %64, %k0141
+    %69 = xor i32 %65, %k0151
+    %70 = xor i32 %35, %10
+    %71 = xor i32 %38, %12
+    %72 = xor i32 %41, %14
+    %73 = xor i32 %44, %16
+    %74 = xor i32 %70, %18
+    %75 = xor i32 %71, %20
+    %76 = xor i32 %72, %22
+    %77 = xor i32 %73, %24
+    %78 = xor i32 %74, %26
+    %79 = xor i32 %75, %28
+    %80 = xor i32 %76, %30
+    %81 = xor i32 %77, %32
+    %82 = xor i32 %55, %45
+    %83 = xor i32 %67, %34
+    %84 = xor i32 %79, %35
+    %85 = xor i32 %56, %36
+    %86 = xor i32 %68, %37
+    %87 = xor i32 %80, %38
+    %88 = xor i32 %57, %39
+    %89 = xor i32 %69, %40
+    %90 = xor i32 %81, %41
+    %91 = xor i32 %54, %42
+    %92 = xor i32 %66, %43
+    %93 = xor i32 %78, %44
+    %94 = xor i32 %82, %Ox01
+    %95 = xor i32 %94, %46
+    %96 = xor i32 %85, %47
+    %97 = xor i32 %88, %48
+    %98 = xor i32 %91, %49
+    %99 = xor i32 %95, %50
+    %100 = xor i32 %96, %51
+    %101 = xor i32 %97, %52
+    %102 = xor i32 %98, %53
+    %103 = xor i32 %99, %54
+    %104 = xor i32 %100, %55
+    %105 = xor i32 %101, %56
+    %106 = xor i32 %102, %57
+    %107 = xor i32 %83, %58
+    %108 = xor i32 %86, %59
+    %109 = xor i32 %89, %60
+    %110 = xor i32 %92, %61
+    %111 = xor i32 %107, %62
+    %112 = xor i32 %108, %63
+    %113 = xor i32 %109, %64
+    %114 = xor i32 %110, %65
+    %115 = xor i32 %111, %66
+    %116 = xor i32 %112, %67
+    %117 = xor i32 %113, %68
+    %118 = xor i32 %114, %69
+    %119 = xor i32 %84, %70
+    %120 = xor i32 %87, %71
+    %121 = xor i32 %90, %72
+    %122 = xor i32 %93, %73
+    %123 = xor i32 %119, %74
+    %124 = xor i32 %120, %75
+    %125 = xor i32 %121, %76
+    %126 = xor i32 %122, %77
+    %127 = xor i32 %123, %78
+    %128 = xor i32 %124, %79
+    %129 = xor i32 %125, %80
+    %130 = xor i32 %126, %81
+    %131 = xor i32 %104, %94
+    %132 = xor i32 %116, %83
+    %133 = xor i32 %128, %84
+    %134 = xor i32 %105, %85
+    %135 = xor i32 %117, %86
+    %136 = xor i32 %129, %87
+    %137 = xor i32 %106, %88
+    %138 = xor i32 %118, %89
+    %139 = xor i32 %130, %90
+    %140 = xor i32 %103, %91
+    %141 = xor i32 %115, %92
+    %142 = xor i32 %127, %93
+    %143 = xor i32 %131, %Ox01
+    %144 = xor i32 %143, %95
+    %145 = xor i32 %134, %96
+    %146 = xor i32 %137, %97
+    %147 = xor i32 %140, %98
+    %148 = xor i32 %144, %99
+    %149 = xor i32 %145, %100
+    %150 = xor i32 %146, %101
+    %151 = xor i32 %147, %102
+    %152 = xor i32 %148, %103
+    %153 = xor i32 %149, %104
+    %154 = xor i32 %150, %105
+    %155 = xor i32 %151, %106
+    %156 = xor i32 %132, %107
+    %157 = xor i32 %135, %108
+    %158 = xor i32 %138, %109
+    %159 = xor i32 %141, %110
+    %160 = xor i32 %156, %111
+    %161 = xor i32 %157, %112
+    %162 = xor i32 %158, %113
+    %163 = xor i32 %159, %114
+    %164 = xor i32 %160, %115
+    %165 = xor i32 %161, %116
+    %166 = xor i32 %162, %117
+    %167 = xor i32 %163, %118
+    %168 = xor i32 %133, %119
+    %169 = xor i32 %136, %120
+    %170 = xor i32 %139, %121
+    %171 = xor i32 %142, %122
+    %172 = xor i32 %168, %123
+    %173 = xor i32 %169, %124
+    %174 = xor i32 %170, %125
+    %175 = xor i32 %171, %126
+    %176 = xor i32 %172, %127
+    %177 = xor i32 %173, %128
+    %178 = xor i32 %174, %129
+    %179 = xor i32 %175, %130
+    %180 = xor i32 %153, %143
+    %181 = xor i32 %165, %132
+    %182 = xor i32 %177, %133
+    %183 = xor i32 %154, %134
+    %184 = xor i32 %166, %135
+    %185 = xor i32 %178, %136
+    %186 = xor i32 %155, %137
+    %187 = xor i32 %167, %138
+    %188 = xor i32 %179, %139
+    %189 = xor i32 %152, %140
+    %190 = xor i32 %164, %141
+    %191 = xor i32 %176, %142
+    %192 = xor i32 %180, %Ox01
+    %193 = xor i32 %192, %144
+    %194 = xor i32 %183, %145
+    %195 = xor i32 %186, %146
+    %196 = xor i32 %189, %147
+    %197 = xor i32 %193, %148
+    %198 = xor i32 %194, %149
+    %199 = xor i32 %195, %150
+    %200 = xor i32 %196, %151
+    %201 = xor i32 %197, %152
+    %202 = xor i32 %198, %153
+    %203 = xor i32 %199, %154
+    %204 = xor i32 %200, %155
+    %205 = xor i32 %181, %156
+    %206 = xor i32 %184, %157
+    %207 = xor i32 %187, %158
+    %208 = xor i32 %190, %159
+    %209 = xor i32 %205, %160
+    %210 = xor i32 %206, %161
+    %211 = xor i32 %207, %162
+    %212 = xor i32 %208, %163
+    %213 = xor i32 %209, %164
+    %214 = xor i32 %210, %165
+    %215 = xor i32 %211, %166
+    %216 = xor i32 %212, %167
+    %217 = xor i32 %182, %168
+    %218 = xor i32 %185, %169
+    %219 = xor i32 %188, %170
+    %220 = xor i32 %191, %171
+    %221 = xor i32 %217, %172
+    %222 = xor i32 %218, %173
+    %223 = xor i32 %219, %174
+    %224 = xor i32 %220, %175
+    %225 = xor i32 %221, %176
+    %226 = xor i32 %222, %177
+    %227 = xor i32 %223, %178
+    %228 = xor i32 %224, %179
+    %229 = xor i32 %202, %192
+    %230 = xor i32 %214, %181
+    %231 = xor i32 %226, %182
+    %232 = xor i32 %203, %183
+    %233 = xor i32 %215, %184
+    %234 = xor i32 %227, %185
+    %235 = xor i32 %204, %186
+    %236 = xor i32 %216, %187
+    %237 = xor i32 %228, %188
+    %238 = xor i32 %201, %189
+    %239 = xor i32 %213, %190
+    %240 = xor i32 %225, %191
+    %241 = xor i32 %229, %Ox01
+    %242 = xor i32 %241, %193
+    %243 = xor i32 %232, %194
+    %244 = xor i32 %235, %195
+    %245 = xor i32 %238, %196
+    %246 = xor i32 %242, %197
+    %247 = xor i32 %243, %198
+    %248 = xor i32 %244, %199
+    %249 = xor i32 %245, %200
+    %250 = xor i32 %246, %201
+    %251 = xor i32 %247, %202
+    %252 = xor i32 %248, %203
+    %253 = xor i32 %249, %204
+    %254 = xor i32 %230, %205
+    %255 = xor i32 %233, %206
+    %256 = xor i32 %236, %207
+    %257 = xor i32 %239, %208
+    %258 = xor i32 %254, %209
+    %259 = xor i32 %255, %210
+    %260 = xor i32 %256, %211
+    %261 = xor i32 %257, %212
+    %262 = xor i32 %258, %213
+    %263 = xor i32 %259, %214
+    %264 = xor i32 %260, %215
+    %265 = xor i32 %261, %216
+    %266 = xor i32 %231, %217
+    %267 = xor i32 %234, %218
+    %268 = xor i32 %237, %219
+    %269 = xor i32 %240, %220
+    %270 = xor i32 %266, %221
+    %271 = xor i32 %267, %222
+    %272 = xor i32 %268, %223
+    %273 = xor i32 %269, %224
+    %274 = xor i32 %270, %225
+    %275 = xor i32 %271, %226
+    %276 = xor i32 %272, %227
+    %277 = xor i32 %273, %228
+    %278 = xor i32 %251, %241
+    %279 = xor i32 %263, %230
+    %280 = xor i32 %275, %231
+    %281 = xor i32 %252, %232
+    %282 = xor i32 %264, %233
+    %283 = xor i32 %276, %234
+    %284 = xor i32 %253, %235
+    %285 = xor i32 %265, %236
+    %286 = xor i32 %277, %237
+    %287 = xor i32 %250, %238
+    %288 = xor i32 %262, %239
+    %289 = xor i32 %274, %240
+    %290 = xor i32 %278, %Ox01
+    %291 = xor i32 %290, %242
+    %292 = xor i32 %281, %243
+    %293 = xor i32 %284, %244
+    %294 = xor i32 %287, %245
+    %295 = xor i32 %291, %246
+    %296 = xor i32 %292, %247
+    %297 = xor i32 %293, %248
+    %298 = xor i32 %294, %249
+    %299 = xor i32 %295, %250
+    %300 = xor i32 %296, %251
+    %301 = xor i32 %297, %252
+    %302 = xor i32 %298, %253
+    %303 = xor i32 %279, %254
+    %304 = xor i32 %282, %255
+    %305 = xor i32 %285, %256
+    %306 = xor i32 %288, %257
+    %307 = xor i32 %303, %258
+    %308 = xor i32 %304, %259
+    %309 = xor i32 %305, %260
+    %310 = xor i32 %306, %261
+    %311 = xor i32 %307, %262
+    %312 = xor i32 %308, %263
+    %313 = xor i32 %309, %264
+    %314 = xor i32 %310, %265
+    %315 = xor i32 %280, %266
+    %316 = xor i32 %283, %267
+    %317 = xor i32 %286, %268
+    %318 = xor i32 %289, %269
+    %319 = xor i32 %315, %270
+    %320 = xor i32 %316, %271
+    %321 = xor i32 %317, %272
+    %322 = xor i32 %318, %273
+    %323 = xor i32 %319, %274
+    %324 = xor i32 %320, %275
+    %325 = xor i32 %321, %276
+    %326 = xor i32 %322, %277
+    %327 = xor i32 %300, %290
+    %328 = xor i32 %312, %279
+    %329 = xor i32 %324, %280
+    %330 = xor i32 %301, %281
+    %331 = xor i32 %313, %282
+    %332 = xor i32 %325, %283
+    %333 = xor i32 %302, %284
+    %334 = xor i32 %314, %285
+    %335 = xor i32 %326, %286
+    %336 = xor i32 %299, %287
+    %337 = xor i32 %311, %288
+    %338 = xor i32 %323, %289
+    %339 = xor i32 %327, %Ox01
+    %340 = xor i32 %339, %291
+    %341 = xor i32 %330, %292
+    %342 = xor i32 %333, %293
+    %343 = xor i32 %336, %294
+    %344 = xor i32 %340, %295
+    %345 = xor i32 %341, %296
+    %346 = xor i32 %342, %297
+    %347 = xor i32 %343, %298
+    %348 = xor i32 %344, %299
+    %349 = xor i32 %345, %300
+    %350 = xor i32 %346, %301
+    %351 = xor i32 %347, %302
+    %352 = xor i32 %328, %303
+    %353 = xor i32 %331, %304
+    %354 = xor i32 %334, %305
+    %355 = xor i32 %337, %306
+    %356 = xor i32 %352, %307
+    %357 = xor i32 %353, %308
+    %358 = xor i32 %354, %309
+    %359 = xor i32 %355, %310
+    %360 = xor i32 %356, %311
+    %361 = xor i32 %357, %312
+    %362 = xor i32 %358, %313
+    %363 = xor i32 %359, %314
+    %364 = xor i32 %329, %315
+    %365 = xor i32 %332, %316
+    %366 = xor i32 %335, %317
+    %367 = xor i32 %338, %318
+    %368 = xor i32 %364, %319
+    %369 = xor i32 %365, %320
+    %370 = xor i32 %366, %321
+    %371 = xor i32 %367, %322
+    %372 = xor i32 %368, %323
+    %373 = xor i32 %369, %324
+    %374 = xor i32 %370, %325
+    %375 = xor i32 %371, %326
+    %376 = xor i32 %349, %339
+    %377 = xor i32 %361, %328
+    %378 = xor i32 %373, %329
+    %379 = xor i32 %350, %330
+    %380 = xor i32 %362, %331
+    %381 = xor i32 %374, %332
+    %382 = xor i32 %351, %333
+    %383 = xor i32 %363, %334
+    %384 = xor i32 %375, %335
+    %385 = xor i32 %348, %336
+    %386 = xor i32 %360, %337
+    %387 = xor i32 %372, %338
+    %388 = xor i32 %376, %Ox01
+    %389 = xor i32 %388, %340
+    %390 = xor i32 %379, %341
+    %391 = xor i32 %382, %342
+    %392 = xor i32 %385, %343
+    %393 = xor i32 %389, %344
+    %394 = xor i32 %390, %345
+    %395 = xor i32 %391, %346
+    %396 = xor i32 %392, %347
+    %397 = xor i32 %393, %348
+    %398 = xor i32 %394, %349
+    %399 = xor i32 %395, %350
+    %400 = xor i32 %396, %351
+    %401 = xor i32 %377, %352
+    %402 = xor i32 %380, %353
+    %403 = xor i32 %383, %354
+    %404 = xor i32 %386, %355
+    %405 = xor i32 %401, %356
+    %406 = xor i32 %402, %357
+    %407 = xor i32 %403, %358
+    %408 = xor i32 %404, %359
+    %409 = xor i32 %405, %360
+    %410 = xor i32 %406, %361
+    %411 = xor i32 %407, %362
+    %412 = xor i32 %408, %363
+    %413 = xor i32 %378, %364
+    %414 = xor i32 %381, %365
+    %415 = xor i32 %384, %366
+    %416 = xor i32 %387, %367
+    %417 = xor i32 %413, %368
+    %418 = xor i32 %414, %369
+    %419 = xor i32 %415, %370
+    %420 = xor i32 %416, %371
+    %421 = xor i32 %417, %372
+    %422 = xor i32 %418, %373
+    %423 = xor i32 %419, %374
+    %424 = xor i32 %420, %375
+    %425 = xor i32 %398, %388
+    %426 = xor i32 %410, %377
+    %427 = xor i32 %422, %378
+    %428 = xor i32 %399, %379
+    %429 = xor i32 %411, %380
+    %430 = xor i32 %423, %381
+    %431 = xor i32 %400, %382
+    %432 = xor i32 %412, %383
+    %433 = xor i32 %424, %384
+    %434 = xor i32 %397, %385
+    %435 = xor i32 %409, %386
+    %436 = xor i32 %421, %387
+    %437 = xor i32 %425, %Ox01
+    %438 = xor i32 %437, %389
+    %439 = xor i32 %428, %390
+    %440 = xor i32 %431, %391
+    %441 = xor i32 %434, %392
+    %442 = xor i32 %438, %393
+    %443 = xor i32 %439, %394
+    %444 = xor i32 %440, %395
+    %445 = xor i32 %441, %396
+    %446 = xor i32 %442, %397
+    %447 = xor i32 %443, %398
+    %448 = xor i32 %444, %399
+    %449 = xor i32 %445, %400
+    %450 = xor i32 %426, %401
+    %451 = xor i32 %429, %402
+    %452 = xor i32 %432, %403
+    %453 = xor i32 %435, %404
+    %454 = xor i32 %450, %405
+    %455 = xor i32 %451, %406
+    %456 = xor i32 %452, %407
+    %457 = xor i32 %453, %408
+    %458 = xor i32 %454, %409
+    %459 = xor i32 %455, %410
+    %460 = xor i32 %456, %411
+    %461 = xor i32 %457, %412
+    %462 = xor i32 %427, %413
+    %463 = xor i32 %430, %414
+    %464 = xor i32 %433, %415
+    %465 = xor i32 %436, %416
+    %466 = xor i32 %462, %417
+    %467 = xor i32 %463, %418
+    %468 = xor i32 %464, %419
+    %469 = xor i32 %465, %420
+    %470 = xor i32 %466, %421
+    %471 = xor i32 %467, %422
+    %472 = xor i32 %468, %423
+    %473 = xor i32 %469, %424
+    %474 = xor i32 %447, %437
+    %475 = xor i32 %459, %426
+    %476 = xor i32 %471, %427
+    %477 = xor i32 %448, %428
+    %478 = xor i32 %460, %429
+    %479 = xor i32 %472, %430
+    %480 = xor i32 %449, %431
+    %481 = xor i32 %461, %432
+    %482 = xor i32 %473, %433
+    %483 = xor i32 %446, %434
+    %484 = xor i32 %458, %435
+    %485 = xor i32 %470, %436
+    %486 = xor i32 %474, %Ox01
+    %487 = xor i32 %486, %438
+    %488 = xor i32 %477, %439
+    %489 = xor i32 %480, %440
+    %490 = xor i32 %483, %441
+    %491 = xor i32 %487, %442
+    %492 = xor i32 %488, %443
+    %493 = xor i32 %489, %444
+    %494 = xor i32 %490, %445
+    %495 = xor i32 %491, %446
+    store volatile i32 %495, i32* %k1720, align 4
+    %496 = xor i32 %492, %447
+    store volatile i32 %496, i32* %k1730, align 4
+    %497 = xor i32 %493, %448
+    store volatile i32 %497, i32* %k1740, align 4
+    %498 = xor i32 %494, %449
+    store volatile i32 %498, i32* %k1750, align 4
+    %499 = xor i32 %475, %450
+    %500 = xor i32 %478, %451
+    %501 = xor i32 %481, %452
+    %502 = xor i32 %484, %453
+    %503 = xor i32 %499, %454
+    %504 = xor i32 %500, %455
+    %505 = xor i32 %501, %456
+    %506 = xor i32 %502, %457
+    %507 = xor i32 %503, %458
+    store volatile i32 %507, i32* %k1721, align 4
+    %508 = xor i32 %504, %459
+    store volatile i32 %508, i32* %k1731, align 4
+    %509 = xor i32 %505, %460
+    store volatile i32 %509, i32* %k1741, align 4
+    %510 = xor i32 %506, %461
+    store volatile i32 %510, i32* %k1751, align 4
+    %511 = xor i32 %476, %462
+    %512 = xor i32 %479, %463
+    %513 = xor i32 %482, %464
+    %514 = xor i32 %485, %465
+    %515 = xor i32 %511, %466
+    %516 = xor i32 %512, %467
+    %517 = xor i32 %513, %468
+    %518 = xor i32 %514, %469
+    %519 = xor i32 %515, %470
+    store volatile i32 %519, i32* %k1722, align 4
+    %520 = xor i32 %516, %471
+    store volatile i32 %520, i32* %k1732, align 4
+    %521 = xor i32 %517, %472
+    store volatile i32 %521, i32* %k1742, align 4
+    %522 = xor i32 %518, %473
+    store volatile i32 %522, i32* %k1752, align 4
+    ret i32 0
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="cortex-m0" "target-features"="+soft-float,+strict-align,-crypto,-neon" "unsafe-fp-math"="false" "use-soft-float"="true" }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0-2ubuntu4 (tags/RELEASE_380/final)"}
+
+...
+---
+name:            _Z2ksiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: tgpr }
+  - { id: 1, class: tgpr }
+  - { id: 2, class: tgpr }
+  - { id: 3, class: tgpr }
+  - { id: 4, class: tgpr }
+  - { id: 5, class: tgpr }
+  - { id: 6, class: tgpr }
+  - { id: 7, class: tgpr }
+  - { id: 8, class: tgpr }
+  - { id: 9, class: tgpr }
+  - { id: 10, class: tgpr }
+  - { id: 11, class: tgpr }
+  - { id: 12, class: tgpr }
+  - { id: 13, class: tgpr }
+  - { id: 14, class: tgpr }
+  - { id: 15, class: tgpr }
+  - { id: 16, class: tgpr }
+  - { id: 17, class: tgpr }
+  - { id: 18, class: tgpr }
+  - { id: 19, class: tgpr }
+  - { id: 20, class: tgpr }
+  - { id: 21, class: tgpr }
+  - { id: 22, class: tgpr }
+  - { id: 23, class: tgpr }
+  - { id: 24, class: tgpr }
+  - { id: 25, class: tgpr }
+  - { id: 26, class: tgpr }
+  - { id: 27, class: tgpr }
+  - { id: 28, class: tgpr }
+  - { id: 29, class: tgpr }
+  - { id: 30, class: tgpr }
+  - { id: 31, class: tgpr }
+  - { id: 32, class: tgpr }
+  - { id: 33, class: tgpr }
+  - { id: 34, class: tgpr }
+  - { id: 35, class: tgpr }
+  - { id: 36, class: tgpr }
+  - { id: 37, class: tgpr }
+  - { id: 38, class: tgpr }
+  - { id: 39, class: tgpr }
+  - { id: 40, class: tgpr }
+  - { id: 41, class: tgpr }
+  - { id: 42, class: tgpr }
+  - { id: 43, class: tgpr }
+  - { id: 44, class: tgpr }
+  - { id: 45, class: tgpr }
+  - { id: 46, class: tgpr }
+  - { id: 47, class: tgpr }
+  - { id: 48, class: tgpr }
+  - { id: 49, class: tgpr }
+  - { id: 50, class: tgpr }
+  - { id: 51, class: tgpr }
+  - { id: 52, class: tgpr }
+  - { id: 53, class: tgpr }
+  - { id: 54, class: tgpr }
+  - { id: 55, class: tgpr }
+  - { id: 56, class: tgpr }
+  - { id: 57, class: tgpr }
+  - { id: 58, class: tgpr }
+  - { id: 59, class: tgpr }
+  - { id: 60, class: tgpr }
+  - { id: 61, class: tgpr }
+  - { id: 62, class: tgpr }
+  - { id: 63, class: tgpr }
+  - { id: 64, class: tgpr }
+  - { id: 65, class: tgpr }
+  - { id: 66, class: tgpr }
+  - { id: 67, class: tgpr }
+  - { id: 68, class: tgpr }
+  - { id: 69, class: tgpr }
+  - { id: 70, class: tgpr }
+  - { id: 71, class: tgpr }
+  - { id: 72, class: tgpr }
+  - { id: 73, class: tgpr }
+  - { id: 74, class: tgpr }
+  - { id: 75, class: tgpr }
+  - { id: 76, class: tgpr }
+  - { id: 77, class: tgpr }
+  - { id: 78, class: tgpr }
+  - { id: 79, class: tgpr }
+  - { id: 80, class: tgpr }
+  - { id: 81, class: tgpr }
+  - { id: 82, class: tgpr }
+  - { id: 83, class: tgpr }
+  - { id: 84, class: tgpr }
+  - { id: 85, class: tgpr }
+  - { id: 86, class: tgpr }
+  - { id: 87, class: tgpr }
+  - { id: 88, class: tgpr }
+  - { id: 89, class: tgpr }
+  - { id: 90, class: tgpr }
+  - { id: 91, class: tgpr }
+  - { id: 92, class: tgpr }
+  - { id: 93, class: tgpr }
+  - { id: 94, class: tgpr }
+  - { id: 95, class: tgpr }
+  - { id: 96, class: tgpr }
+  - { id: 97, class: tgpr }
+  - { id: 98, class: tgpr }
+  - { id: 99, class: tgpr }
+  - { id: 100, class: tgpr }
+  - { id: 101, class: tgpr }
+  - { id: 102, class: tgpr }
+  - { id: 103, class: tgpr }
+  - { id: 104, class: tgpr }
+  - { id: 105, class: tgpr }
+  - { id: 106, class: tgpr }
+  - { id: 107, class: tgpr }
+  - { id: 108, class: tgpr }
+  - { id: 109, class: tgpr }
+  - { id: 110, class: tgpr }
+  - { id: 111, class: tgpr }
+  - { id: 112, class: tgpr }
+  - { id: 113, class: tgpr }
+  - { id: 114, class: tgpr }
+  - { id: 115, class: tgpr }
+  - { id: 116, class: tgpr }
+  - { id: 117, class: tgpr }
+  - { id: 118, class: tgpr }
+  - { id: 119, class: tgpr }
+  - { id: 120, class: tgpr }
+  - { id: 121, class: tgpr }
+  - { id: 122, class: tgpr }
+  - { id: 123, class: tgpr }
+  - { id: 124, class: tgpr }
+  - { id: 125, class: tgpr }
+  - { id: 126, class: tgpr }
+  - { id: 127, class: tgpr }
+  - { id: 128, class: tgpr }
+  - { id: 129, class: tgpr }
+  - { id: 130, class: tgpr }
+  - { id: 131, class: tgpr }
+  - { id: 132, class: tgpr }
+  - { id: 133, class: tgpr }
+  - { id: 134, class: tgpr }
+  - { id: 135, class: tgpr }
+  - { id: 136, class: tgpr }
+  - { id: 137, class: tgpr }
+  - { id: 138, class: tgpr }
+  - { id: 139, class: tgpr }
+  - { id: 140, class: tgpr }
+  - { id: 141, class: tgpr }
+  - { id: 142, class: tgpr }
+  - { id: 143, class: tgpr }
+  - { id: 144, class: tgpr }
+  - { id: 145, class: tgpr }
+  - { id: 146, class: tgpr }
+  - { id: 147, class: tgpr }
+  - { id: 148, class: tgpr }
+  - { id: 149, class: tgpr }
+  - { id: 150, class: tgpr }
+  - { id: 151, class: tgpr }
+  - { id: 152, class: tgpr }
+  - { id: 153, class: tgpr }
+  - { id: 154, class: tgpr }
+  - { id: 155, class: tgpr }
+  - { id: 156, class: tgpr }
+  - { id: 157, class: tgpr }
+  - { id: 158, class: tgpr }
+  - { id: 159, class: tgpr }
+  - { id: 160, class: tgpr }
+  - { id: 161, class: tgpr }
+  - { id: 162, class: tgpr }
+  - { id: 163, class: tgpr }
+  - { id: 164, class: tgpr }
+  - { id: 165, class: tgpr }
+  - { id: 166, class: tgpr }
+  - { id: 167, class: tgpr }
+  - { id: 168, class: tgpr }
+  - { id: 169, class: tgpr }
+  - { id: 170, class: tgpr }
+  - { id: 171, class: tgpr }
+  - { id: 172, class: tgpr }
+  - { id: 173, class: tgpr }
+  - { id: 174, class: tgpr }
+  - { id: 175, class: tgpr }
+  - { id: 176, class: tgpr }
+  - { id: 177, class: tgpr }
+  - { id: 178, class: tgpr }
+  - { id: 179, class: tgpr }
+  - { id: 180, class: tgpr }
+  - { id: 181, class: tgpr }
+  - { id: 182, class: tgpr }
+  - { id: 183, class: tgpr }
+  - { id: 184, class: tgpr }
+  - { id: 185, class: tgpr }
+  - { id: 186, class: tgpr }
+  - { id: 187, class: tgpr }
+  - { id: 188, class: tgpr }
+  - { id: 189, class: tgpr }
+  - { id: 190, class: tgpr }
+  - { id: 191, class: tgpr }
+  - { id: 192, class: tgpr }
+  - { id: 193, class: tgpr }
+  - { id: 194, class: tgpr }
+  - { id: 195, class: tgpr }
+  - { id: 196, class: tgpr }
+  - { id: 197, class: tgpr }
+  - { id: 198, class: tgpr }
+  - { id: 199, class: tgpr }
+  - { id: 200, class: tgpr }
+  - { id: 201, class: tgpr }
+  - { id: 202, class: tgpr }
+  - { id: 203, class: tgpr }
+  - { id: 204, class: tgpr }
+  - { id: 205, class: tgpr }
+  - { id: 206, class: tgpr }
+  - { id: 207, class: tgpr }
+  - { id: 208, class: tgpr }
+  - { id: 209, class: tgpr }
+  - { id: 210, class: tgpr }
+  - { id: 211, class: tgpr }
+  - { id: 212, class: tgpr }
+  - { id: 213, class: tgpr }
+  - { id: 214, class: tgpr }
+  - { id: 215, class: tgpr }
+  - { id: 216, class: tgpr }
+  - { id: 217, class: tgpr }
+  - { id: 218, class: tgpr }
+  - { id: 219, class: tgpr }
+  - { id: 220, class: tgpr }
+  - { id: 221, class: tgpr }
+  - { id: 222, class: tgpr }
+  - { id: 223, class: tgpr }
+  - { id: 224, class: tgpr }
+  - { id: 225, class: tgpr }
+  - { id: 226, class: tgpr }
+  - { id: 227, class: tgpr }
+  - { id: 228, class: tgpr }
+  - { id: 229, class: tgpr }
+  - { id: 230, class: tgpr }
+  - { id: 231, class: tgpr }
+  - { id: 232, class: tgpr }
+  - { id: 233, class: tgpr }
+  - { id: 234, class: tgpr }
+  - { id: 235, class: tgpr }
+  - { id: 236, class: tgpr }
+  - { id: 237, class: tgpr }
+  - { id: 238, class: tgpr }
+  - { id: 239, class: tgpr }
+  - { id: 240, class: tgpr }
+  - { id: 241, class: tgpr }
+  - { id: 242, class: tgpr }
+  - { id: 243, class: tgpr }
+  - { id: 244, class: tgpr }
+  - { id: 245, class: tgpr }
+  - { id: 246, class: tgpr }
+  - { id: 247, class: tgpr }
+  - { id: 248, class: tgpr }
+  - { id: 249, class: tgpr }
+  - { id: 250, class: tgpr }
+  - { id: 251, class: tgpr }
+  - { id: 252, class: tgpr }
+  - { id: 253, class: tgpr }
+  - { id: 254, class: tgpr }
+  - { id: 255, class: tgpr }
+  - { id: 256, class: tgpr }
+  - { id: 257, class: tgpr }
+  - { id: 258, class: tgpr }
+  - { id: 259, class: tgpr }
+  - { id: 260, class: tgpr }
+  - { id: 261, class: tgpr }
+  - { id: 262, class: tgpr }
+  - { id: 263, class: tgpr }
+  - { id: 264, class: tgpr }
+  - { id: 265, class: tgpr }
+  - { id: 266, class: tgpr }
+  - { id: 267, class: tgpr }
+  - { id: 268, class: tgpr }
+  - { id: 269, class: tgpr }
+  - { id: 270, class: tgpr }
+  - { id: 271, class: tgpr }
+  - { id: 272, class: tgpr }
+  - { id: 273, class: tgpr }
+  - { id: 274, class: tgpr }
+  - { id: 275, class: tgpr }
+  - { id: 276, class: tgpr }
+  - { id: 277, class: tgpr }
+  - { id: 278, class: tgpr }
+  - { id: 279, class: tgpr }
+  - { id: 280, class: tgpr }
+  - { id: 281, class: tgpr }
+  - { id: 282, class: tgpr }
+  - { id: 283, class: tgpr }
+  - { id: 284, class: tgpr }
+  - { id: 285, class: tgpr }
+  - { id: 286, class: tgpr }
+  - { id: 287, class: tgpr }
+  - { id: 288, class: tgpr }
+  - { id: 289, class: tgpr }
+  - { id: 290, class: tgpr }
+  - { id: 291, class: tgpr }
+  - { id: 292, class: tgpr }
+  - { id: 293, class: tgpr }
+  - { id: 294, class: tgpr }
+  - { id: 295, class: tgpr }
+  - { id: 296, class: tgpr }
+  - { id: 297, class: tgpr }
+  - { id: 298, class: tgpr }
+  - { id: 299, class: tgpr }
+  - { id: 300, class: tgpr }
+  - { id: 301, class: tgpr }
+  - { id: 302, class: tgpr }
+  - { id: 303, class: tgpr }
+  - { id: 304, class: tgpr }
+  - { id: 305, class: tgpr }
+  - { id: 306, class: tgpr }
+  - { id: 307, class: tgpr }
+  - { id: 308, class: tgpr }
+  - { id: 309, class: tgpr }
+  - { id: 310, class: tgpr }
+  - { id: 311, class: tgpr }
+  - { id: 312, class: tgpr }
+  - { id: 313, class: tgpr }
+  - { id: 314, class: tgpr }
+  - { id: 315, class: tgpr }
+  - { id: 316, class: tgpr }
+  - { id: 317, class: tgpr }
+  - { id: 318, class: tgpr }
+  - { id: 319, class: tgpr }
+  - { id: 320, class: tgpr }
+  - { id: 321, class: tgpr }
+  - { id: 322, class: tgpr }
+  - { id: 323, class: tgpr }
+  - { id: 324, class: tgpr }
+  - { id: 325, class: tgpr }
+  - { id: 326, class: tgpr }
+  - { id: 327, class: tgpr }
+  - { id: 328, class: tgpr }
+  - { id: 329, class: tgpr }
+  - { id: 330, class: tgpr }
+  - { id: 331, class: tgpr }
+  - { id: 332, class: tgpr }
+  - { id: 333, class: tgpr }
+  - { id: 334, class: tgpr }
+  - { id: 335, class: tgpr }
+  - { id: 336, class: tgpr }
+  - { id: 337, class: tgpr }
+  - { id: 338, class: tgpr }
+  - { id: 339, class: tgpr }
+  - { id: 340, class: tgpr }
+  - { id: 341, class: tgpr }
+  - { id: 342, class: tgpr }
+  - { id: 343, class: tgpr }
+  - { id: 344, class: tgpr }
+  - { id: 345, class: tgpr }
+  - { id: 346, class: tgpr }
+  - { id: 347, class: tgpr }
+  - { id: 348, class: tgpr }
+  - { id: 349, class: tgpr }
+  - { id: 350, class: tgpr }
+  - { id: 351, class: tgpr }
+  - { id: 352, class: tgpr }
+  - { id: 353, class: tgpr }
+  - { id: 354, class: tgpr }
+  - { id: 355, class: tgpr }
+  - { id: 356, class: tgpr }
+  - { id: 357, class: tgpr }
+  - { id: 358, class: tgpr }
+  - { id: 359, class: tgpr }
+  - { id: 360, class: tgpr }
+  - { id: 361, class: tgpr }
+  - { id: 362, class: tgpr }
+  - { id: 363, class: tgpr }
+  - { id: 364, class: tgpr }
+  - { id: 365, class: tgpr }
+  - { id: 366, class: tgpr }
+  - { id: 367, class: tgpr }
+  - { id: 368, class: tgpr }
+  - { id: 369, class: tgpr }
+  - { id: 370, class: tgpr }
+  - { id: 371, class: tgpr }
+  - { id: 372, class: tgpr }
+  - { id: 373, class: tgpr }
+  - { id: 374, class: tgpr }
+  - { id: 375, class: tgpr }
+  - { id: 376, class: tgpr }
+  - { id: 377, class: tgpr }
+  - { id: 378, class: tgpr }
+  - { id: 379, class: tgpr }
+  - { id: 380, class: tgpr }
+  - { id: 381, class: tgpr }
+  - { id: 382, class: tgpr }
+  - { id: 383, class: tgpr }
+  - { id: 384, class: tgpr }
+  - { id: 385, class: tgpr }
+  - { id: 386, class: tgpr }
+  - { id: 387, class: tgpr }
+  - { id: 388, class: tgpr }
+  - { id: 389, class: tgpr }
+  - { id: 390, class: tgpr }
+  - { id: 391, class: tgpr }
+  - { id: 392, class: tgpr }
+  - { id: 393, class: tgpr }
+  - { id: 394, class: tgpr }
+  - { id: 395, class: tgpr }
+  - { id: 396, class: tgpr }
+  - { id: 397, class: tgpr }
+  - { id: 398, class: tgpr }
+  - { id: 399, class: tgpr }
+  - { id: 400, class: tgpr }
+  - { id: 401, class: tgpr }
+  - { id: 402, class: tgpr }
+  - { id: 403, class: tgpr }
+  - { id: 404, class: tgpr }
+  - { id: 405, class: tgpr }
+  - { id: 406, class: tgpr }
+  - { id: 407, class: tgpr }
+  - { id: 408, class: tgpr }
+  - { id: 409, class: tgpr }
+  - { id: 410, class: tgpr }
+  - { id: 411, class: tgpr }
+  - { id: 412, class: tgpr }
+  - { id: 413, class: tgpr }
+  - { id: 414, class: tgpr }
+  - { id: 415, class: tgpr }
+  - { id: 416, class: tgpr }
+  - { id: 417, class: tgpr }
+  - { id: 418, class: tgpr }
+  - { id: 419, class: tgpr }
+  - { id: 420, class: tgpr }
+  - { id: 421, class: tgpr }
+  - { id: 422, class: tgpr }
+  - { id: 423, class: tgpr }
+  - { id: 424, class: tgpr }
+  - { id: 425, class: tgpr }
+  - { id: 426, class: tgpr }
+  - { id: 427, class: tgpr }
+  - { id: 428, class: tgpr }
+  - { id: 429, class: tgpr }
+  - { id: 430, class: tgpr }
+  - { id: 431, class: tgpr }
+  - { id: 432, class: tgpr }
+  - { id: 433, class: tgpr }
+  - { id: 434, class: tgpr }
+  - { id: 435, class: tgpr }
+  - { id: 436, class: tgpr }
+  - { id: 437, class: tgpr }
+  - { id: 438, class: tgpr }
+  - { id: 439, class: tgpr }
+  - { id: 440, class: tgpr }
+  - { id: 441, class: tgpr }
+  - { id: 442, class: tgpr }
+  - { id: 443, class: tgpr }
+  - { id: 444, class: tgpr }
+  - { id: 445, class: tgpr }
+  - { id: 446, class: tgpr }
+  - { id: 447, class: tgpr }
+  - { id: 448, class: tgpr }
+  - { id: 449, class: tgpr }
+  - { id: 450, class: tgpr }
+  - { id: 451, class: tgpr }
+  - { id: 452, class: tgpr }
+  - { id: 453, class: tgpr }
+  - { id: 454, class: tgpr }
+  - { id: 455, class: tgpr }
+  - { id: 456, class: tgpr }
+  - { id: 457, class: tgpr }
+  - { id: 458, class: tgpr }
+  - { id: 459, class: tgpr }
+  - { id: 460, class: tgpr }
+  - { id: 461, class: tgpr }
+  - { id: 462, class: tgpr }
+  - { id: 463, class: tgpr }
+  - { id: 464, class: tgpr }
+  - { id: 465, class: tgpr }
+  - { id: 466, class: tgpr }
+  - { id: 467, class: tgpr }
+  - { id: 468, class: tgpr }
+  - { id: 469, class: tgpr }
+  - { id: 470, class: tgpr }
+  - { id: 471, class: tgpr }
+  - { id: 472, class: tgpr }
+  - { id: 473, class: tgpr }
+  - { id: 474, class: tgpr }
+  - { id: 475, class: tgpr }
+  - { id: 476, class: tgpr }
+  - { id: 477, class: tgpr }
+  - { id: 478, class: tgpr }
+  - { id: 479, class: tgpr }
+  - { id: 480, class: tgpr }
+  - { id: 481, class: tgpr }
+  - { id: 482, class: tgpr }
+  - { id: 483, class: tgpr }
+  - { id: 484, class: tgpr }
+  - { id: 485, class: tgpr }
+  - { id: 486, class: tgpr }
+  - { id: 487, class: tgpr }
+  - { id: 488, class: tgpr }
+  - { id: 489, class: tgpr }
+  - { id: 490, class: tgpr }
+  - { id: 491, class: tgpr }
+  - { id: 492, class: tgpr }
+  - { id: 493, class: tgpr }
+  - { id: 494, class: tgpr }
+  - { id: 495, class: tgpr }
+  - { id: 496, class: tgpr }
+  - { id: 497, class: tgpr }
+  - { id: 498, class: tgpr }
+  - { id: 499, class: tgpr }
+  - { id: 500, class: tgpr }
+  - { id: 501, class: tgpr }
+  - { id: 502, class: tgpr }
+  - { id: 503, class: tgpr }
+  - { id: 504, class: tgpr }
+  - { id: 505, class: tgpr }
+  - { id: 506, class: tgpr }
+  - { id: 507, class: tgpr }
+  - { id: 508, class: tgpr }
+  - { id: 509, class: tgpr }
+  - { id: 510, class: tgpr }
+  - { id: 511, class: tgpr }
+  - { id: 512, class: tgpr }
+  - { id: 513, class: tgpr }
+  - { id: 514, class: tgpr }
+  - { id: 515, class: tgpr }
+  - { id: 516, class: tgpr }
+  - { id: 517, class: tgpr }
+  - { id: 518, class: tgpr }
+  - { id: 519, class: tgpr }
+  - { id: 520, class: tgpr }
+  - { id: 521, class: tgpr }
+  - { id: 522, class: tgpr }
+  - { id: 523, class: tgpr }
+  - { id: 524, class: tgpr }
+  - { id: 525, class: tgpr }
+  - { id: 526, class: tgpr }
+  - { id: 527, class: tgpr }
+  - { id: 528, class: tgpr }
+  - { id: 529, class: tgpr }
+  - { id: 530, class: tgpr }
+  - { id: 531, class: tgpr }
+  - { id: 532, class: tgpr }
+  - { id: 533, class: tgpr }
+  - { id: 534, class: tgpr }
+  - { id: 535, class: tgpr }
+  - { id: 536, class: tgpr }
+  - { id: 537, class: tgpr }
+  - { id: 538, class: tgpr }
+  - { id: 539, class: tgpr }
+  - { id: 540, class: tgpr }
+  - { id: 541, class: tgpr }
+  - { id: 542, class: tgpr }
+  - { id: 543, class: tgpr }
+  - { id: 544, class: tgpr }
+  - { id: 545, class: tgpr }
+  - { id: 546, class: tgpr }
+  - { id: 547, class: tgpr }
+  - { id: 548, class: tgpr }
+  - { id: 549, class: tgpr }
+  - { id: 550, class: tgpr }
+  - { id: 551, class: tgpr }
+  - { id: 552, class: tgpr }
+  - { id: 553, class: tgpr }
+  - { id: 554, class: tgpr }
+  - { id: 555, class: tgpr }
+  - { id: 556, class: tgpr }
+  - { id: 557, class: tgpr }
+  - { id: 558, class: tgpr }
+  - { id: 559, class: tgpr }
+  - { id: 560, class: tgpr }
+  - { id: 561, class: tgpr }
+  - { id: 562, class: tgpr }
+  - { id: 563, class: tgpr }
+  - { id: 564, class: tgpr }
+  - { id: 565, class: tgpr }
+  - { id: 566, class: tgpr }
+  - { id: 567, class: tgpr }
+  - { id: 568, class: tgpr }
+  - { id: 569, class: tgpr }
+  - { id: 570, class: tgpr }
+  - { id: 571, class: tgpr }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%0' }
+  - { reg: '%r1', virtual-reg: '%1' }
+  - { reg: '%r2', virtual-reg: '%2' }
+  - { reg: '%r3', virtual-reg: '%3' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+fixedStack:      
+  - { id: 0, offset: 176, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 1, offset: 172, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 2, offset: 168, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 3, offset: 164, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 4, offset: 160, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 5, offset: 156, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 6, offset: 152, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 7, offset: 148, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 8, offset: 144, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 9, offset: 140, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 10, offset: 136, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 11, offset: 132, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 12, offset: 128, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 13, offset: 124, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 14, offset: 120, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 15, offset: 116, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 16, offset: 112, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 17, offset: 108, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 18, offset: 104, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 19, offset: 100, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 20, offset: 96, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 21, offset: 92, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 22, offset: 88, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 23, offset: 84, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 24, offset: 80, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 25, offset: 76, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 26, offset: 72, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 27, offset: 68, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 28, offset: 64, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 29, offset: 60, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 30, offset: 56, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 31, offset: 52, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 32, offset: 48, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 33, offset: 44, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 34, offset: 40, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 35, offset: 36, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 36, offset: 32, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 37, offset: 28, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 38, offset: 24, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 39, offset: 20, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 40, offset: 16, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 41, offset: 12, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 42, offset: 8, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+  - { id: 43, offset: 4, size: 4, alignment: 4, isImmutable: true, isAliased: false }
+  - { id: 44, offset: 0, size: 4, alignment: 8, isImmutable: true, isAliased: false }
+stack:           
+  - { id: 0, name: k1720, offset: 0, size: 4, alignment: 4, local-offset: -4 }
+  - { id: 1, name: k1721, offset: 0, size: 4, alignment: 4, local-offset: -8 }
+  - { id: 2, name: k1722, offset: 0, size: 4, alignment: 4, local-offset: -12 }
+  - { id: 3, name: k1730, offset: 0, size: 4, alignment: 4, local-offset: -16 }
+  - { id: 4, name: k1731, offset: 0, size: 4, alignment: 4, local-offset: -20 }
+  - { id: 5, name: k1732, offset: 0, size: 4, alignment: 4, local-offset: -24 }
+  - { id: 6, name: k1740, offset: 0, size: 4, alignment: 4, local-offset: -28 }
+  - { id: 7, name: k1741, offset: 0, size: 4, alignment: 4, local-offset: -32 }
+  - { id: 8, name: k1742, offset: 0, size: 4, alignment: 4, local-offset: -36 }
+  - { id: 9, name: k1750, offset: 0, size: 4, alignment: 4, local-offset: -40 }
+  - { id: 10, name: k1751, offset: 0, size: 4, alignment: 4, local-offset: -44 }
+  - { id: 11, name: k1752, offset: 0, size: 4, alignment: 4, local-offset: -48 }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0, %r1, %r2, %r3
+    liveouts: %r0
+  
+    %3 = COPY %r3
+    %2 = COPY %r2
+    %1 = COPY %r1
+    %0 = COPY %r0
+    %4 = tLDRspi %fixed-stack.32, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %5 = tLDRspi %fixed-stack.6, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %6, %cpsr = tEOR %5, %4, 14, _
+    %7 = tLDRspi %fixed-stack.0, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %8, %cpsr = tEOR %6, %7, 14, _
+    %9 = tLDRspi %fixed-stack.30, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %10 = tLDRspi %fixed-stack.4, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %11, %cpsr = tEOR %10, %9, 14, _
+    %12 = tLDRspi %fixed-stack.22, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %13, %cpsr = tEOR %11, %12, 14, _
+    %14 = tLDRspi %fixed-stack.14, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %15, %cpsr = tEOR %13, %14, 14, _
+    %16, %cpsr = tEOR %15, %5, 14, _
+    %17, %cpsr = tEOR %16, %8, 14, _
+    %18, %cpsr = tEOR %17, %7, 14, _
+    %19 = tLDRspi %fixed-stack.28, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %20 = tLDRspi %fixed-stack.2, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %21, %cpsr = tEOR %20, %19, 14, _
+    %22 = tLDRspi %fixed-stack.20, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %23, %cpsr = tEOR %21, %22, 14, _
+    %24 = tLDRspi %fixed-stack.12, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %25, %cpsr = tEOR %23, %24, 14, _
+    %26, %cpsr = tEOR %25, %10, 14, _
+    %27, %cpsr = tEOR %26, %11, 14, _
+    %28, %cpsr = tEOR %27, %13, 14, _
+    %29, %cpsr = tEOR %28, %15, 14, _
+    %30, %cpsr = tEOR %29, %16, 14, _
+    %31, %cpsr = tEOR %30, %18, 14, _
+    %32, %cpsr = tEOR %31, %7, 14, _
+    %33 = tLDRspi %fixed-stack.26, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %34 = tLDRspi %fixed-stack.8, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %35, %cpsr = tEOR %34, %33, 14, _
+    %36 = tLDRspi %fixed-stack.18, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %37, %cpsr = tEOR %35, %36, 14, _
+    %38 = tLDRspi %fixed-stack.10, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %39, %cpsr = tEOR %37, %38, 14, _
+    %40, %cpsr = tEOR %39, %20, 14, _
+    %41, %cpsr = tEOR %40, %21, 14, _
+    %42, %cpsr = tEOR %41, %23, 14, _
+    %43, %cpsr = tEOR %42, %25, 14, _
+    %44, %cpsr = tEOR %43, %26, 14, _
+    %45, %cpsr = tEOR %44, %27, 14, _
+    %46, %cpsr = tEOR %45, %28, 14, _
+    %47, %cpsr = tEOR %46, %29, 14, _
+    %48, %cpsr = tEOR %47, %30, 14, _
+    %49, %cpsr = tEOR %48, %32, 14, _
+    %50, %cpsr = tEOR %49, %7, 14, _
+    %51 = tLDRspi %fixed-stack.24, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %52, %cpsr = tEOR %8, %51, 14, _
+    %53 = tLDRspi %fixed-stack.16, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %54, %cpsr = tEOR %52, %53, 14, _
+    %55, %cpsr = tEOR %54, %34, 14, _
+    %56, %cpsr = tEOR %55, %35, 14, _
+    %57, %cpsr = tEOR %56, %37, 14, _
+    %58, %cpsr = tEOR %57, %39, 14, _
+    %59, %cpsr = tEOR %58, %40, 14, _
+    %60, %cpsr = tEOR %59, %41, 14, _
+    %61, %cpsr = tEOR %60, %42, 14, _
+    %62, %cpsr = tEOR %61, %43, 14, _
+    %63, %cpsr = tEOR %62, %44, 14, _
+    %64, %cpsr = tEOR %63, %45, 14, _
+    %65, %cpsr = tEOR %64, %46, 14, _
+    %66, %cpsr = tEOR %65, %47, 14, _
+    %67, %cpsr = tEOR %66, %48, 14, _
+    %68, %cpsr = tEOR %67, %50, 14, _
+    %69, %cpsr = tEOR %68, %7, 14, _
+    %70, %cpsr = tEOR %18, %52, 14, _
+    %71, %cpsr = tEOR %70, %54, 14, _
+    %72, %cpsr = tEOR %71, %55, 14, _
+    %73, %cpsr = tEOR %72, %56, 14, _
+    %74, %cpsr = tEOR %73, %57, 14, _
+    %75, %cpsr = tEOR %74, %58, 14, _
+    %76, %cpsr = tEOR %75, %59, 14, _
+    %77, %cpsr = tEOR %76, %60, 14, _
+    %78, %cpsr = tEOR %77, %61, 14, _
+    %79, %cpsr = tEOR %78, %62, 14, _
+    %80, %cpsr = tEOR %79, %63, 14, _
+    %81, %cpsr = tEOR %80, %64, 14, _
+    %82, %cpsr = tEOR %81, %65, 14, _
+    %83, %cpsr = tEOR %82, %66, 14, _
+    %84, %cpsr = tEOR %83, %67, 14, _
+    %85, %cpsr = tEOR %84, %69, 14, _
+    %86, %cpsr = tEOR %85, %7, 14, _
+    %87, %cpsr = tEOR %32, %70, 14, _
+    %88, %cpsr = tEOR %87, %71, 14, _
+    %89, %cpsr = tEOR %88, %72, 14, _
+    %90, %cpsr = tEOR %89, %73, 14, _
+    %91, %cpsr = tEOR %90, %74, 14, _
+    %92, %cpsr = tEOR %91, %75, 14, _
+    %93, %cpsr = tEOR %92, %76, 14, _
+    %94, %cpsr = tEOR %93, %77, 14, _
+    %95, %cpsr = tEOR %94, %78, 14, _
+    %96, %cpsr = tEOR %95, %79, 14, _
+    %97, %cpsr = tEOR %96, %80, 14, _
+    %98, %cpsr = tEOR %97, %81, 14, _
+    %99, %cpsr = tEOR %98, %82, 14, _
+    %100, %cpsr = tEOR %99, %83, 14, _
+    %101, %cpsr = tEOR %100, %84, 14, _
+    %102, %cpsr = tEOR %101, %86, 14, _
+    %103, %cpsr = tEOR %102, %7, 14, _
+    %104, %cpsr = tEOR %50, %87, 14, _
+    %105, %cpsr = tEOR %104, %88, 14, _
+    %106, %cpsr = tEOR %105, %89, 14, _
+    %107, %cpsr = tEOR %106, %90, 14, _
+    %108, %cpsr = tEOR %107, %91, 14, _
+    %109, %cpsr = tEOR %108, %92, 14, _
+    %110, %cpsr = tEOR %109, %93, 14, _
+    %111, %cpsr = tEOR %110, %94, 14, _
+    %112, %cpsr = tEOR %111, %95, 14, _
+    %113, %cpsr = tEOR %112, %96, 14, _
+    %114, %cpsr = tEOR %113, %97, 14, _
+    %115, %cpsr = tEOR %114, %98, 14, _
+    %116, %cpsr = tEOR %115, %99, 14, _
+    %117, %cpsr = tEOR %116, %100, 14, _
+    %118, %cpsr = tEOR %117, %101, 14, _
+    %119, %cpsr = tEOR %118, %103, 14, _
+    %120, %cpsr = tEOR %119, %7, 14, _
+    %121, %cpsr = tEOR %69, %104, 14, _
+    %122, %cpsr = tEOR %121, %105, 14, _
+    %123, %cpsr = tEOR %122, %106, 14, _
+    %124, %cpsr = tEOR %123, %107, 14, _
+    %125, %cpsr = tEOR %124, %108, 14, _
+    %126, %cpsr = tEOR %125, %109, 14, _
+    %127, %cpsr = tEOR %126, %110, 14, _
+    %128, %cpsr = tEOR %127, %111, 14, _
+    %129, %cpsr = tEOR %128, %112, 14, _
+    %130, %cpsr = tEOR %129, %113, 14, _
+    %131, %cpsr = tEOR %130, %114, 14, _
+    %132, %cpsr = tEOR %131, %115, 14, _
+    %133, %cpsr = tEOR %132, %116, 14, _
+    %134, %cpsr = tEOR %133, %117, 14, _
+    %135, %cpsr = tEOR %134, %118, 14, _
+    %136, %cpsr = tEOR %135, %120, 14, _
+    %137, %cpsr = tEOR %136, %7, 14, _
+    %138, %cpsr = tEOR %86, %121, 14, _
+    %139, %cpsr = tEOR %138, %122, 14, _
+    %140, %cpsr = tEOR %139, %123, 14, _
+    %141, %cpsr = tEOR %140, %124, 14, _
+    %142, %cpsr = tEOR %141, %125, 14, _
+    %143, %cpsr = tEOR %142, %126, 14, _
+    %144, %cpsr = tEOR %143, %127, 14, _
+    %145, %cpsr = tEOR %144, %128, 14, _
+    %146, %cpsr = tEOR %145, %129, 14, _
+    %147, %cpsr = tEOR %146, %130, 14, _
+    %148, %cpsr = tEOR %147, %131, 14, _
+    %149, %cpsr = tEOR %148, %132, 14, _
+    %150, %cpsr = tEOR %149, %133, 14, _
+    %151, %cpsr = tEOR %150, %134, 14, _
+    %152, %cpsr = tEOR %151, %135, 14, _
+    %153, %cpsr = tEOR %152, %137, 14, _
+    %154, %cpsr = tEOR %153, %7, 14, _
+    %155, %cpsr = tEOR %103, %138, 14, _
+    %156, %cpsr = tEOR %120, %155, 14, _
+    %157, %cpsr = tEOR %137, %156, 14, _
+    %158, %cpsr = tEOR %154, %157, 14, _
+    %159, %cpsr = tEOR %155, %139, 14, _
+    %160, %cpsr = tEOR %156, %159, 14, _
+    %161, %cpsr = tEOR %157, %160, 14, _
+    %162, %cpsr = tEOR %158, %161, 14, _
+    %163, %cpsr = tEOR %159, %140, 14, _
+    %164, %cpsr = tEOR %160, %163, 14, _
+    %165, %cpsr = tEOR %161, %164, 14, _
+    %166, %cpsr = tEOR %162, %165, 14, _
+    tSTRspi killed %166, %stack.0.k1720, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1720)
+    %167, %cpsr = tEOR %163, %141, 14, _
+    %168, %cpsr = tEOR %167, %142, 14, _
+    %169, %cpsr = tEOR %168, %143, 14, _
+    %170, %cpsr = tEOR %169, %144, 14, _
+    %171, %cpsr = tEOR %170, %145, 14, _
+    %172, %cpsr = tEOR %171, %146, 14, _
+    %173, %cpsr = tEOR %172, %147, 14, _
+    %174, %cpsr = tEOR %173, %148, 14, _
+    %175, %cpsr = tEOR %174, %149, 14, _
+    %176, %cpsr = tEOR %175, %150, 14, _
+    %177, %cpsr = tEOR %176, %151, 14, _
+    %178, %cpsr = tEOR %177, %152, 14, _
+    tSTRspi killed %178, %stack.3.k1730, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1730)
+    %179, %cpsr = tEOR %164, %167, 14, _
+    %180, %cpsr = tEOR %179, %168, 14, _
+    %181, %cpsr = tEOR %180, %169, 14, _
+    %182, %cpsr = tEOR %181, %170, 14, _
+    %183, %cpsr = tEOR %182, %171, 14, _
+    %184, %cpsr = tEOR %183, %172, 14, _
+    %185, %cpsr = tEOR %184, %173, 14, _
+    %186, %cpsr = tEOR %185, %174, 14, _
+    tSTRspi killed %186, %stack.6.k1740, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1740)
+    %187, %cpsr = tEOR %165, %179, 14, _
+    %188, %cpsr = tEOR %187, %180, 14, _
+    %189, %cpsr = tEOR %188, %181, 14, _
+    %190, %cpsr = tEOR %189, %182, 14, _
+    tSTRspi killed %190, %stack.9.k1750, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1750)
+    %191 = tLDRspi %fixed-stack.31, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %192 = tLDRspi %fixed-stack.5, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %193, %cpsr = tEOR %192, %191, 14, _
+    %194 = tLDRspi %fixed-stack.29, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %195 = tLDRspi %fixed-stack.3, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %196, %cpsr = tEOR %195, %194, 14, _
+    %197 = tLDRspi %fixed-stack.21, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %198, %cpsr = tEOR %196, %197, 14, _
+    %199 = tLDRspi %fixed-stack.13, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %200, %cpsr = tEOR %198, %199, 14, _
+    %201, %cpsr = tEOR %200, %192, 14, _
+    %202, %cpsr = tEOR %201, %193, 14, _
+    %203 = tLDRspi %fixed-stack.27, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %204 = tLDRspi %fixed-stack.1, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %205, %cpsr = tEOR %204, %203, 14, _
+    %206 = tLDRspi %fixed-stack.19, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %207, %cpsr = tEOR %205, %206, 14, _
+    %208 = tLDRspi %fixed-stack.11, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %209, %cpsr = tEOR %207, %208, 14, _
+    %210, %cpsr = tEOR %209, %195, 14, _
+    %211, %cpsr = tEOR %210, %196, 14, _
+    %212, %cpsr = tEOR %211, %198, 14, _
+    %213, %cpsr = tEOR %212, %200, 14, _
+    %214, %cpsr = tEOR %213, %201, 14, _
+    %215, %cpsr = tEOR %214, %202, 14, _
+    %216 = tLDRspi %fixed-stack.25, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %217 = tLDRspi %fixed-stack.7, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %218, %cpsr = tEOR %217, %216, 14, _
+    %219 = tLDRspi %fixed-stack.17, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %220, %cpsr = tEOR %218, %219, 14, _
+    %221 = tLDRspi %fixed-stack.9, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %222, %cpsr = tEOR %220, %221, 14, _
+    %223, %cpsr = tEOR %222, %204, 14, _
+    %224, %cpsr = tEOR %223, %205, 14, _
+    %225, %cpsr = tEOR %224, %207, 14, _
+    %226, %cpsr = tEOR %225, %209, 14, _
+    %227, %cpsr = tEOR %226, %210, 14, _
+    %228, %cpsr = tEOR %227, %211, 14, _
+    %229, %cpsr = tEOR %228, %212, 14, _
+    %230, %cpsr = tEOR %229, %213, 14, _
+    %231, %cpsr = tEOR %230, %214, 14, _
+    %232, %cpsr = tEOR %231, %215, 14, _
+    %233 = tLDRspi %fixed-stack.23, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %234, %cpsr = tEOR %193, %233, 14, _
+    %235 = tLDRspi %fixed-stack.15, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %236, %cpsr = tEOR %234, %235, 14, _
+    %237, %cpsr = tEOR %236, %217, 14, _
+    %238, %cpsr = tEOR %237, %218, 14, _
+    %239, %cpsr = tEOR %238, %220, 14, _
+    %240, %cpsr = tEOR %239, %222, 14, _
+    %241, %cpsr = tEOR %240, %223, 14, _
+    %242, %cpsr = tEOR %241, %224, 14, _
+    %243, %cpsr = tEOR %242, %225, 14, _
+    %244, %cpsr = tEOR %243, %226, 14, _
+    %245, %cpsr = tEOR %244, %227, 14, _
+    %246, %cpsr = tEOR %245, %228, 14, _
+    %247, %cpsr = tEOR %246, %229, 14, _
+    %248, %cpsr = tEOR %247, %230, 14, _
+    %249, %cpsr = tEOR %248, %231, 14, _
+    %250, %cpsr = tEOR %249, %232, 14, _
+    %251, %cpsr = tEOR %202, %234, 14, _
+    %252, %cpsr = tEOR %251, %236, 14, _
+    %253, %cpsr = tEOR %252, %237, 14, _
+    %254, %cpsr = tEOR %253, %238, 14, _
+    %255, %cpsr = tEOR %254, %239, 14, _
+    %256, %cpsr = tEOR %255, %240, 14, _
+    %257, %cpsr = tEOR %256, %241, 14, _
+    %258, %cpsr = tEOR %257, %242, 14, _
+    %259, %cpsr = tEOR %258, %243, 14, _
+    %260, %cpsr = tEOR %259, %244, 14, _
+    %261, %cpsr = tEOR %260, %245, 14, _
+    %262, %cpsr = tEOR %261, %246, 14, _
+    %263, %cpsr = tEOR %262, %247, 14, _
+    %264, %cpsr = tEOR %263, %248, 14, _
+    %265, %cpsr = tEOR %264, %249, 14, _
+    %266, %cpsr = tEOR %265, %250, 14, _
+    %267, %cpsr = tEOR %215, %251, 14, _
+    %268, %cpsr = tEOR %267, %252, 14, _
+    %269, %cpsr = tEOR %268, %253, 14, _
+    %270, %cpsr = tEOR %269, %254, 14, _
+    %271, %cpsr = tEOR %270, %255, 14, _
+    %272, %cpsr = tEOR %271, %256, 14, _
+    %273, %cpsr = tEOR %272, %257, 14, _
+    %274, %cpsr = tEOR %273, %258, 14, _
+    %275, %cpsr = tEOR %274, %259, 14, _
+    %276, %cpsr = tEOR %275, %260, 14, _
+    %277, %cpsr = tEOR %276, %261, 14, _
+    %278, %cpsr = tEOR %277, %262, 14, _
+    %279, %cpsr = tEOR %278, %263, 14, _
+    %280, %cpsr = tEOR %279, %264, 14, _
+    %281, %cpsr = tEOR %280, %265, 14, _
+    %282, %cpsr = tEOR %281, %266, 14, _
+    %283, %cpsr = tEOR %232, %267, 14, _
+    %284, %cpsr = tEOR %283, %268, 14, _
+    %285, %cpsr = tEOR %284, %269, 14, _
+    %286, %cpsr = tEOR %285, %270, 14, _
+    %287, %cpsr = tEOR %286, %271, 14, _
+    %288, %cpsr = tEOR %287, %272, 14, _
+    %289, %cpsr = tEOR %288, %273, 14, _
+    %290, %cpsr = tEOR %289, %274, 14, _
+    %291, %cpsr = tEOR %290, %275, 14, _
+    %292, %cpsr = tEOR %291, %276, 14, _
+    %293, %cpsr = tEOR %292, %277, 14, _
+    %294, %cpsr = tEOR %293, %278, 14, _
+    %295, %cpsr = tEOR %294, %279, 14, _
+    %296, %cpsr = tEOR %295, %280, 14, _
+    %297, %cpsr = tEOR %296, %281, 14, _
+    %298, %cpsr = tEOR %297, %282, 14, _
+    %299, %cpsr = tEOR %250, %283, 14, _
+    %300, %cpsr = tEOR %299, %284, 14, _
+    %301, %cpsr = tEOR %300, %285, 14, _
+    %302, %cpsr = tEOR %301, %286, 14, _
+    %303, %cpsr = tEOR %302, %287, 14, _
+    %304, %cpsr = tEOR %303, %288, 14, _
+    %305, %cpsr = tEOR %304, %289, 14, _
+    %306, %cpsr = tEOR %305, %290, 14, _
+    %307, %cpsr = tEOR %306, %291, 14, _
+    %308, %cpsr = tEOR %307, %292, 14, _
+    %309, %cpsr = tEOR %308, %293, 14, _
+    %310, %cpsr = tEOR %309, %294, 14, _
+    %311, %cpsr = tEOR %310, %295, 14, _
+    %312, %cpsr = tEOR %311, %296, 14, _
+    %313, %cpsr = tEOR %312, %297, 14, _
+    %314, %cpsr = tEOR %313, %298, 14, _
+    %315, %cpsr = tEOR %266, %299, 14, _
+    %316, %cpsr = tEOR %315, %300, 14, _
+    %317, %cpsr = tEOR %316, %301, 14, _
+    %318, %cpsr = tEOR %317, %302, 14, _
+    %319, %cpsr = tEOR %318, %303, 14, _
+    %320, %cpsr = tEOR %319, %304, 14, _
+    %321, %cpsr = tEOR %320, %305, 14, _
+    %322, %cpsr = tEOR %321, %306, 14, _
+    %323, %cpsr = tEOR %322, %307, 14, _
+    %324, %cpsr = tEOR %323, %308, 14, _
+    %325, %cpsr = tEOR %324, %309, 14, _
+    %326, %cpsr = tEOR %325, %310, 14, _
+    %327, %cpsr = tEOR %326, %311, 14, _
+    %328, %cpsr = tEOR %327, %312, 14, _
+    %329, %cpsr = tEOR %328, %313, 14, _
+    %330, %cpsr = tEOR %329, %314, 14, _
+    %331, %cpsr = tEOR %282, %315, 14, _
+    %332, %cpsr = tEOR %298, %331, 14, _
+    %333, %cpsr = tEOR %314, %332, 14, _
+    %334, %cpsr = tEOR %330, %333, 14, _
+    %335, %cpsr = tEOR %331, %316, 14, _
+    %336, %cpsr = tEOR %332, %335, 14, _
+    %337, %cpsr = tEOR %333, %336, 14, _
+    %338, %cpsr = tEOR %334, %337, 14, _
+    %339, %cpsr = tEOR %335, %317, 14, _
+    %340, %cpsr = tEOR %336, %339, 14, _
+    %341, %cpsr = tEOR %337, %340, 14, _
+    %342, %cpsr = tEOR %338, %341, 14, _
+    tSTRspi killed %342, %stack.1.k1721, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1721)
+    %343, %cpsr = tEOR %339, %318, 14, _
+    %344, %cpsr = tEOR %343, %319, 14, _
+    %345, %cpsr = tEOR %344, %320, 14, _
+    %346, %cpsr = tEOR %345, %321, 14, _
+    %347, %cpsr = tEOR %346, %322, 14, _
+    %348, %cpsr = tEOR %347, %323, 14, _
+    %349, %cpsr = tEOR %348, %324, 14, _
+    %350, %cpsr = tEOR %349, %325, 14, _
+    %351, %cpsr = tEOR %350, %326, 14, _
+    %352, %cpsr = tEOR %351, %327, 14, _
+    %353, %cpsr = tEOR %352, %328, 14, _
+    %354, %cpsr = tEOR %353, %329, 14, _
+    tSTRspi killed %354, %stack.4.k1731, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1731)
+    %355, %cpsr = tEOR %340, %343, 14, _
+    %356, %cpsr = tEOR %355, %344, 14, _
+    %357, %cpsr = tEOR %356, %345, 14, _
+    %358, %cpsr = tEOR %357, %346, 14, _
+    %359, %cpsr = tEOR %358, %347, 14, _
+    %360, %cpsr = tEOR %359, %348, 14, _
+    %361, %cpsr = tEOR %360, %349, 14, _
+    %362, %cpsr = tEOR %361, %350, 14, _
+    tSTRspi killed %362, %stack.7.k1741, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1741)
+    %363, %cpsr = tEOR %341, %355, 14, _
+    %364, %cpsr = tEOR %363, %356, 14, _
+    %365, %cpsr = tEOR %364, %357, 14, _
+    %366, %cpsr = tEOR %365, %358, 14, _
+    tSTRspi killed %366, %stack.10.k1751, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1751)
+    %367, %cpsr = tEOR %0, %4, 14, _
+    %368, %cpsr = tEOR %367, %191, 14, _
+    %369 = tLDRspi %fixed-stack.35, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %370, %cpsr = tEOR %369, %5, 14, _
+    %371, %cpsr = tEOR %370, %192, 14, _
+    %372, %cpsr = tEOR %371, killed %368, 14, _
+    %373, %cpsr = tEOR %1, %9, 14, _
+    %374, %cpsr = tEOR %373, %194, 14, _
+    %375 = tLDRspi %fixed-stack.34, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %376, %cpsr = tEOR %375, %10, 14, _
+    %377, %cpsr = tEOR %376, %195, 14, _
+    %378, %cpsr = tEOR %377, killed %374, 14, _
+    %379 = tLDRspi %fixed-stack.43, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %380, %cpsr = tEOR %379, %12, 14, _
+    %381, %cpsr = tEOR %380, %197, 14, _
+    %382, %cpsr = tEOR %378, killed %381, 14, _
+    %383 = tLDRspi %fixed-stack.39, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %384, %cpsr = tEOR %383, %14, 14, _
+    %385, %cpsr = tEOR %384, %199, 14, _
+    %386, %cpsr = tEOR %382, killed %385, 14, _
+    %387, %cpsr = tEOR %386, %371, 14, _
+    %388, %cpsr = tEOR %387, %372, 14, _
+    %389, %cpsr = tEOR %2, %19, 14, _
+    %390, %cpsr = tEOR %389, %203, 14, _
+    %391 = tLDRspi %fixed-stack.33, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %392, %cpsr = tEOR %391, %20, 14, _
+    %393, %cpsr = tEOR %392, %204, 14, _
+    %394, %cpsr = tEOR %393, killed %390, 14, _
+    %395 = tLDRspi %fixed-stack.42, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %396, %cpsr = tEOR %395, %22, 14, _
+    %397, %cpsr = tEOR %396, %206, 14, _
+    %398, %cpsr = tEOR %394, killed %397, 14, _
+    %399 = tLDRspi %fixed-stack.38, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %400, %cpsr = tEOR %399, %24, 14, _
+    %401, %cpsr = tEOR %400, %208, 14, _
+    %402, %cpsr = tEOR %398, killed %401, 14, _
+    %403, %cpsr = tEOR %402, %377, 14, _
+    %404, %cpsr = tEOR %403, %378, 14, _
+    %405, %cpsr = tEOR %404, %382, 14, _
+    %406, %cpsr = tEOR %405, %386, 14, _
+    %407, %cpsr = tEOR %406, %387, 14, _
+    %408, %cpsr = tEOR %407, %388, 14, _
+    %409, %cpsr = tEOR %3, %33, 14, _
+    %410, %cpsr = tEOR %409, %216, 14, _
+    %411 = tLDRspi %fixed-stack.36, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %412, %cpsr = tEOR %411, %34, 14, _
+    %413, %cpsr = tEOR %412, %217, 14, _
+    %414, %cpsr = tEOR %413, killed %410, 14, _
+    %415 = tLDRspi %fixed-stack.41, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %416, %cpsr = tEOR %415, %36, 14, _
+    %417, %cpsr = tEOR %416, %219, 14, _
+    %418, %cpsr = tEOR %414, killed %417, 14, _
+    %419 = tLDRspi %fixed-stack.37, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack)
+    %420, %cpsr = tEOR %419, %38, 14, _
+    %421, %cpsr = tEOR %420, %221, 14, _
+    %422, %cpsr = tEOR %418, killed %421, 14, _
+    %423, %cpsr = tEOR %422, %393, 14, _
+    %424, %cpsr = tEOR %423, %394, 14, _
+    %425, %cpsr = tEOR %424, %398, 14, _
+    %426, %cpsr = tEOR %425, %402, 14, _
+    %427, %cpsr = tEOR %426, %403, 14, _
+    %428, %cpsr = tEOR %427, %404, 14, _
+    %429, %cpsr = tEOR %428, %405, 14, _
+    %430, %cpsr = tEOR %429, %406, 14, _
+    %431, %cpsr = tEOR %430, %407, 14, _
+    %432, %cpsr = tEOR %431, %408, 14, _
+    %433 = tLDRspi %fixed-stack.44, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %434, %cpsr = tEOR %433, %51, 14, _
+    %435, %cpsr = tEOR %434, %233, 14, _
+    %436, %cpsr = tEOR %372, killed %435, 14, _
+    %437 = tLDRspi %fixed-stack.40, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (load 4 from stack, align 8)
+    %438, %cpsr = tEOR %437, %53, 14, _
+    %439, %cpsr = tEOR %438, %235, 14, _
+    %440, %cpsr = tEOR %436, killed %439, 14, _
+    %441, %cpsr = tEOR %440, %413, 14, _
+    %442, %cpsr = tEOR %441, %414, 14, _
+    %443, %cpsr = tEOR %442, %418, 14, _
+    %444, %cpsr = tEOR %443, %422, 14, _
+    %445, %cpsr = tEOR %444, %423, 14, _
+    %446, %cpsr = tEOR %445, %424, 14, _
+    %447, %cpsr = tEOR %446, %425, 14, _
+    %448, %cpsr = tEOR %447, %426, 14, _
+    %449, %cpsr = tEOR %448, %427, 14, _
+    %450, %cpsr = tEOR %449, %428, 14, _
+    %451, %cpsr = tEOR %450, %429, 14, _
+    %452, %cpsr = tEOR %451, %430, 14, _
+    %453, %cpsr = tEOR %452, %431, 14, _
+    %454, %cpsr = tEOR %453, %432, 14, _
+    %455, %cpsr = tEOR %388, %436, 14, _
+    %456, %cpsr = tEOR %455, %440, 14, _
+    %457, %cpsr = tEOR %456, %441, 14, _
+    %458, %cpsr = tEOR %457, %442, 14, _
+    %459, %cpsr = tEOR %458, %443, 14, _
+    %460, %cpsr = tEOR %459, %444, 14, _
+    %461, %cpsr = tEOR %460, %445, 14, _
+    %462, %cpsr = tEOR %461, %446, 14, _
+    %463, %cpsr = tEOR %462, %447, 14, _
+    %464, %cpsr = tEOR %463, %448, 14, _
+    %465, %cpsr = tEOR %464, %449, 14, _
+    %466, %cpsr = tEOR %465, %450, 14, _
+    %467, %cpsr = tEOR %466, %451, 14, _
+    %468, %cpsr = tEOR %467, %452, 14, _
+    %469, %cpsr = tEOR %468, %453, 14, _
+    %470, %cpsr = tEOR %469, %454, 14, _
+    %471, %cpsr = tEOR %408, %455, 14, _
+    %472, %cpsr = tEOR %471, %456, 14, _
+    %473, %cpsr = tEOR %472, %457, 14, _
+    %474, %cpsr = tEOR %473, %458, 14, _
+    %475, %cpsr = tEOR %474, %459, 14, _
+    %476, %cpsr = tEOR %475, %460, 14, _
+    %477, %cpsr = tEOR %476, %461, 14, _
+    %478, %cpsr = tEOR %477, %462, 14, _
+    %479, %cpsr = tEOR %478, %463, 14, _
+    %480, %cpsr = tEOR %479, %464, 14, _
+    %481, %cpsr = tEOR %480, %465, 14, _
+    %482, %cpsr = tEOR %481, %466, 14, _
+    %483, %cpsr = tEOR %482, %467, 14, _
+    %484, %cpsr = tEOR %483, %468, 14, _
+    %485, %cpsr = tEOR %484, %469, 14, _
+    %486, %cpsr = tEOR %485, %470, 14, _
+    %487, %cpsr = tEOR %432, %471, 14, _
+    %488, %cpsr = tEOR %487, %472, 14, _
+    %489, %cpsr = tEOR %488, %473, 14, _
+    %490, %cpsr = tEOR %489, %474, 14, _
+    %491, %cpsr = tEOR %490, %475, 14, _
+    %492, %cpsr = tEOR %491, %476, 14, _
+    %493, %cpsr = tEOR %492, %477, 14, _
+    %494, %cpsr = tEOR %493, %478, 14, _
+    %495, %cpsr = tEOR %494, %479, 14, _
+    %496, %cpsr = tEOR %495, %480, 14, _
+    %497, %cpsr = tEOR %496, %481, 14, _
+    %498, %cpsr = tEOR %497, %482, 14, _
+    %499, %cpsr = tEOR %498, %483, 14, _
+    %500, %cpsr = tEOR %499, %484, 14, _
+    %501, %cpsr = tEOR %500, %485, 14, _
+    %502, %cpsr = tEOR %501, %486, 14, _
+    %503, %cpsr = tEOR %454, %487, 14, _
+    %504, %cpsr = tEOR %503, %488, 14, _
+    %505, %cpsr = tEOR %504, %489, 14, _
+    %506, %cpsr = tEOR %505, %490, 14, _
+    %507, %cpsr = tEOR %506, %491, 14, _
+    %508, %cpsr = tEOR %507, %492, 14, _
+    %509, %cpsr = tEOR %508, %493, 14, _
+    %510, %cpsr = tEOR %509, %494, 14, _
+    %511, %cpsr = tEOR %510, %495, 14, _
+    %512, %cpsr = tEOR %511, %496, 14, _
+    %513, %cpsr = tEOR %512, %497, 14, _
+    %514, %cpsr = tEOR %513, %498, 14, _
+    %515, %cpsr = tEOR %514, %499, 14, _
+    %516, %cpsr = tEOR %515, %500, 14, _
+    %517, %cpsr = tEOR %516, %501, 14, _
+    %518, %cpsr = tEOR %517, %502, 14, _
+    %519, %cpsr = tEOR %470, %503, 14, _
+    %520, %cpsr = tEOR %519, %504, 14, _
+    %521, %cpsr = tEOR %520, %505, 14, _
+    %522, %cpsr = tEOR %521, %506, 14, _
+    %523, %cpsr = tEOR %522, %507, 14, _
+    %524, %cpsr = tEOR %523, %508, 14, _
+    %525, %cpsr = tEOR %524, %509, 14, _
+    %526, %cpsr = tEOR %525, %510, 14, _
+    %527, %cpsr = tEOR %526, %511, 14, _
+    %528, %cpsr = tEOR %527, %512, 14, _
+    %529, %cpsr = tEOR %528, %513, 14, _
+    %530, %cpsr = tEOR %529, %514, 14, _
+    %531, %cpsr = tEOR %530, %515, 14, _
+    %532, %cpsr = tEOR %531, %516, 14, _
+    %533, %cpsr = tEOR %532, %517, 14, _
+    %534, %cpsr = tEOR %533, %518, 14, _
+    %535, %cpsr = tEOR %486, %519, 14, _
+    %536, %cpsr = tEOR %502, %535, 14, _
+    %537, %cpsr = tEOR %518, %536, 14, _
+    %538, %cpsr = tEOR %534, %537, 14, _
+    %539, %cpsr = tEOR %535, %520, 14, _
+    %540, %cpsr = tEOR %536, %539, 14, _
+    %541, %cpsr = tEOR %537, %540, 14, _
+    %542, %cpsr = tEOR %538, %541, 14, _
+    %543, %cpsr = tEOR %539, %521, 14, _
+    %544, %cpsr = tEOR %540, %543, 14, _
+    %545, %cpsr = tEOR %541, %544, 14, _
+    %546, %cpsr = tEOR %542, %545, 14, _
+    tSTRspi killed %546, %stack.2.k1722, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1722)
+    %547, %cpsr = tEOR %543, %522, 14, _
+    %548, %cpsr = tEOR %547, %523, 14, _
+    %549, %cpsr = tEOR %548, %524, 14, _
+    %550, %cpsr = tEOR %549, %525, 14, _
+    %551, %cpsr = tEOR %550, %526, 14, _
+    %552, %cpsr = tEOR %551, %527, 14, _
+    %553, %cpsr = tEOR %552, %528, 14, _
+    %554, %cpsr = tEOR %553, %529, 14, _
+    %555, %cpsr = tEOR %554, %530, 14, _
+    %556, %cpsr = tEOR %555, %531, 14, _
+    %557, %cpsr = tEOR %556, %532, 14, _
+    %558, %cpsr = tEOR %557, %533, 14, _
+    tSTRspi killed %558, %stack.5.k1732, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1732)
+    %559, %cpsr = tEOR %544, %547, 14, _
+    %560, %cpsr = tEOR %559, %548, 14, _
+    %561, %cpsr = tEOR %560, %549, 14, _
+    %562, %cpsr = tEOR %561, %550, 14, _
+    %563, %cpsr = tEOR %562, %551, 14, _
+    %564, %cpsr = tEOR %563, %552, 14, _
+    %565, %cpsr = tEOR %564, %553, 14, _
+    %566, %cpsr = tEOR %565, %554, 14, _
+    tSTRspi killed %566, %stack.8.k1742, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1742)
+    %567, %cpsr = tEOR %545, %559, 14, _
+    %568, %cpsr = tEOR %567, %560, 14, _
+    %569, %cpsr = tEOR %568, %561, 14, _
+    %570, %cpsr = tEOR %569, %562, 14, _
+    tSTRspi killed %570, %stack.11.k1752, 0, 14, _, <0x3c44c60> = !{!"unison-memory-partition", i32 0} :: (volatile store 4 into %ir.k1752)
+    %571, %cpsr = tMOVi8 0, 14, _
+    %r0 = COPY %571
+    tBX_RET 14, _, implicit %r0
+
+...

@@ -1,2 +1,7 @@
-bash -x compile_minizinc.sh code_cm0  _Z7computejjjj 25 thumb
-bash -x compile_minizinc.sh code_mips  _Z7computejjjj 25 mips
+#!/bin/bash
+
+iter=$1
+filen=code
+func=_Z7computejjjj
+bash -x compile_minizinc.sh ${filen}_cm0 $func 25 thumb $iter
+bash -x compile_minizinc.sh ${filen}_mips $func 25 mips $iter

@@ -1,12 +1,12 @@
-//p2, Messerges unsignedean to arithmetic (bit0)
+//p2, Messerges boolean to arithmetic (bit0)
 //for one bit operation subtraction, addition and xor are equivalent
-unsigned compute(unsigned C, unsigned rx, unsigned x){
-    unsigned B;
-    unsigned A1;
-    unsigned A2;
-    unsigned A3;
-    unsigned A4;
-    unsigned X;
+char compute(char C, char rx, char x){
+    char B;
+    char A1;
+    char A2;
+    char A3;
+    char A4;
+    char X;
     X = x ^ rx;
     B = C ^ rx;
     A1 = C ^ X;

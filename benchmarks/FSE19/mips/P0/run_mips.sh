@@ -1,6 +1,6 @@
 #e/bin/bash
 
-FSE_HOME=$HOME/didaktoriko/unison/secdivcon/FSE19/
+#FSE_HOME=$HOME/didaktoriko/unison/secdivcon/FSE19/
 LLC=${FSE_HOME}/LLVM/build/bin/llc
 OPT=${FSE_HOME}/LLVM/build/bin/opt
 FILE=$1

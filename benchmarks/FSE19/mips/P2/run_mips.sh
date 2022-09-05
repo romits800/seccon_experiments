@@ -1,6 +1,6 @@
 #e/bin/bash
 
-FSE_HOME=$HOME/didaktoriko/unison/secdivcon/FSE19/
+FSE_HOME=../../
 LLC=${FSE_HOME}/LLVM/build/bin/llc
 OPT=${FSE_HOME}/LLVM/build/bin/opt
 FILE=$1
@@ -12,13 +12,11 @@ INPUT=$2
 #popd
 #../common/analy_backend  memBool.log shared_variable.txt
 
-bash clean.sh
-
 clang-3.6  -nostdlib -ffreestanding   --target=mips   -mcpu=mips32  -mfloat-abi=soft -o $FILE.ll   -S  -emit-llvm $FILE.cpp
 
 #clang-3.6 -emit-llvm -S $FILE.cpp -o $FILE.ll
 # generate original - and output memBool.log and others
-$LLC -march=mips -mcpu=mips32  -regalloc=basic -debug-only=regalloc $FILE.ll -o ${FILE}_mips.s  &> out
+$LLC -march=mips -mcpu=mips32  -regalloc=basic -debug-only=regalloc $FILE.ll -o ${FILE}_mips.s  &> /dev/null
 # generates shared_variable.txt
 ${FSE_HOME}/common/analy_backend_linux  memBool.log shared_variable.txt
 
