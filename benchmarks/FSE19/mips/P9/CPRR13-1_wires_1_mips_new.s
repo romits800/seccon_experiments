@@ -22,194 +22,98 @@ _Z12CPRR13_wiresjjjjjjjjj:              # @_Z12CPRR13_wiresjjjjjjjjj
 	sw	$fp, 116($sp)           # 4-byte Folded Spill
 	move	 $fp, $sp
 	move	 $8, $7
-	lw	$9, 152($fp)
-	lw	$7, 148($fp)
-	lw	$3, 144($fp)
-	lw	$2, 140($fp)
+	lw	$2, 152($fp)
+	lw	$9, 148($fp)
+	lw	$7, 144($fp)
+	lw	$3, 140($fp)
 	lw	$1, 136($fp)
 	sw	$4, 112($fp)
-	sw	$5, 108($fp)
-	sw	$6, 104($fp)
-	sw	$8, 100($fp)
-	sw	$1, 96($fp)
-	sw	$2, 92($fp)
-	sw	$3, 88($fp)
-	sw	$7, 84($fp)
+	sw	$5, 80($fp)
+	sw	$6, 80($fp)
+	sw	$8, 80($fp)
+	sw	$1, 80($fp)
+	sw	$3, 80($fp)
+	sw	$7, 80($fp)
 	sw	$9, 80($fp)
-	lw	$2, 108($fp)
+	sw	$2, 80($fp)
 	lw	$1, 112($fp)
 	xor	$1, $1, $2
-	sw	$1, 76($fp)
-	lw	$1, 108($fp)
-	sw	$1, 64($fp)
-	lw	$1, 76($fp)
-	sw	$1, 60($fp)
-	lw	$2, 100($fp)
-	sw	$2, 48($fp)
-	lw	$1, 108($fp)
-	mul	$2, $1, $2
-	sw	$2, 48($fp)
-	lw	$1, 104($fp)
-	xor	$1, $1, $2
-	sw	$1, 40($fp)
-	lw	$2, 108($fp)
-	sw	$2, 48($fp)
-	lw	$1, 100($fp)
-	mul	$2, $1, $2
-	sw	$2, 48($fp)
-	lw	$1, 40($fp)
-	xor	$1, $1, $2
-	sw	$1, 40($fp)
-	lw	$2, 100($fp)
-	lw	$1, 76($fp)
-	xor	$2, $1, $2
-	sw	$2, 48($fp)
-	lw	$1, 108($fp)
-	mul	$2, $1, $2
-	sw	$2, 48($fp)
-	lw	$1, 40($fp)
-	xor	$1, $1, $2
-	sw	$1, 40($fp)
-	lw	$1, 108($fp)
-	sw	$1, 48($fp)
-	lw	$2, 100($fp)
-	lw	$1, 76($fp)
-	xor	$2, $1, $2
-	sw	$2, 44($fp)
-	lw	$1, 48($fp)
-	mul	$2, $2, $1
-	sw	$2, 48($fp)
-	lw	$1, 40($fp)
-	xor	$1, $1, $2
-	sw	$1, 40($fp)
-	lw	$1, 108($fp)
-	mul	$2, $1, $1
-	sw	$2, 48($fp)
-	lw	$1, 104($fp)
-	xor	$1, $2, $1
-	sw	$1, 72($fp)
-	lw	$1, 76($fp)
-	mul	$2, $1, $1
-	sw	$2, 48($fp)
-	lw	$1, 40($fp)
-	xor	$1, $2, $1
-	sw	$1, 68($fp)
-	lw	$1, 72($fp)
-	sw	$1, 56($fp)
-	lw	$1, 68($fp)
-	sw	$1, 52($fp)
-	lw	$2, 92($fp)
-	sw	$2, 36($fp)
-	lw	$1, 72($fp)
-	mul	$2, $1, $2
-	sw	$2, 36($fp)
-	lw	$1, 96($fp)
-	xor	$1, $1, $2
-	sw	$1, 28($fp)
-	lw	$2, 72($fp)
-	sw	$2, 36($fp)
-	lw	$1, 92($fp)
-	mul	$2, $1, $2
-	sw	$2, 36($fp)
-	lw	$1, 28($fp)
-	xor	$1, $1, $2
-	sw	$1, 28($fp)
-	lw	$2, 92($fp)
-	lw	$1, 68($fp)
-	xor	$2, $1, $2
-	sw	$2, 36($fp)
-	lw	$1, 72($fp)
-	mul	$2, $1, $2
-	sw	$2, 36($fp)
-	lw	$1, 28($fp)
-	xor	$1, $1, $2
-	sw	$1, 28($fp)
-	lw	$1, 72($fp)
-	sw	$1, 36($fp)
-	lw	$2, 92($fp)
-	lw	$1, 68($fp)
-	xor	$2, $1, $2
-	sw	$2, 32($fp)
-	lw	$1, 36($fp)
-	mul	$2, $2, $1
-	sw	$2, 36($fp)
-	lw	$1, 28($fp)
-	xor	$1, $1, $2
-	sw	$1, 28($fp)
-	lw	$1, 72($fp)
-	mul	$2, $1, $1
-	sw	$2, 36($fp)
-	lw	$1, 96($fp)
-	xor	$1, $2, $1
-	sw	$1, 72($fp)
-	lw	$1, 68($fp)
-	mul	$2, $1, $1
-	sw	$2, 36($fp)
-	lw	$1, 28($fp)
-	xor	$1, $2, $1
-	sw	$1, 68($fp)
-	lw	$2, 52($fp)
-	lw	$1, 72($fp)
-	mul	$2, $1, $2
-	sw	$2, 20($fp)
-	lw	$1, 88($fp)
-	xor	$1, $1, $2
-	sw	$1, 24($fp)
-	lw	$2, 56($fp)
-	lw	$1, 68($fp)
-	mul	$2, $1, $2
-	sw	$2, 16($fp)
-	lw	$1, 24($fp)
-	xor	$1, $1, $2
-	sw	$1, 24($fp)
-	lw	$2, 56($fp)
-	lw	$1, 72($fp)
-	mul	$2, $1, $2
-	sw	$2, 72($fp)
-	lw	$1, 88($fp)
-	xor	$1, $2, $1
-	sw	$1, 72($fp)
-	lw	$2, 52($fp)
-	lw	$1, 68($fp)
-	mul	$2, $1, $2
-	sw	$2, 68($fp)
-	lw	$1, 24($fp)
-	xor	$1, $2, $1
-	sw	$1, 68($fp)
-	lw	$2, 60($fp)
-	lw	$1, 72($fp)
-	mul	$2, $1, $2
-	sw	$2, 8($fp)
-	lw	$1, 84($fp)
-	xor	$1, $1, $2
-	sw	$1, 12($fp)
-	lw	$2, 64($fp)
-	lw	$1, 68($fp)
-	mul	$2, $1, $2
-	sw	$2, 4($fp)
-	lw	$1, 12($fp)
-	xor	$1, $1, $2
-	sw	$1, 12($fp)
-	lw	$2, 64($fp)
-	lw	$1, 72($fp)
-	mul	$2, $1, $2
-	sw	$2, 72($fp)
-	lw	$1, 84($fp)
-	xor	$1, $2, $1
-	sw	$1, 72($fp)
-	lw	$2, 60($fp)
-	lw	$1, 68($fp)
-	mul	$2, $1, $2
-	sw	$2, 68($fp)
-	lw	$1, 12($fp)
-	xor	$1, $2, $1
-	sw	$1, 68($fp)
+	sw	$1, 80($fp)
 	lw	$2, 80($fp)
-	lw	$1, 72($fp)
+	mul	$2, $2, $2
+	sw	$2, 80($fp)
+	sw	$zero, 80($fp)
+	sw	$zero, 44($fp)
+	sw	$zero, 80($fp)
+	lw	$1, 80($fp)
+	mul	$1, $1, $1
+	sw	$1, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$1, 80($fp)
+	mul	$1, $1, $1
+	sw	$1, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$2, 80($fp)
+	mul	$1, $2, $2
+	sw	$1, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$1, 80($fp)
+	mul	$2, $1, $1
+	sw	$2, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$1, 80($fp)
+	mul	$2, $1, $1
+	sw	$2, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$1, 80($fp)
+	mul	$1, $1, $1
+	sw	$1, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$1, 80($fp)
+	mul	$1, $1, $1
+	sw	$1, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$2, 80($fp)
+	mul	$2, $2, $2
+	sw	$2, 20($fp)
+	lw	$1, 80($fp)
 	xor	$2, $1, $2
-	sw	$2, 72($fp)
-	lw	$1, 68($fp)
-	xor	$2, $2, $1
+	sw	$2, 80($fp)
+	lw	$1, 80($fp)
+	mul	$2, $1, $1
+	sw	$2, 16($fp)
+	lw	$1, 80($fp)
+	xor	$1, $1, $2
+	sw	$1, 80($fp)
+	lw	$2, 80($fp)
+	mul	$1, $2, $2
+	sw	$1, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$2, 80($fp)
+	mul	$1, $2, $2
+	sw	$1, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$2, 80($fp)
+	mul	$2, $2, $2
+	sw	$2, 8($fp)
+	lw	$1, 80($fp)
+	xor	$1, $1, $2
+	sw	$1, 80($fp)
+	lw	$1, 80($fp)
+	mul	$2, $1, $1
+	sw	$2, 4($fp)
+	lw	$1, 80($fp)
+	xor	$2, $1, $2
+	sw	$2, 80($fp)
+	lw	$2, 80($fp)
+	mul	$2, $2, $2
+	sw	$2, 80($fp)
+	sw	$zero, 80($fp)
+	lw	$1, 80($fp)
+	mul	$1, $1, $1
+	sw	$1, 80($fp)
+	sw	$zero, 80($fp)
+	addiu	$2, $zero, 0
 	move	 $sp, $fp
 	lw	$fp, 116($sp)           # 4-byte Folded Reload
 	jr	$ra

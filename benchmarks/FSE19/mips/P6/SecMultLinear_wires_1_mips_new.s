@@ -30,59 +30,58 @@ _Z7SecMultiiiii:                        # @_Z7SecMultiiiii
 	lw	$2, 32($fp)
 	lw	$1, 40($fp)
 	xor	$1, $1, $2
-	sw	$1, 20($fp)
+	sw	$1, 32($fp)
 	lw	$2, 24($fp)
 	sw	$2, 8($fp)
 	lw	$1, 32($fp)
-	mul	$2, $1, $2
-	sw	$2, 8($fp)
-	lw	$1, 28($fp)
-	xor	$1, $1, $2
-	sw	$1, 0($fp)
+	mul	$1, $1, $2
+	sw	$1, 8($fp)
+	lw	$2, 28($fp)
+	xor	$1, $2, $1
+	sw	$1, 28($fp)
 	lw	$2, 32($fp)
 	sw	$2, 8($fp)
 	lw	$1, 24($fp)
 	mul	$2, $1, $2
 	sw	$2, 8($fp)
-	lw	$1, 0($fp)
+	lw	$1, 28($fp)
 	xor	$1, $1, $2
-	sw	$1, 0($fp)
+	sw	$1, 28($fp)
 	lw	$2, 24($fp)
-	lw	$1, 20($fp)
+	lw	$1, 32($fp)
 	xor	$2, $1, $2
 	sw	$2, 8($fp)
 	lw	$1, 32($fp)
-	mul	$2, $1, $2
-	sw	$2, 8($fp)
-	lw	$1, 0($fp)
-	xor	$1, $1, $2
-	sw	$1, 0($fp)
+	mul	$1, $1, $2
+	sw	$1, 8($fp)
+	lw	$2, 28($fp)
+	xor	$1, $2, $1
+	sw	$1, 28($fp)
 	lw	$1, 32($fp)
 	sw	$1, 8($fp)
 	lw	$2, 24($fp)
-	lw	$1, 20($fp)
+	lw	$1, 32($fp)
 	xor	$2, $1, $2
 	sw	$2, 4($fp)
 	lw	$1, 8($fp)
 	mul	$2, $2, $1
 	sw	$2, 8($fp)
-	lw	$1, 0($fp)
-	xor	$1, $1, $2
-	sw	$1, 0($fp)
-	lw	$1, 32($fp)
-	mul	$2, $1, $1
-	sw	$2, 8($fp)
 	lw	$1, 28($fp)
-	xor	$1, $2, $1
-	sw	$1, 16($fp)
-	lw	$1, 20($fp)
-	mul	$2, $1, $1
-	sw	$2, 8($fp)
-	lw	$1, 0($fp)
-	xor	$2, $2, $1
-	sw	$2, 12($fp)
-	lw	$1, 16($fp)
-	xor	$2, $1, $2
+	xor	$1, $1, $2
+	sw	$1, 28($fp)
+	lw	$1, 32($fp)
+	mul	$1, $1, $1
+	sw	$1, 8($fp)
+	lw	$2, 28($fp)
+	xor	$1, $1, $2
+	sw	$1, 28($fp)
+	lw	$1, 32($fp)
+	mul	$1, $1, $1
+	sw	$1, 8($fp)
+	lw	$2, 28($fp)
+	xor	$1, $1, $2
+	sw	$1, 28($fp)
+	addiu	$2, $zero, 0
 	move	 $sp, $fp
 	lw	$fp, 44($sp)            # 4-byte Folded Reload
 	jr	$ra

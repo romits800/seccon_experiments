@@ -30,47 +30,44 @@ _Z7computeccc:
 	sub	sp, #12
 	mov	r4, r2
 	mov	r3, r1
-	add	r2, sp, #8
-	adds	r2, #3
-	strb	r0, [r2]
 	add	r1, sp, #8
-	adds	r1, #2
-	strb	r3, [r1]
+	adds	r1, #3
+	strb	r0, [r1]
+	add	r2, sp, #8
+	adds	r2, #2
+	strb	r3, [r2]
 	add	r0, sp, #8
 	adds	r0, #1
 	strb	r4, [r0]
-	ldrb	r3, [r1]
+	ldrb	r3, [r2]
 	ldrb	r0, [r0]
 	eors	r0, r3
-	mov	r4, sp
-	adds	r4, #3
-	strb	r0, [r4]
-	ldrb	r1, [r1]
-	ldrb	r0, [r2]
-	eors	r0, r1
-	add	r3, sp, #8
-	strb	r0, [r3]
-	ldrb	r1, [r4]
-	ldrb	r0, [r2]
-	eors	r0, r1
-	add	r1, sp, #4
-	adds	r1, #3
-	strb	r0, [r1]
-	ldrb	r3, [r3]
-	ldrb	r0, [r1]
-	eors	r0, r3
-	add	r1, sp, #4
-	adds	r1, #2
-	strb	r0, [r1]
-	ldrb	r3, [r2]
-	ldrb	r0, [r1]
-	eors	r0, r3
-	add	r1, sp, #4
-	adds	r1, #1
 	strb	r0, [r1]
 	ldrb	r2, [r2]
 	ldrb	r0, [r1]
 	eors	r0, r2
+	add	r3, sp, #8
+	strb	r0, [r3]
+	ldrb	r0, [r1]
+	eors	r0, r0
+	add	r2, sp, #4
+	adds	r2, #3
+	strb	r0, [r2]
+	ldrb	r3, [r3]
+	ldrb	r0, [r2]
+	eors	r0, r3
+	add	r2, sp, #4
+	adds	r2, #2
+	strb	r0, [r2]
+	ldrb	r3, [r1]
+	ldrb	r0, [r2]
+	eors	r0, r3
+	add	r2, sp, #4
+	adds	r2, #1
+	strb	r0, [r2]
+	ldrb	r1, [r1]
+	ldrb	r0, [r2]
+	eors	r0, r1
 	add	r1, sp, #4
 	strb	r0, [r1]
 	ldrb	r0, [r1]

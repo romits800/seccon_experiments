@@ -26,10 +26,12 @@ _Z7computejjj:                          # @_Z7computejjj
 	sw	$6, 8($fp)
 	lw	$1, 12($fp)
 	xor	$2, $6, $1
-	sw	$2, 4($fp)
-	lw	$1, 16($fp)
-	xor	$2, $2, $1
-	sw	$2, 0($fp)
+	sw	$2, 12($fp)
+	lw	$2, 16($fp)
+	lw	$1, 12($fp)
+	xor	$1, $1, $2
+	sw	$1, 16($fp)
+	lw	$2, 16($fp)
 	move	 $sp, $fp
 	lw	$fp, 20($sp)            # 4-byte Folded Reload
 	jr	$ra

@@ -28,26 +28,19 @@ _Z7computejjjj:
 @ BB#0:
 	push	{r4, lr}
 	sub	sp, #40
-	mov	r4, sp
-	str	r3, [r4, #24]
-	str	r2, [r4, #28]
-	str	r1, [r4, #32]
-	str	r0, [r4, #36]
-	ldr	r0, [r4, #36]
-	eors	r0, r3
-	str	r0, [r4, #4]
-	ldr	r1, [r4, #36]
-	ldr	r0, [r4, #28]
+	add	r4, sp, #24
+	str	r3, [r4]
+	str	r2, [r4, #4]
+	str	r1, [r4, #8]
+	str	r0, [r4, #12]
+	ldr	r1, [r4, #12]
+	eors	r1, r3
+	str	r1, [r4, #12]
+	ldr	r0, [r4, #4]
 	eors	r0, r1
 	str	r0, [r4, #12]
-	str	r0, [r4, #16]
-	ldr	r0, [r4, #4]
-	str	r0, [r4, #20]
-	str	r0, [r4, #8]
-	ldr	r1, [r4, #16]
-	str	r1, [r4]
-	ldr	r0, [r4, #8]
-	subs	r0, r0, r1
+	movs	r1, #0
+	mov	r0, r1
 	add	sp, #40
 	pop	{r4, pc}
 .Ltmp0:

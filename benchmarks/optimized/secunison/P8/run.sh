@@ -9,15 +9,17 @@ export UNISON_PATH=${SECCON_PATH}
 func=_Z6OptLUTjjjjjjjjj 
 filen=CPRR13-OptLUT_wires_1 
 
-bash -x compile_secminizinc.sh ${filen}_mips $func 25 mips $iter
-#bash -x compile_clustering.sh ${filen}_cm0 $func 6 1000 8 thumb
-#bash -x compile_secminizinc.sh ${filen}_cm0 $func 80 thumb
-bash -x compile_secminizinc.sh ${filen}_cm0 $func 15 thumb $iter
+# sleep 20m
+#bash -x compile_secminizinc.sh ${filen}_mips $func 25 mips $iter
+#sleep 10m
+#bash -x compile_secminizinc.sh ${filen}_cm0 $func 15 thumb $iter
+#bash -x compile_secminizinc.sh ${filen}_cm0 $func 10 thumb $iter
+bash -x compile_secminizinc.sh ${filen}_cm0 $func 11 thumb $iter
 
+sleep 10m
 bash -x run_minizinc.sh ${filen}_mips $func 25 mips $iter
-bash -x run_minizinc.sh ${filen}_cm0 $func 15 thumb $iter
-#bash -x run_minizinc_cl.sh ${filen}_cm0 $func 6 1000 8 thumb
+#bash -x run_minizinc.sh ${filen}_cm0 $func 15 thumb $iter
 
 
 cat ${filen}_mips.$iter.out  | outfilter.pl ${filen}_mips.out.json.chuffed.last .chuffed  > ${filen}_mips.chuffed.$iter.out.json
-cat ${filen}_cm0.$iter.out  | outfilter.pl ${filen}_cm0.out.json.chuffed.last .chuffed  > ${filen}_cm0.chuffed.$iter.out.json
+#cat ${filen}_cm0.$iter.out  | outfilter.pl ${filen}_cm0.out.json.chuffed.last .chuffed  > ${filen}_cm0.chuffed.$iter.out.json

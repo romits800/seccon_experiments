@@ -35,10 +35,10 @@ _Z7SecMultiiiii:
 	str	r3, [r4, #44]
 	ldr	r0, [sp, #68]
 	str	r0, [r4, #40]
-	ldr	r1, [r4, #48]
-	ldr	r0, [r4, #56]
-	eors	r0, r1
-	str	r0, [r4, #36]
+	ldr	r0, [r4, #48]
+	ldr	r1, [r4, #56]
+	eors	r1, r0
+	str	r1, [r4, #48]
 	ldr	r1, [r4, #44]
 	ldr	r0, [r4, #52]
 	eors	r0, r1
@@ -48,7 +48,7 @@ _Z7SecMultiiiii:
 	muls	r0, r1, r0
 	str	r0, [r4, #28]
 	ldr	r1, [r4, #32]
-	ldr	r0, [r4, #36]
+	ldr	r0, [r4, #48]
 	muls	r0, r1, r0
 	str	r0, [r4, #24]
 	ldr	r0, [r4, #32]
@@ -59,7 +59,7 @@ _Z7SecMultiiiii:
 	eors	r0, r1
 	str	r0, [r4, #20]
 	ldr	r0, [r4, #44]
-	ldr	r1, [r4, #36]
+	ldr	r1, [r4, #48]
 	muls	r1, r0, r1
 	str	r1, [r4, #12]
 	ldr	r0, [r4, #20]

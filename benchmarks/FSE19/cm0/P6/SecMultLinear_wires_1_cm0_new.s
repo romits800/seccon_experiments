@@ -28,68 +28,38 @@ _Z7SecMultiiiii:
 @ BB#0:
 	push	{r4, lr}
 	sub	sp, #44
-	mov	r4, sp
-	str	r0, [r4, #40]
-	str	r1, [r4, #36]
-	str	r2, [r4, #32]
-	str	r3, [r4, #28]
-	ldr	r0, [sp, #52]
-	str	r0, [r4, #24]
-	ldr	r1, [r4, #32]
-	ldr	r0, [r4, #40]
+	add	r4, sp, #4
+	str	r3, [r4, #24]
+	str	r2, [r4, #28]
+	str	r1, [r4, #32]
+	str	r0, [r4, #36]
+	ldr	r1, [sp, #52]
+	str	r1, [r4, #28]
+	ldr	r0, [r4, #36]
 	eors	r0, r1
-	str	r0, [r4, #20]
-	ldr	r0, [r4, #24]
-	str	r0, [r4, #8]
-	ldr	r1, [r4, #32]
-	muls	r1, r0, r1
-	str	r1, [r4, #8]
-	ldr	r0, [r4, #28]
-	eors	r0, r1
-	str	r0, [r4]
-	ldr	r0, [r4, #32]
-	str	r0, [r4, #8]
-	ldr	r1, [r4, #24]
-	muls	r1, r0, r1
-	str	r1, [r4, #8]
-	ldr	r0, [r4]
-	eors	r0, r1
-	str	r0, [r4]
-	ldr	r1, [r4, #20]
-	ldr	r0, [r4, #24]
-	eors	r0, r1
-	str	r0, [r4, #8]
-	ldr	r1, [r4, #32]
-	muls	r1, r0, r1
-	str	r1, [r4, #8]
-	ldr	r0, [r4]
-	eors	r0, r1
-	str	r0, [r4]
-	ldr	r0, [r4, #32]
-	str	r0, [r4, #8]
-	ldr	r1, [r4, #20]
-	ldr	r0, [r4, #24]
-	eors	r0, r1
-	str	r0, [r4, #4]
-	ldr	r1, [r4, #8]
-	muls	r1, r0, r1
-	str	r1, [r4, #8]
-	ldr	r0, [r4]
-	eors	r0, r1
-	str	r0, [r4]
-	ldr	r1, [r4, #32]
-	muls	r1, r1, r1
-	str	r1, [r4, #8]
-	ldr	r0, [r4, #28]
-	eors	r0, r1
-	str	r0, [r4, #16]
-	ldr	r0, [r4, #20]
+	str	r0, [r4, #28]
 	muls	r0, r0, r0
-	str	r0, [r4, #8]
-	ldr	r1, [r4]
-	eors	r1, r0
-	str	r1, [r4, #12]
-	ldr	r0, [r4, #16]
+	str	r0, [r4, #28]
+	ldr	r1, [r4, #24]
+	ldr	r0, [r4, #28]
+	eors	r0, r1
+	str	r0, [r4, #28]
+	muls	r0, r0, r0
+	str	r0, [r4, #28]
+	movs	r2, #0
+	str	r2, [r4, #28]
+	str	r2, [r4]
+	str	r2, [r4, #28]
+	ldr	r3, [r4, #24]
+	ldr	r0, [r4, #28]
+	eors	r0, r3
+	str	r0, [r4, #24]
+	ldr	r1, [r4, #28]
+	muls	r1, r1, r1
+	str	r1, [r4, #28]
+	str	r2, [r4, #28]
+	ldr	r1, [r4, #24]
+	ldr	r0, [r4, #28]
 	eors	r0, r1
 	add	sp, #44
 	pop	{r4, pc}

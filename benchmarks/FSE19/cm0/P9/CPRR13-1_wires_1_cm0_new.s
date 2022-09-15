@@ -29,194 +29,99 @@ _Z12CPRR13_wiresjjjjjjjjj:
 	push	{r4, lr}
 	sub	sp, #112
 	mov	r4, sp
-	str	r1, [r4, #104]
 	str	r0, [r4, #108]
-	str	r2, [r4, #100]
-	str	r3, [r4, #96]
+	str	r1, [r4, #76]
+	str	r2, [r4, #76]
+	str	r3, [r4, #76]
 	ldr	r0, [sp, #120]
-	str	r0, [r4, #92]
-	ldr	r0, [sp, #124]
-	str	r0, [r4, #88]
-	ldr	r0, [sp, #128]
-	str	r0, [r4, #84]
-	ldr	r0, [sp, #132]
-	str	r0, [r4, #80]
-	ldr	r0, [sp, #136]
 	str	r0, [r4, #76]
-	ldr	r1, [r4, #104]
+	ldr	r0, [sp, #124]
+	str	r0, [r4, #76]
+	ldr	r0, [sp, #128]
+	str	r0, [r4, #76]
+	ldr	r0, [sp, #132]
+	str	r0, [r4, #76]
+	ldr	r1, [sp, #136]
+	str	r1, [r4, #76]
 	ldr	r0, [r4, #108]
 	eors	r0, r1
-	str	r0, [r4, #72]
-	ldr	r0, [r4, #104]
-	str	r0, [r4, #60]
-	ldr	r0, [r4, #72]
-	str	r0, [r4, #56]
-	ldr	r0, [r4, #96]
-	str	r0, [r4, #44]
-	ldr	r1, [r4, #104]
-	muls	r1, r0, r1
-	str	r1, [r4, #44]
-	ldr	r0, [r4, #100]
-	eors	r0, r1
-	str	r0, [r4, #36]
-	ldr	r0, [r4, #104]
-	str	r0, [r4, #44]
-	ldr	r1, [r4, #96]
-	muls	r1, r0, r1
-	str	r1, [r4, #44]
-	ldr	r0, [r4, #36]
-	eors	r0, r1
-	str	r0, [r4, #36]
-	ldr	r1, [r4, #96]
-	ldr	r0, [r4, #72]
-	eors	r0, r1
-	str	r0, [r4, #44]
-	ldr	r1, [r4, #104]
-	muls	r1, r0, r1
-	str	r1, [r4, #44]
-	ldr	r0, [r4, #36]
-	eors	r0, r1
-	str	r0, [r4, #36]
-	ldr	r0, [r4, #104]
-	str	r0, [r4, #44]
-	ldr	r1, [r4, #96]
-	ldr	r0, [r4, #72]
-	eors	r0, r1
-	str	r0, [r4, #40]
-	ldr	r1, [r4, #44]
-	muls	r1, r0, r1
-	str	r1, [r4, #44]
-	ldr	r0, [r4, #36]
-	eors	r0, r1
-	str	r0, [r4, #36]
-	ldr	r1, [r4, #104]
+	str	r0, [r4, #76]
+	ldr	r1, [r4, #76]
 	muls	r1, r1, r1
-	str	r1, [r4, #44]
-	ldr	r0, [r4, #100]
-	eors	r0, r1
-	str	r0, [r4, #68]
-	ldr	r1, [r4, #72]
-	muls	r1, r1, r1
-	str	r1, [r4, #44]
-	ldr	r0, [r4, #36]
-	eors	r0, r1
-	str	r0, [r4, #64]
-	ldr	r0, [r4, #68]
-	str	r0, [r4, #52]
-	ldr	r0, [r4, #64]
-	str	r0, [r4, #48]
-	ldr	r0, [r4, #88]
-	str	r0, [r4, #32]
-	ldr	r1, [r4, #68]
-	muls	r1, r0, r1
-	str	r1, [r4, #32]
-	ldr	r0, [r4, #92]
-	eors	r0, r1
-	str	r0, [r4, #24]
-	ldr	r0, [r4, #68]
-	str	r0, [r4, #32]
-	ldr	r1, [r4, #88]
-	muls	r1, r0, r1
-	str	r1, [r4, #32]
-	ldr	r0, [r4, #24]
-	eors	r0, r1
-	str	r0, [r4, #24]
-	ldr	r1, [r4, #88]
-	ldr	r0, [r4, #64]
-	eors	r0, r1
-	str	r0, [r4, #32]
-	ldr	r1, [r4, #68]
-	muls	r1, r0, r1
-	str	r1, [r4, #32]
-	ldr	r0, [r4, #24]
-	eors	r0, r1
-	str	r0, [r4, #24]
-	ldr	r0, [r4, #68]
-	str	r0, [r4, #32]
-	ldr	r1, [r4, #88]
-	ldr	r0, [r4, #64]
-	eors	r0, r1
-	str	r0, [r4, #28]
-	ldr	r1, [r4, #32]
-	muls	r1, r0, r1
-	str	r1, [r4, #32]
-	ldr	r0, [r4, #24]
-	eors	r0, r1
-	str	r0, [r4, #24]
-	ldr	r1, [r4, #68]
-	muls	r1, r1, r1
-	str	r1, [r4, #32]
-	ldr	r0, [r4, #92]
-	eors	r0, r1
-	str	r0, [r4, #68]
-	ldr	r1, [r4, #64]
-	muls	r1, r1, r1
-	str	r1, [r4, #32]
-	ldr	r0, [r4, #24]
-	eors	r0, r1
-	str	r0, [r4, #64]
-	ldr	r0, [r4, #48]
-	ldr	r1, [r4, #68]
-	muls	r1, r0, r1
-	str	r1, [r4, #16]
-	ldr	r0, [r4, #84]
-	eors	r0, r1
-	str	r0, [r4, #20]
-	ldr	r0, [r4, #52]
-	ldr	r1, [r4, #64]
-	muls	r1, r0, r1
-	str	r1, [r4, #12]
-	ldr	r0, [r4, #20]
-	eors	r0, r1
-	str	r0, [r4, #20]
-	ldr	r0, [r4, #52]
-	ldr	r1, [r4, #68]
-	muls	r1, r0, r1
-	str	r1, [r4, #68]
-	ldr	r0, [r4, #84]
-	eors	r0, r1
-	str	r0, [r4, #68]
-	ldr	r0, [r4, #48]
-	ldr	r1, [r4, #64]
-	muls	r1, r0, r1
-	str	r1, [r4, #64]
-	ldr	r0, [r4, #20]
-	eors	r0, r1
-	str	r0, [r4, #64]
-	ldr	r0, [r4, #56]
-	ldr	r1, [r4, #68]
-	muls	r1, r0, r1
-	str	r1, [r4, #4]
-	ldr	r0, [r4, #80]
-	eors	r0, r1
-	str	r0, [r4, #8]
-	ldr	r0, [r4, #60]
-	ldr	r1, [r4, #64]
-	muls	r1, r0, r1
-	str	r1, [r4]
-	ldr	r0, [r4, #8]
-	eors	r0, r1
-	str	r0, [r4, #8]
-	ldr	r0, [r4, #60]
-	ldr	r1, [r4, #68]
-	muls	r1, r0, r1
-	str	r1, [r4, #68]
-	ldr	r0, [r4, #80]
-	eors	r0, r1
-	str	r0, [r4, #68]
-	ldr	r0, [r4, #56]
-	ldr	r1, [r4, #64]
-	muls	r1, r0, r1
-	str	r1, [r4, #64]
-	ldr	r0, [r4, #8]
-	eors	r0, r1
-	str	r0, [r4, #64]
+	str	r1, [r4, #76]
+	movs	r2, #0
+	str	r2, [r4, #76]
+	str	r2, [r4, #40]
+	str	r2, [r4, #76]
 	ldr	r0, [r4, #76]
-	ldr	r1, [r4, #68]
-	eors	r1, r0
-	str	r1, [r4, #68]
-	ldr	r0, [r4, #64]
+	muls	r0, r0, r0
+	str	r0, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r0, [r4, #76]
+	muls	r0, r0, r0
+	str	r0, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r1, [r4, #76]
+	muls	r1, r1, r1
+	str	r1, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r1, [r4, #76]
+	muls	r1, r1, r1
+	str	r1, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r1, [r4, #76]
+	muls	r1, r1, r1
+	str	r1, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r0, [r4, #76]
+	muls	r0, r0, r0
+	str	r0, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r0, [r4, #76]
+	muls	r0, r0, r0
+	str	r0, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r1, [r4, #76]
+	muls	r1, r1, r1
+	str	r1, [r4, #16]
+	ldr	r0, [r4, #76]
 	eors	r0, r1
+	str	r0, [r4, #76]
+	ldr	r1, [r4, #76]
+	muls	r1, r1, r1
+	str	r1, [r4, #12]
+	ldr	r0, [r4, #76]
+	eors	r0, r1
+	str	r0, [r4, #76]
+	ldr	r0, [r4, #76]
+	muls	r0, r0, r0
+	str	r0, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r0, [r4, #76]
+	muls	r0, r0, r0
+	str	r0, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r1, [r4, #76]
+	muls	r1, r1, r1
+	str	r1, [r4, #4]
+	ldr	r0, [r4, #76]
+	eors	r0, r1
+	str	r0, [r4, #76]
+	ldr	r0, [r4, #76]
+	muls	r0, r0, r0
+	str	r0, [r4]
+	ldr	r1, [r4, #76]
+	eors	r1, r0
+	str	r1, [r4, #76]
+	ldr	r1, [r4, #76]
+	muls	r1, r1, r1
+	str	r1, [r4, #76]
+	str	r2, [r4, #76]
+	ldr	r0, [r4, #76]
+	muls	r0, r0, r0
+	str	r0, [r4, #76]
+	str	r2, [r4, #76]
+	mov	r0, r2
 	add	sp, #112
 	pop	{r4, pc}
 .Ltmp0:

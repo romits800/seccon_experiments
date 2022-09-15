@@ -27,35 +27,36 @@ _Z7computejjj:
 .Leh_func_begin0:
 @ BB#0:
 	sub	sp, #44
-	mov	r3, sp
-	str	r0, [r3, #40]
-	str	r1, [r3, #36]
-	str	r2, [r3, #32]
-	ldr	r0, [r3, #36]
-	eors	r0, r2
-	str	r0, [r3]
-	ldr	r2, [r3, #40]
-	eors	r2, r0
+	add	r3, sp, #4
 	str	r2, [r3, #28]
-	ldr	r1, [r3, #40]
-	eors	r1, r2
-	str	r1, [r3, #24]
-	ldr	r0, [r3]
-	eors	r0, r1
-	str	r0, [r3, #20]
+	str	r1, [r3, #32]
+	str	r0, [r3, #36]
 	ldr	r0, [r3, #32]
-	ldr	r1, [r3, #40]
+	eors	r0, r2
+	str	r0, [r3, #32]
+	ldr	r1, [r3, #32]
+	ldr	r0, [r3, #36]
+	eors	r0, r1
+	str	r0, [r3, #24]
+	ldr	r1, [r3, #36]
 	eors	r1, r0
-	str	r1, [r3, #16]
-	ldr	r0, [r3]
+	str	r1, [r3, #20]
+	ldr	r0, [r3, #32]
+	eors	r0, r1
+	str	r0, [r3, #16]
+	ldr	r1, [r3, #28]
+	ldr	r0, [r3, #36]
 	eors	r0, r1
 	str	r0, [r3, #12]
-	ldr	r1, [r3, #16]
-	eors	r1, r0
-	str	r1, [r3, #8]
-	ldr	r0, [r3, #20]
+	ldr	r2, [r3, #32]
+	eors	r2, r0
+	str	r2, [r3, #8]
+	ldr	r1, [r3, #12]
+	eors	r1, r2
+	str	r1, [r3, #4]
+	ldr	r0, [r3, #16]
 	eors	r0, r1
-	str	r0, [r3, #4]
+	str	r0, [r3]
 	add	sp, #44
 	bx	lr
 .Ltmp0:

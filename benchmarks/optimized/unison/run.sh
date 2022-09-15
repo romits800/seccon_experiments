@@ -3,13 +3,13 @@
 # which iteration we are running
 iter=$1
 
-for i in P{0..10}
+for i in P{0..9}
 do
     pushd $i
     bash -x clean.sh
     bash -x run.sh $iter &> out
     # sleeping
-    sleep 10m
+    sleep 1m
     #bash -x run_only_chuffed.sh &> out_only_chuffed
     popd
 done

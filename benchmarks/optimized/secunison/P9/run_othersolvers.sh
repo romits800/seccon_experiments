@@ -49,12 +49,12 @@ mzn-crippled-chuffed --fzn-flag --verbosity --fzn-flag 3 --fzn-flag -f --fzn-fla
 #gecode-secsolver --global-budget 500 --local-limit 50000 $flags -o $name.gecode.out.json --verbose $name.ext.json
 
 
-export MINIZINC_PATH=/home/romi/repo/minizinc/MiniZincIDE-2.6.2-bundle-linux-x86_64/bin/
-export PATH=${MINIZINC_PATH}:${PATH} 
-minizinc -c --solver geas -D good_cumulative=true -D good_diffn=false -D good_member=true --fzn ${name}.geas.fzn ${name}.dzn ${name}.mzn
-fzn-geas -s --time-out 5400 -f --global-diff true -a ${name}.geas.fzn
-
-fzn-geas -s --time-out 5400 -f --core-opt true --global-diff true -a ${name}.geas.fzn
-
-minizinc -c --solver ortools -D good_cumulative=true -D good_diffn=false -D good_member=true --fzn ${name}.ortools.fzn ${name}.dzn ${name}.mzn
-fzn-or-tools --stop_logging_if_full_disk true --threads 12 --free_search true --time_limit 5400 --statistics=true ${name}.ortools.fzn
+# export MINIZINC_PATH=/home/romi/repo/minizinc/MiniZincIDE-2.6.2-bundle-linux-x86_64/bin/
+# export PATH=${MINIZINC_PATH}:${PATH} 
+# minizinc -c --solver geas -D good_cumulative=true -D good_diffn=false -D good_member=true --fzn ${name}.geas.fzn ${name}.dzn ${name}.mzn
+# fzn-geas -s --time-out 5400 -f --global-diff true -a ${name}.geas.fzn
+# 
+# fzn-geas -s --time-out 5400 -f --core-opt true --global-diff true -a ${name}.geas.fzn
+# 
+# minizinc -c --solver ortools -D good_cumulative=true -D good_diffn=false -D good_member=true --fzn ${name}.ortools.fzn ${name}.dzn ${name}.mzn
+# fzn-or-tools --stop_logging_if_full_disk true --threads 12 --free_search true --time_limit 5400 --statistics=true ${name}.ortools.fzn

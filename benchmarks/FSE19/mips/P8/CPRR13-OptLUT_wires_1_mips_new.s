@@ -38,21 +38,17 @@ _Z6OptLUTjjjjjjjjj:                     # @_Z6OptLUTjjjjjjjjj
 	sw	$9, 184($fp)
 	lw	$2, 212($fp)
 	lw	$1, 216($fp)
-	xor	$1, $1, $2
-	sw	$1, 180($fp)
-	lw	$1, 212($fp)
-	sw	$1, 176($fp)
-	lw	$1, 180($fp)
-	sw	$1, 172($fp)
-	lw	$2, 204($fp)
-	lw	$1, 212($fp)
 	xor	$2, $1, $2
+	sw	$2, 212($fp)
+	lw	$3, 212($fp)
+	lw	$1, 204($fp)
+	xor	$2, $3, $1
 	sw	$2, 168($fp)
 	lw	$1, 208($fp)
 	xor	$1, $1, $2
 	sw	$1, 164($fp)
 	lw	$2, 204($fp)
-	lw	$1, 180($fp)
+	lw	$1, 212($fp)
 	xor	$2, $1, $2
 	sw	$2, 160($fp)
 	lw	$1, 164($fp)
@@ -62,7 +58,7 @@ _Z6OptLUTjjjjjjjjj:                     # @_Z6OptLUTjjjjjjjjj
 	lw	$1, 212($fp)
 	xor	$2, $1, $2
 	sw	$2, 152($fp)
-	lw	$1, 180($fp)
+	lw	$1, 212($fp)
 	xor	$2, $2, $1
 	sw	$2, 148($fp)
 	lw	$1, 156($fp)
@@ -73,16 +69,14 @@ _Z6OptLUTjjjjjjjjj:                     # @_Z6OptLUTjjjjjjjjj
 	lw	$1, 144($fp)
 	xor	$1, $1, $2
 	sw	$1, 136($fp)
-	lw	$2, 212($fp)
-	sw	$2, 132($fp)
-	lw	$1, 208($fp)
-	xor	$1, $2, $1
-	sw	$1, 128($fp)
-	lw	$2, 180($fp)
-	sw	$2, 124($fp)
-	lw	$1, 136($fp)
-	xor	$1, $2, $1
-	sw	$1, 120($fp)
+	lw	$2, 208($fp)
+	lw	$1, 212($fp)
+	xor	$2, $1, $2
+	sw	$2, 128($fp)
+	lw	$2, 136($fp)
+	lw	$1, 212($fp)
+	xor	$2, $1, $2
+	sw	$2, 120($fp)
 	lw	$1, 128($fp)
 	sw	$1, 116($fp)
 	lw	$1, 120($fp)
@@ -105,7 +99,7 @@ _Z6OptLUTjjjjjjjjj:                     # @_Z6OptLUTjjjjjjjjj
 	lw	$1, 128($fp)
 	xor	$2, $1, $2
 	sw	$2, 92($fp)
-	lw	$1, 124($fp)
+	lw	$1, 212($fp)
 	xor	$2, $2, $1
 	sw	$2, 88($fp)
 	lw	$1, 96($fp)
@@ -154,22 +148,22 @@ _Z6OptLUTjjjjjjjjj:                     # @_Z6OptLUTjjjjjjjjj
 	lw	$1, 60($fp)
 	xor	$1, $1, $2
 	sw	$1, 36($fp)
-	lw	$2, 176($fp)
+	lw	$2, 212($fp)
 	lw	$1, 40($fp)
 	mul	$1, $1, $2
 	sw	$1, 32($fp)
-	lw	$2, 172($fp)
+	lw	$2, 212($fp)
 	lw	$1, 36($fp)
 	mul	$1, $1, $2
 	sw	$1, 28($fp)
-	lw	$2, 172($fp)
+	lw	$2, 212($fp)
 	lw	$1, 40($fp)
 	mul	$2, $1, $2
 	sw	$2, 24($fp)
 	lw	$1, 188($fp)
 	xor	$1, $1, $2
 	sw	$1, 20($fp)
-	lw	$2, 176($fp)
+	lw	$2, 212($fp)
 	lw	$1, 36($fp)
 	mul	$2, $1, $2
 	sw	$2, 16($fp)
