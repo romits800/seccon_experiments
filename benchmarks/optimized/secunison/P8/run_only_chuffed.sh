@@ -1,6 +1,3 @@
 #!/bin/bash
-
-func=_Z6OptLUTjjjjjjjjj 
-filen=CPRR13-OptLUT_wires_1 
-bash -x run_minizinc.sh ${filen}_mips $func 25 mips
-bash -x run_minizinc.sh ${filen}_cm0 $func 25 thumb
+bash -x run_minizinc.sh CPRR13-lut_wires_1_mips _Z18CPRR13_lut_wires_1iiiiiiiii 25 mips
+bash -x run_minizinc.sh CPRR13-lut_wires_1_cm0 _Z18CPRR13_lut_wires_1iiiiiiiii 25 thumb

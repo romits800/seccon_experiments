@@ -6,7 +6,9 @@ csize=$3
 kmiter=$4
 neigens=$5
 arch=$6
+# iteration number
 iter=$7
+
 
 case $arch in
     mips)

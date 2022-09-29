@@ -31,12 +31,11 @@ GPS=${DIVCON_PATH}/src/solvers/gecode/gecode-presolver
 #flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"
 #flags="$flags --sec-implementation sec_reg_2_mem_2"
 
-$UNI import --target=$target ${aflags} $name.mir -o $name.uni --function=$func  --goal=speed --maxblocksize=$bsize --policy $input
+$UNI import --target=$target ${aflags} $name.mir -o $name.uni --function=$func  --goal=speed --maxblocksize=$bsize
 $UNI linearize --target=$target ${aflags} $name.uni -o $name.lssa.uni
 $UNI extend --target=$target ${aflags} $name.lssa.uni -o $name.ext.uni
 $UNI augment --target=$target ${aflags} $name.ext.uni -o $name.alt.uni
-$UNI secaugment --target=$target ${aflags} --policy $input $name.alt.uni -o $name.sec.uni
-$UNI model  --target=$target ${aflags}   $name.sec.uni -o $name.json --policy $input
+$UNI model  --target=$target ${aflags}   $name.alt.uni -o $name.json 
 $GPS -nogoods false -tabling false -o $name.ext.json --dzn ${name}.dzn  -verbose $name.json
  
 minizinc-solver --setuponly --topdown --chuffed --no-diffn --free --rnd -l .chuffed -dzn ${name}.dzn ${name}.ext.json

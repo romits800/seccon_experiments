@@ -29,8 +29,8 @@ _Z7SecMultiiiii:                        # @_Z7SecMultiiiii
 	sw	$1, 40($fp)
 	lw	$2, 48($fp)
 	lw	$1, 56($fp)
-	xor	$2, $1, $2
-	sw	$2, 48($fp)
+	xor	$1, $1, $2
+	sw	$1, 36($fp)
 	lw	$2, 44($fp)
 	lw	$1, 52($fp)
 	xor	$2, $1, $2
@@ -42,7 +42,7 @@ _Z7SecMultiiiii:                        # @_Z7SecMultiiiii
 	xor	$1, $1, $2
 	sw	$1, 20($fp)
 	lw	$2, 44($fp)
-	lw	$1, 48($fp)
+	lw	$1, 36($fp)
 	mul	$2, $1, $2
 	sw	$2, 12($fp)
 	lw	$1, 20($fp)
@@ -56,7 +56,7 @@ _Z7SecMultiiiii:                        # @_Z7SecMultiiiii
 	xor	$1, $2, $1
 	sw	$1, 8($fp)
 	lw	$2, 32($fp)
-	lw	$1, 48($fp)
+	lw	$1, 36($fp)
 	mul	$2, $1, $2
 	sw	$2, 24($fp)
 	lw	$1, 20($fp)

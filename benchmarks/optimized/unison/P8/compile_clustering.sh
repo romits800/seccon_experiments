@@ -6,7 +6,6 @@ csize=$3
 kmiter=$4
 neigens=$5
 arch=$6
-iter=$7
 
 case $arch in
     mips)
@@ -41,9 +40,9 @@ $UNI model  --target=$target ${aflags}   $name.alt.uni -o $name.json
 $GPS -o $name.ext.json -dzn ${name}_${csize}.dzn --verbose $name.json
  
 # 0.1 - 800 - 80000 : 1413
-for aggr in 0.1 #0.1 #0.3 0.5
+for aggr in 0.5 #0.1 #0.3 0.5
 do
-    $GS --step-aggressiveness $aggr --global-budget 500 --local-limit 50000 -o ${name}_${csize}_${kmiter}_${neigens}.gecode.$iter.out.json --verbose $name.ext.json
+    $GS --step-aggressiveness $aggr --global-budget 500 --local-limit 50000 -o ${name}_${csize}_${kmiter}_${neigens}.gecode.out.json --verbose $name.ext.json
 done
 
 

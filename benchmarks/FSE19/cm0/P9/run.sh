@@ -1,1 +1,1 @@
-bash -x run_cm0.sh CPRR13-1_wires_1 input_P9.txt
+bash -x run_cm0.sh CPRR13-OptLUT_wires_1 input_P8.txt

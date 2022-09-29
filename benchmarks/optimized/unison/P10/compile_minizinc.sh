@@ -17,7 +17,8 @@ case $arch in
           echo "Give architecture as the third argument"; exit 0;;
 esac
 
-export PATH=${DIVCON_PATH}/src/solvers/gecode:${DIVCON_PATH}/src/solvers/multi_backend/minizinc/:${DIVCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${DIVCON_PATH}/src/solvers/multi_backend/common/:${PATH} 
+
+export PATH=${DIVCON_PATH}/src/solvers/gecode:${DIVCON_PATH}/src/solvers/multi_backend/minizinc/:${DIVCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${DIVCON_PATH}/src/solvers/multi_backend/common/:${PATH}
 export UNISON_DIR=${DIVCON_PATH} 
 
 echo "MINIZINC_PATH:" ${MINIZINC_PATH}
@@ -36,11 +37,8 @@ $UNI augment --target=$target ${aflags} $name.ext.uni -o $name.alt.uni
 $UNI model  --target=$target ${aflags}   $name.alt.uni -o $name.json
 $GPS -o $name.ext.json -dzn ${name}.dzn --verbose $name.json
  
-# 0.1 - 800 - 80000 : 1413
-for aggr in 0.1 #0.1 #0.3 0.5
-do
-    $GS --step-aggressiveness $aggr --global-budget 800 --local-limit 80000 -o ${name}_${bsize}.gecode.$iter.out.json --verbose $name.ext.json
-done
+
+$GS --step-aggressiveness 0.5 --global-budget 500 --local-limit 50000 -o $name.gecode.$iter.out.json --verbose $name.ext.json
 #${DIVCON_PATH}/src/solvers/multi_backend/portfolio-solver --timeout 1200 --gecodeflags "--global-budget 500 --local-limit 50000" -o $name.out.json --verbose $name.ext.json
 #$UNI export --keepnops --target=$target ${aflags} $name.sec.uni -o $name.unison.mir --solfile=$name.out.json;
 #llc $name.unison.mir  -march=thumb -mcpu=cortex-m0 -disable-post-ra -disable-tail-duplicate -disable-branch-fold -disable-block-placement -start-after livedebugvars -o ${name}_sec.s

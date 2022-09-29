@@ -26,22 +26,21 @@ _Z7computejjj:                          # @_Z7computejjj
 	sw	$6, 32($fp)
 	lw	$1, 36($fp)
 	xor	$2, $1, $6
-	sw	$2, 36($fp)
-	lw	$2, 40($fp)
-	lw	$1, 36($fp)
-	xor	$2, $1, $2
+	sw	$2, 0($fp)
+	lw	$1, 40($fp)
+	xor	$2, $2, $1
 	sw	$2, 28($fp)
 	lw	$1, 40($fp)
 	xor	$2, $2, $1
 	sw	$2, 24($fp)
-	lw	$1, 36($fp)
+	lw	$1, 0($fp)
 	xor	$1, $2, $1
 	sw	$1, 20($fp)
 	lw	$2, 32($fp)
 	lw	$1, 40($fp)
 	xor	$2, $1, $2
 	sw	$2, 16($fp)
-	lw	$1, 36($fp)
+	lw	$1, 0($fp)
 	xor	$2, $1, $2
 	sw	$2, 12($fp)
 	lw	$1, 16($fp)

@@ -86,6 +86,7 @@ for fold in dall:
             # TODO(Check if possible to check proven)     
 
     
+
 # measured by hand
 dall["O0"] =     { "P0": {"cm0": {"cost": [13]}, "mips": {"cost": [19]}},
                    "P1": {"cm0": {"cost": [29]}, "mips": {"cost": [33]}},
@@ -94,10 +95,11 @@ dall["O0"] =     { "P0": {"cm0": {"cost": [13]}, "mips": {"cost": [19]}},
                    "P4": {"cm0": {"cost": [61]}, "mips": {"cost": [139]}},
                    "P5": {"cm0": {"cost": [58]}, "mips": {"cost": [133]}},
                    "P6": {"cm0": {"cost": [78]}, "mips": {"cost": [189]}},
-                   "P7": {"cm0": {"cost": [182]}, "mips": {"cost": [371]}},
-                   "P8": {"cm0": {"cost": [187]}, "mips": {"cost": [371]}},
-                   "P9": {"cm0": {"cost": [218]}, "mips": {"cost": [593]}},
-                   "P10": {"cm0": {"cost": [4100]}, "mips": {"cost": [3688]}}
+                   "P8": {"cm0": {"cost": [182]}, "mips": {"cost": [371]}},
+                   "P9": {"cm0": {"cost": [187]}, "mips": {"cost": [371]}},
+                   "P10": {"cm0": {"cost": [218]}, "mips": {"cost": [593]}},
+                   "P11": {"cm0": {"cost": [4100]}, "mips": {"cost": [3688]}},
+                   "P7": {"cm0": {"cost": [313]}, "mips": {"cost": [382]}}
                  } 
 
 dall["FSE19"] =  { "P0": {"cm0": {"cost": [13]}, "mips": {"cost": [23]}},
@@ -107,10 +109,11 @@ dall["FSE19"] =  { "P0": {"cm0": {"cost": [13]}, "mips": {"cost": [23]}},
                    "P4": {"cm0": {"cost": [61]}, "mips": {"cost": [139]}},
                    "P5": {"cm0": {"cost": [58]}, "mips": {"cost": [133]}},
                    "P6": {"cm0": {"cost": [45]}, "mips": {"cost": [188]}}, # weird result by Wang.. Missing many muls
-                   "P7": {"cm0": {"cost": [106]}, "mips": {"cost": [253]}},
-                   "P8": {"cm0": {"cost": [181]}, "mips": {"cost": [371]}},
-                   "P9": {"cm0": {"cost": [119]}, "mips": {"cost": [383]}},
-                   "P10": {"cm0": {"cost": [-1]}, "mips": {"cost": [-1]}}
+                   "P8": {"cm0": {"cost": [106]}, "mips": {"cost": [253]}},
+                   "P9": {"cm0": {"cost": [181]}, "mips": {"cost": [371]}},
+                   "P10": {"cm0": {"cost": [119]}, "mips": {"cost": [383]}},
+                   "P11": {"cm0": {"cost": [3864]}, "mips": {"cost": [3237]}},
+                   "P7": {"cm0": {"cost": [465]}, "mips": {"cost": [430]}}
                  } 
 
  
@@ -119,7 +122,7 @@ for fil in llvm:
         dall["O0"][fil][arch]["runtime"] = llvm[fil][arch]["runtime"]
         dall["O0"][fil][arch]["runtime_std"] = llvm[fil][arch]["runtime_std"]
 
-ps = ["P"+ str(i) for i in range(11)]
+ps = ["P"+ str(i) for i in range(12)]
 
 
 # Overhead over Unison

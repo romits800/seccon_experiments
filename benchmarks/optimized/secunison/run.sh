@@ -6,7 +6,7 @@ pushd ../../../
 . secconenv
 popd
 
-for i in P{0..6}
+for i in {0..11}
 do
     pushd $i
     bash clean.sh

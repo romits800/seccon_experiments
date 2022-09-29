@@ -3,7 +3,7 @@
 # which iteration we are running
 iter=$1
 
-for i in P{0..9}
+for i in {0..11}
 do
     pushd $i
     bash -x clean.sh
