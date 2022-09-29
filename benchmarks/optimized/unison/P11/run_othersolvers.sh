@@ -15,17 +15,17 @@ case $arch in
 esac
 
 
-export PATH=${DIVCON_PATH}/src/solvers/gecode:${DIVCON_PATH}/src/solvers/multi_backend/minizinc/:${DIVCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${DIVCON_PATH}/src/solvers/multi_backend/common/:${PATH}
-export UNISON_DIR=${DIVCON_PATH} 
+export PATH=${UNISON_PATH}/src/solvers/gecode:${UNISON_PATH}/src/solvers/multi_backend/minizinc/:${UNISON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${UNISON_PATH}/src/solvers/multi_backend/common/:${PATH}
+export UNISON_DIR=${UNISON_PATH} 
 
 echo "MINIZINC_PATH:" ${MINIZINC_PATH}
-echo "DIVCON_PATH:" ${DIVCON_PATH}
+echo "UNISON_PATH:" ${UNISON_PATH}
 echo "which gecode-solver:" `which gecode-solver`
 
 
 #UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
-UNI=${DIVCON_PATH}/src/unison/build/uni
-GEC=${DIVCON_PATH}/src/solvers/gecode/
+UNI=${UNISON_PATH}/src/unison/build/uni
+GEC=${UNISON_PATH}/src/solvers/gecode/
 timeout=5400000
 
 $UNI import --target=$target ${aflags} $name.mir -o $name.uni --function=$func  --goal=speed --maxblocksize=$bsize

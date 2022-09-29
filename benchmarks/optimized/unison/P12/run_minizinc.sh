@@ -18,16 +18,16 @@ case $arch in
 esac
 
 
-export PATH=${DIVCON_PATH}/src/solvers/gecode:${DIVCON_PATH}/src/solvers/multi_backend/minizinc/:${DIVCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${DIVCON_PATH}/src/solvers/multi_backend/common/:${PATH} 
-export UNISON_DIR=${DIVCON_PATH} 
+export PATH=${UNISON_PATH}/src/solvers/gecode:${UNISON_PATH}/src/solvers/multi_backend/minizinc/:${UNISON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${UNISON_PATH}/src/solvers/multi_backend/common/:${PATH} 
+export UNISON_DIR=${UNISON_PATH} 
 
 echo "MINIZINC_PATH:" ${MINIZINC_PATH}
-echo "DIVCON_PATH:" ${DIVCON_PATH}
+echo "UNISON_PATH:" ${UNISON_PATH}
 
 
 #UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
-UNI=${DIVCON_PATH}/src/unison/build/uni
-GPS=${DIVCON_PATH}/src/solvers/gecode/gecode-presolver
+UNI=${UNISON_PATH}/src/unison/build/uni
+GPS=${UNISON_PATH}/src/solvers/gecode/gecode-presolver
 #flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"
 #flags="$flags --sec-implementation sec_reg_2_mem_2"
 

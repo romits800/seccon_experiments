@@ -18,19 +18,19 @@ case $arch in
 esac
 
 
-#DIVCON_PATH=/home/romi/unison/secdivcon/seccon_experiments/secConCG/
+#UNISON_PATH=/home/romi/unison/secdivcon/seccon_experiments/secConCG/
 
-export PATH=${DIVCON_PATH}/src/solvers/gecode:${DIVCON_PATH}/src/solvers/multi_backend/minizinc/:${DIVCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${DIVCON_PATH}/src/solvers/multi_backend/common/:${PATH}
-export UNISON_DIR=${DIVCON_PATH} 
+export PATH=${UNISON_PATH}/src/solvers/gecode:${UNISON_PATH}/src/solvers/multi_backend/minizinc/:${UNISON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${UNISON_PATH}/src/solvers/multi_backend/common/:${PATH}
+export UNISON_DIR=${UNISON_PATH} 
 
 echo "MINIZINC_PATH:" ${MINIZINC_PATH}
-echo "DIVCON_PATH:" ${DIVCON_PATH}
+echo "UNISON_PATH:" ${UNISON_PATH}
 
 
 #UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
-UNI=${DIVCON_PATH}/src/unison/build/uni
-GPS=${DIVCON_PATH}/src/solvers/gecode/gecode-presolver
-GS=${DIVCON_PATH}/src/solvers/gecode/gecode-solver
+UNI=${UNISON_PATH}/src/unison/build/uni
+GPS=${UNISON_PATH}/src/solvers/gecode/gecode-presolver
+GS=${UNISON_PATH}/src/solvers/gecode/gecode-solver
 
 $UNI import --target=$target ${aflags} $name.mir -o ${name}_${csize}_${kmiter}_${neigens}.uni --function=$func  --goal=speed --clusternumber=$csize \
             --kmeansiterations $kmiter --numbereigenvectors $neigens
