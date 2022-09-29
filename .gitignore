@@ -8,3 +8,4 @@
 .gecode
 *.fzn
 *.ozn
+*.bak
