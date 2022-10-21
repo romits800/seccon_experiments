@@ -8,7 +8,7 @@ popd
 
 for i in {0..11}
 do
-    pushd $i
+    pushd P$i
     bash clean.sh
     bash -x run.sh $iter &> out_$iter
     sleep 1m
