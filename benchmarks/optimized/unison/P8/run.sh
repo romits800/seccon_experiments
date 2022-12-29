@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
-export PATH=${UNISON_PATH}/src/solvers/gecode:${UNISON_PATH}/src/solvers/multi_backend/minizinc/:${UNISON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${UNISON_PATH}/src/solvers/multi_backend/common/:${PATH}
-export UNISON_PATH=${UNISON_PATH}
+export PATH=${SECCON_PATH}/src/solvers/gecode:${SECCON_PATH}/src/solvers/multi_backend/minizinc/:${SECCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${SECCON_PATH}/src/solvers/multi_backend/common/:${PATH}
+export SECCON_PATH=${SECCON_PATH}
 
 
 iter=$1
@@ -11,7 +11,7 @@ func=_Z18CPRR13_lut_wires_1iiiiiiiii
 #bash -x compile_clustering.sh ${file}_cm0 $func 3 1000 3 thumb
 #bash -x compile_minizinc.sh ${file}_cm0 $func 10 thumb $iter
 bash -x compile_minizinc.sh ${file}_mips $func 25 mips $iter
-bash -x compile_minizinc.sh ${file}_cm0 $func 15 thumb $iter
+bash -x compile_minizinc.sh ${file}_cm0 $func 10 thumb $iter
 
 #bash -x run_minizinc_cl.sh ${file}_cm0 $func 3 1000 3 thumb
 bash -x run_minizinc.sh ${file}_mips $func 25 mips $iter

@@ -8,8 +8,10 @@ gtime=/usr/bin/time
 
 #$gtime -f 'Max Memory (KB): %M' -o ${filen}_mips_gecode.out bash -x compile_minizinc.sh ${filen}_mips $func 55 mips $iter
 #$gtime -f 'Max Memory (KB): %M' -o ${filen}_cm0_gecode.out bash -x compile_minizinc.sh ${filen}_cm0 $func 30 thumb $iter
-./memusg bash -x compile_minizinc.sh ${filen}_cm0 $func 30 thumb $iter
-./memusg bash -x compile_minizinc.sh ${filen}_mips $func 55 mips $iter
+#./memusg 
+time bash -x compile_minizinc.sh ${filen}_cm0 $func 30 thumb $iter
+#./memusg 
+time bash -x compile_minizinc.sh ${filen}_mips $func 55 mips $iter
 
 #$gtime -f 'Max Memory (KB): %M' -o ${filen}_mips_minizinc.out bash -x run_minizinc.sh ${filen}_mips $func 55 mips $iter
 #$gtime -f 'Max Memory (KB): %M' -o ${filen}_cm0_minizinc.out bash -x run_minizinc.sh ${filen}_cm0 $func 30 thumb $iter

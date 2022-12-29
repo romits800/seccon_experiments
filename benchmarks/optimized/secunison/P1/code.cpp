@@ -12,5 +12,6 @@ unsigned compute(unsigned r1, unsigned r2, unsigned st2_orig, unsigned st10_orig
   r25  = st10 ^0;
   sTT2 = r25 ^ 0;
   sTT10 = r24 ^ 0;
-  return(sTT2 - sTT10);
+  long ret = (sTT2 << 32) | sTT10;
+  return ret; //(sTT2 - sTT10);
 } 

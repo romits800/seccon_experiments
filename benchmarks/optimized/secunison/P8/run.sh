@@ -12,9 +12,10 @@ func=_Z18CPRR13_lut_wires_1iiiiiiiii
 
 
 #sleep 20m
+#bash -x compile_secminizinc.sh ${file}_cm0 $func 10 thumb $iter
 bash -x compile_secminizinc.sh ${file}_cm0 $func 10 thumb $iter
-#bash -x compile_secminizinc.sh ${file}_cm0 $func 11 thumb $iter
 #bash -x compile_secminizinc.sh ${file}_cm0 $func 15 thumb $iter
+#bash -x compile_secminizinc.sh ${file}_cm0 $func 20 thumb $iter
 #sleep 10m
 #bash -x compile_secminizinc.sh ${file}_mips $func 25 mips $iter
 sleep 10m

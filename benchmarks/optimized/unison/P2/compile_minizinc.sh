@@ -18,16 +18,16 @@ case $arch in
 esac
 
 
-export PATH=${UNISON_PATH}/src/solvers/gecode:${UNISON_PATH}/src/solvers/multi_backend/minizinc/:${UNISON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${UNISON_PATH}/src/solvers/multi_backend/common/:${PATH} 
-export UNISON_DIR=${UNISON_PATH} 
+export PATH=${SECCON_PATH}/src/solvers/gecode:${SECCON_PATH}/src/solvers/multi_backend/minizinc/:${SECCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${SECCON_PATH}/src/solvers/multi_backend/common/:${PATH} 
+export UNISON_DIR=${SECCON_PATH} 
 
 echo "MINIZINC_PATH:" ${MINIZINC_PATH}
-echo "UNISON_PATH:" ${UNISON_PATH}
+echo "SECCON_PATH:" ${SECCON_PATH}
 
 
 #UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
-UNI=${UNISON_PATH}/src/unison/build/uni
-GPS=${UNISON_PATH}/src/solvers/gecode/gecode-presolver
+UNI=${SECCON_PATH}/src/unison/build/uni
+GPS=${SECCON_PATH}/src/solvers/gecode/gecode-presolver
 
 $UNI import --target=$target ${aflags} $name.mir -o $name.uni --function=$func  --goal=speed --maxblocksize=$bsize
 $UNI linearize --target=$target ${aflags} $name.uni -o $name.lssa.uni
@@ -37,4 +37,4 @@ $UNI model  --target=$target ${aflags}   $name.alt.uni -o $name.json
 $GPS -o $name.ext.json -dzn ${name}.dzn --verbose $name.json
  
 
-${UNISON_PATH}/src/solvers/multi_backend/portfolio-solver --timeout 1200 --gecodeflags "--global-budget 500 --local-limit 50000" -o $name.$iter.out.json --verbose $name.ext.json
+${SECCON_PATH}/src/solvers/multi_backend/portfolio-solver --timeout 1200 --gecodeflags "--global-budget 500 --local-limit 50000" -o $name.$iter.out.json --verbose $name.ext.json

@@ -88,32 +88,32 @@ for fold in dall:
     
 
 # measured by hand
-dall["O0"] =     { "P0": {"cm0": {"cost": [13]}, "mips": {"cost": [19]}},
-                   "P1": {"cm0": {"cost": [29]}, "mips": {"cost": [33]}},
-                   "P2": {"cm0": {"cost": [55]}, "mips": {"cost": [43]}},
-                   "P3": {"cm0": {"cost": [32]}, "mips": {"cost": [47]}},
-                   "P4": {"cm0": {"cost": [61]}, "mips": {"cost": [139]}},
-                   "P5": {"cm0": {"cost": [58]}, "mips": {"cost": [133]}},
-                   "P6": {"cm0": {"cost": [78]}, "mips": {"cost": [189]}},
-                   "P8": {"cm0": {"cost": [182]}, "mips": {"cost": [371]}},
-                   "P9": {"cm0": {"cost": [187]}, "mips": {"cost": [371]}},
-                   "P10": {"cm0": {"cost": [218]}, "mips": {"cost": [593]}},
-                   "P11": {"cm0": {"cost": [4100]}, "mips": {"cost": [3688]}},
-                   "P7": {"cm0": {"cost": [313]}, "mips": {"cost": [382]}}
+dall["O0"] =     { "P0": {"cm0": {"cost": [20]}, "mips": {"cost": [19]}},
+                   "P1": {"cm0": {"cost": [39]}, "mips": {"cost": [33]}},
+                   "P2": {"cm0": {"cost": [63]}, "mips": {"cost": [43]}},
+                   "P3": {"cm0": {"cost": [52]}, "mips": {"cost": [47]}},
+                   "P4": {"cm0": {"cost": [87]}, "mips": {"cost": [139]}},
+                   "P5": {"cm0": {"cost": [81]}, "mips": {"cost": [133]}},
+                   "P6": {"cm0": {"cost": [112]}, "mips": {"cost": [189]}},
+                   "P8": {"cm0": {"cost": [293]}, "mips": {"cost": [371]}},
+                   "P9": {"cm0": {"cost": [301]}, "mips": {"cost": [371]}},
+                   "P10": {"cm0": {"cost": [333]}, "mips": {"cost": [593]}},
+                   "P11": {"cm0": {"cost": [4504]}, "mips": {"cost": [3688]}},
+                   "P7": {"cm0": {"cost": [609]}, "mips": {"cost": [382]}}
                  } 
 
-dall["FSE19"] =  { "P0": {"cm0": {"cost": [13]}, "mips": {"cost": [23]}},
-                   "P1": {"cm0": {"cost": [22]}, "mips": {"cost": [21]}},
-                   "P2": {"cm0": {"cost": [52]}, "mips": {"cost": [43]}},
-                   "P3": {"cm0": {"cost": [33]}, "mips": {"cost": [47]}},
-                   "P4": {"cm0": {"cost": [61]}, "mips": {"cost": [139]}},
-                   "P5": {"cm0": {"cost": [58]}, "mips": {"cost": [133]}},
-                   "P6": {"cm0": {"cost": [45]}, "mips": {"cost": [188]}}, # weird result by Wang.. Missing many muls
-                   "P8": {"cm0": {"cost": [106]}, "mips": {"cost": [253]}},
-                   "P9": {"cm0": {"cost": [181]}, "mips": {"cost": [371]}},
-                   "P10": {"cm0": {"cost": [119]}, "mips": {"cost": [383]}},
-                   "P11": {"cm0": {"cost": [3864]}, "mips": {"cost": [3237]}},
-                   "P7": {"cm0": {"cost": [465]}, "mips": {"cost": [430]}}
+dall["FSE19"] =  { "P0": {"cm0": {"cost": [22]}, "mips": {"cost": [23]}},
+                   "P1": {"cm0": {"cost": [32]}, "mips": {"cost": [21]}},
+                   "P2": {"cm0": {"cost": [76]}, "mips": {"cost": [43]}},
+                   "P3": {"cm0": {"cost": [56]}, "mips": {"cost": [47]}},
+                   "P4": {"cm0": {"cost": [96]}, "mips": {"cost": [139]}},
+                   "P5": {"cm0": {"cost": [90]}, "mips": {"cost": [133]}},
+                   "P6": {"cm0": {"cost": [69]}, "mips": {"cost": [188]}}, # weird result by Wang.. Missing many muls
+                   "P8": {"cm0": {"cost": [166]}, "mips": {"cost": [253]}},
+                   "P9": {"cm0": {"cost": [303]}, "mips": {"cost": [371]}},
+                   "P10": {"cm0": {"cost": [176]}, "mips": {"cost": [383]}},
+                   "P11": {"cm0": {"cost": [6742]}, "mips": {"cost": [3237]}},
+                   "P7": {"cm0": {"cost": [786]}, "mips": {"cost": [430]}}
                  } 
 
  
@@ -385,24 +385,26 @@ for p in ps:
                 oh = secmips/o0mips
                 mipsoh0 = "{:.1f}".format(oh) if oh < 100. else ("{:.1f}K".format(oh/1000.) if oh < 100000. else "{:.1f}M".format(oh/1000000.))
             else:
-                mipsoh0 = "-{:.1f}".format(o0mips/secmips)
+                oh = o0mips/secmips
+                mipsoh0 = "{:.1f}".format(oh) if oh < 100. else ("{:.1f}K".format(oh/1000.) if oh < 100000. else "{:.1f}M".format(oh/1000000.))
             if seccm0 >= o0cm0:
                 oh = seccm0/o0cm0
                 cm0oh0 = "{:.1f}".format(oh) if oh < 100. else ("{:.1f}K".format(oh/1000.) if oh < 100000. else  "{:.1f}M".format(oh/1000000.))
             else:
-                cm0oh0 = "-{:.1f}".format(o0cm0/seccm0)
+                oh = o0cm0/seccm0
+                cm0oh0 = "{:.1f}".format(oh) if oh < 100. else ("{:.1f}K".format(oh/1000.) if oh < 100000. else  "{:.1f}M".format(oh/1000000.))
  
-            if secmips >= unimips:
+            if round(secmips/unimips,1) >= 1.0:
                 mipsoh = "{:.1f}".format(secmips/unimips)
             else:
                 mipsoh = "-{:.1f}".format(unimips/secmips)
-            if seccm0 >= unicm0:
+            if round(seccm0/unicm0,1) >= 1.0:
                 cm0oh = "{:.1f}".format(seccm0/unicm0)
             else:
                 cm0oh = "-{:.1f}".format(unicm0/seccm0)
  
         #for arch in ["cm0", "mips"]:
-        print ("\t&\t".join([p, cm0cost1, cm0cost2, cm0oh, mipscost1, mipscost2, mipsoh]) + "\\\\")
+        print ("\t&\t".join([p, cm0cost0, cm0cost1, cm0cost2, cm0oh, mipscost0, mipscost1, mipscost2, mipsoh]) + "\\\\")
 print("\n")
 
 

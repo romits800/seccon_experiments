@@ -10,14 +10,16 @@ func=_Z12CPRR13_wiresjjjjjjjjj
 filen=CPRR13-1_wires_1
 
 
-#sleep 20m
-#bash -x compile_secminizinc.sh ${filen}_mips $func 50 mips 0.5 $iter
-#sleep 10m
-#sleep 20m
 bash -x compile_secminizinc.sh ${filen}_cm0 $func 20 thumb 0.1 $iter
-sleep 10m
+#bash -x compile_secminizinc.sh ${filen}_cm0 $func 19 thumb 0.1 $iter
+#bash -x compile_secminizinc.sh ${filen}_cm0 $func 15 thumb 0.1 $iter
+#bash -x compile_secminizinc.sh ${filen}_cm0 $func 25 thumb 0.1 $iter
+#bash -x compile_secminizinc.sh ${filen}_cm0 $func 10 thumb 0.1 $iter
+#bash -x compile_secminizinc.sh ${filen}_cm0 $func 30 thumb 0.1 $iter
+sleep 1m
 
 bash -x run_othersolvers.sh ${filen}_mips $func 50 mips $iter
+#bash -x compile_secminizinc.sh ${filen}_mips $func 50 mips 0.5 $iter
 ##bash -x run_othersolvers.sh ${filen}_cm0 $func 22 thumb $iter
 
 

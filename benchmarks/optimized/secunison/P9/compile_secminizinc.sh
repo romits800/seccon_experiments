@@ -5,6 +5,7 @@ func=$2
 bsize=$3
 arch=$4
 iter=$5
+unass=$6
 
 case $arch in
     mips)
@@ -29,8 +30,8 @@ GPS=${SECCON_PATH}/src/solvers/gecode/gecode-presolver
 GS=${SECCON_PATH}/src/solvers/gecode/gecode-secsolver
 flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"
 flags="$flags --sec-implementation sec_reg_2_mem_2"
-flags="$flags --monolithic-budget 120"
-flags="$flags --unassigned-budget 40"
+flags="$flags --monolithic-budget 80"
+flags="$flags --unassigned-budget $unass"
 flags="$flags --step-aggressiveness 0.1 --global-budget 500 --local-limit 50000"
 flags="$flags --threads 1 --relax 0.5"
 flags="$flags --restart-scale 100000"

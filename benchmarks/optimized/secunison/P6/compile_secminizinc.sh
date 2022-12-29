@@ -32,6 +32,7 @@ flags="$flags --global-budget 500 --local-limit 80000"
 flags="$flags --threads 1 --relax 0.5"
 flags="$flags --restart-scale 1000"
 flags="$flags --step-aggressiveness 0.5"
+flags="$flags --monolithic-budget 30"
 
 
 

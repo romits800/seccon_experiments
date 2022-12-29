@@ -9,9 +9,10 @@ iter=$6
 
 case $arch in
     mips)
-          target=Mips; aflags=""; input=input_mips.txt;;
+          target=Mips; aflags="";  input=input_mips.txt;;
     thumb)
           target=Thumb; aflags="--targetoption cortex-m0"; input=input_cm0.txt;;
+          #target=Thumb; aflags="--targetoption cortex-m0"; impflags="--reorderinsts";input=input_cm0.txt;;
     *)
           echo "Give architecture as the third argument"; exit 0;;
 esac
@@ -31,15 +32,15 @@ GEC=${SECCON_PATH}/src/solvers/gecode/
 flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"
 flags="$flags --sec-implementation sec_reg_2_mem_2"
 flags="$flags --monolithic-budget 200"
-flags="$flags --unassigned-budget 20"
-flags="$flags --step-aggressiveness $agr --global-budget 500 --local-limit 110000"
+flags="$flags --unassigned-budget 50"
+flags="$flags --step-aggressiveness $agr --global-budget 500 --local-limit 150000"
 #flags="$flags --step-aggressiveness $agr --global-budget 500 --local-limit 100000"
 flags="$flags --threads 1 --relax 0.5"
 flags="$flags --restart-scale 100000"
 
 
 
-$UNI import --target=$target ${aflags} $name.mir -o $name.uni --function=$func  --goal=speed --maxblocksize=$bsize --policy $input
+$UNI import --target=$target ${aflags} $impflags $name.mir -o $name.uni --function=$func  --goal=speed --maxblocksize=$bsize --policy $input
 $UNI linearize --target=$target ${aflags} $name.uni -o $name.lssa.uni
 $UNI extend --target=$target ${aflags} $name.lssa.uni -o $name.ext.uni
 $UNI augment --target=$target ${aflags} $name.ext.uni -o $name.alt.uni

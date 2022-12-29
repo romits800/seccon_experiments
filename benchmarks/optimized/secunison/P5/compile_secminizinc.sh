@@ -31,6 +31,7 @@ flags="$flags --sec-implementation sec_reg_2_mem_2"
 flags="$flags --global-budget 500 --local-limit 50000"
 flags="$flags --threads 1 --relax 0.5"
 flags="$flags --restart-scale 1000"
+flags="$flags --monolithic-budget 30"
 
  
 
