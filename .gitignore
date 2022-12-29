@@ -9,3 +9,5 @@
 *.fzn
 *.ozn
 *.bak
+test*
+benchmarks/FSE19/mips/paper_example
