@@ -4,8 +4,9 @@
 ## Compile the code
 To use SecConCG, clone this repo recursively to clone the submodules.
 
-Check [secConCG/README.md](secConCG/README.md) for details about build prerequisites
 
+| Note: Check secConCG/README.md for details about the build prerequisites. |
+| --- |
 
 Then, enter to the `src` directory in `secConCG`:
 
