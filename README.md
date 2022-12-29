@@ -46,8 +46,13 @@ $ cd benchmarks/optimized/
 
 And run the `run_all_many.sh` script:
 ```bash
-$ bash run_all_many.sh
+$ bash run_all_many.sh &> /dev/null &
 ```
+
+| Note: This step may take many hours to finish. |
+| --- |
+
+
 
 Alternatively, enter each benchmark directory:
 
