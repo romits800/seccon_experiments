@@ -1,6 +1,5 @@
 #!/bin/bash
 
-FSE_HOME=../../
 LLC=${FSE_HOME}/LLVM/build/bin/llc
 OPT=${FSE_HOME}/LLVM/build/bin/opt
 FILE=$1
