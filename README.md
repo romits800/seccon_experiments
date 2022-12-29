@@ -4,7 +4,7 @@
 ## Compile the code
 To use SecConCG, clone this repo recursively to clone the submodules.
 
-Check secConCG/README.md for details about build prerequisites
+Check [secConCG/README.md](secConCG/README.md) for details about build prerequisites
 
 
 Then, enter to the `src` directory in `secConCG`:
@@ -24,7 +24,7 @@ $ make -j 12
 
 ### Download Minizinc-IDE
 
-Download Minizinc IDE version 2.6.2 from (here)(https://github.com/MiniZinc/MiniZincIDE/releases) 
+Download Minizinc IDE version 2.6.2 from [here](https://github.com/MiniZinc/MiniZincIDE/releases) 
 ```
 export MINIZINC_PATH=/path/to/MiniZincIDE-2.6.2-bundle-linux-x86_64/bin/
 ```
@@ -58,7 +58,7 @@ The latter requires some input parameters.
 
 ### FSE19 experiments
 To run the Wang et al. experiments you first need to install their LLVM tool 
-from (here)(https://github.com/bobowang2333/FSE19)
+from [here](https://github.com/bobowang2333/FSE19)
 
 ```
 $ git clone https://github.com/bobowang2333/FSE19
@@ -94,7 +94,7 @@ $ bash run_all.sh
 ### LLVM compilation time experiments 
 
 To run the LLVM experiments you may install LLVM-3.8.
-For this evaluation, we use the LLVM fork of (Unison)(https://github.com/unison-code/llvm.git) and
+For this evaluation, we use the LLVM fork of [Unison](https://github.com/unison-code/llvm.git) and
 checkout at branch *release_38-unison*:
 ```bash
 $ git clone https://github.com/unison-code/llvm.git
