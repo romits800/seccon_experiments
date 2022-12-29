@@ -4,6 +4,9 @@
 ## Compile the code
 To use SecConCG, clone this repo recursively to clone the submodules.
 
+Check secConCG/README.md for details about build prerequisites
+
+
 Then, enter to the `src` directory in `secConCG`:
 
 ```bash
@@ -13,8 +16,9 @@ $ cd secConCG/src
 and compile the code:
 
 ```bash
-$ make -j 12 && sudo make install
+$ make -j 12
 ```
+
 
 ## Run the experiments
 
