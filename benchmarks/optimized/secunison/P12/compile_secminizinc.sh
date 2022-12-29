@@ -24,7 +24,6 @@ echo "SECCON_PATH:" ${SECCON_PATH}
 echo "which gecode-solver:" `which gecode-solver`
 
 
-#UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
 UNI=${SECCON_PATH}/src/unison/build/uni
 GEC=${SECCON_PATH}/src/solvers/gecode/
 flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"

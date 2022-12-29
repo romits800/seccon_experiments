@@ -22,7 +22,6 @@ echo "MINIZINC_PATH:" ${MINIZINC_PATH}
 echo "SECCON_PATH:" ${SECCON_PATH}
 
 
-#UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
 UNI=${SECCON_PATH}/src/unison/build/uni
 GPS=${SECCON_PATH}/src/solvers/gecode/gecode-presolver
 flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"

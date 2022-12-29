@@ -18,7 +18,13 @@ $ make -j 12 && sudo make install
 
 ## Run the experiments
 
+### Download Minizinc-IDE
 
+Download Minizinc IDE version 2.6.2 from (here)[https://github.com/MiniZinc/MiniZincIDE/releases] 
+```
+export MINIZINC_PATH=/path/to/MiniZincIDE-2.6.2-bundle-linux-x86_64/bin/
+```
+### Set Enviroment Variables
 First, export some necessary environment variables (top directory):
 
 ```bash

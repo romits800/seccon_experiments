@@ -22,7 +22,6 @@ echo "MINIZINC_PATH:" ${MINIZINC_PATH}
 echo "DIVCON_PATH:" ${DIVCON_PATH}
 
 
-#UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
 UNI=${DIVCON_PATH}/src/unison/build/uni
 flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"
 

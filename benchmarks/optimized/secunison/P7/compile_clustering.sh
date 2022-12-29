@@ -19,7 +19,6 @@ case $arch in
 esac
 
 
-#SECCON_PATH=/home/romi/unison/secdivcon/divCon #seccon_experiments/secConCG/
 
 export PATH=${PATH}:${SECCON_PATH}/src/solvers/gecode:${SECCON_PATH}/src/solvers/multi_backend/minizinc/:${SECCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${SECCON_PATH}/src/solvers/multi_backend/common/ 
 export UNISON_DIR=${SECCON_PATH} 
@@ -28,7 +27,6 @@ echo "MINIZINC_PATH:" ${MINIZINC_PATH}
 echo "SECCON_PATH:" ${SECCON_PATH}
 
 
-#UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
 UNI=${SECCON_PATH}/src/unison/build/uni
 GPS=${SECCON_PATH}/src/solvers/gecode/gecode-presolver
 GS=${SECCON_PATH}/src/solvers/gecode/gecode-secsolver

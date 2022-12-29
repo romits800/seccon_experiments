@@ -15,7 +15,6 @@ case $arch in
           echo "Give architecture as the third argument"; exit 0;;
 esac
 
-#SECCON_PATH=/home/romi/unison/secdivcon/seccon_experiments/secConCG/
 
 export PATH=${PATH}:${SECCON_PATH}/src/solvers/gecode:${SECCON_PATH}/src/solvers/multi_backend/minizinc/:${SECCON_PATH}/src/solvers/multi_backend/:${MINIZINC_PATH}:${SECCON_PATH}/src/solvers/multi_backend/common/ 
 export UNISON_DIR=${SECCON_PATH} 
@@ -24,7 +23,6 @@ echo "MINIZINC_PATH:" ${MINIZINC_PATH}
 echo "SECCON_PATH:" ${SECCON_PATH}
 
 
-#UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
 UNI=${SECCON_PATH}/src/unison/build/uni
 flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"
 flags="$flags --sec-implementation sec_reg_2_mem_2"
