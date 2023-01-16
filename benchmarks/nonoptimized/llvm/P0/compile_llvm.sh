@@ -5,8 +5,8 @@ arch=$2
 iter=$3
 
 TIME=/usr/bin/time
-LLC=$HOME/repo/llvm/build_release/bin/llc
-PATH="$HOME/repo/llvm/build_release/bin/:$PATH"
+LLC=$LLVM_UNISON_PATH/bin/llc
+PATH="$LLVM_UNISON_PATH/bin/:$PATH"
 
 case $arch in
     mips)
