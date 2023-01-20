@@ -81,7 +81,7 @@ $ git apply FSE19_mips_arm_fixes.patch
 ```
 
 To compile LLVM you need to install the following packages:
-```bash
+```
 # apt-get install gcc-7 g++-7 c++-7 libzip-dev cmake
 ```
 
@@ -91,6 +91,7 @@ $ cd FSE19/LLVM
 $ mkdir build
 $ cd build
 $ cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ../llvm
+$ make -j 12
 ```
 
 Then, you need the path to the directory you cloned in the following environment variable:
