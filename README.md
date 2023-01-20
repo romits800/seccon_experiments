@@ -122,8 +122,10 @@ $ cmake -G "Unix Makefiles"  -DLLVM_TARGETS_TO_BUILD="Mips;ARM;Hexagon" -CMAKE_B
 Export the directory:
 ```
 $ export LLVM_UNISON_PATH=/path/to/llvm/build
+```
 
 To run the experiments do:
+
 ```
 $ cd benchmarks/nonoptimized/llvm
 $ bash run_all.sh
