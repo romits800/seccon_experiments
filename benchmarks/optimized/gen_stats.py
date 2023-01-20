@@ -4,7 +4,7 @@ import re
 import math
 import pickle
 
-llvm = pickle.load(open("stats_llvm.pickle", "rb"))        
+llvm = pickle.load(open("../nonoptimized/llvm/stats_llvm.pickle", "rb"))        
 #pat = re.compile("(.*).out.json")
 pat = re.compile("(.*)_(mips|cm0).*\.[0-4]\.out\.json")
 iterations = range(5)

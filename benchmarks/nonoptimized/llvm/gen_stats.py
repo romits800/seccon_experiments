@@ -32,7 +32,7 @@ for itr in iterations:
                     arch = match.groups()[0]
                 #print(fil, out)
                 if not arch:
-                    print "Not arch"
+                    print ("Not arch")
                     continue
                 results = []
 

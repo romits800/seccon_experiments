@@ -102,7 +102,14 @@ $ bash run_all.sh
 
 ### LLVM compilation time experiments 
 
-To run the LLVM experiments you may install LLVM-3.8.
+To run the LLVM experiments you need to install LLVM-3.8.
+
+To do that you need to install the following packages:
+```bash
+# apt-get install gcc-7 g++-7 c++-7 libzip-dev cmake
+```
+
+
 For this evaluation, we use the LLVM fork of [Unison](https://github.com/unison-code/llvm.git) and
 checkout at branch *release_38-unison*:
 ```bash
@@ -115,8 +122,7 @@ Then compile LLVM:
 ```
 $ mkdir build
 $ cd build
-
-$ cmake -G "Unix Makefiles"  -DLLVM_TARGETS_TO_BUILD="Mips;ARM;Hexagon" -CMAKE_BUILD_TYPE="Release" -CMAKE_CXX_COMPILER=g++-7  ..
+$ cmake -G "Unix Makefiles"  -DLLVM_TARGETS_TO_BUILD="Mips;ARM;Hexagon" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ..
 ```
 
 Export the directory:
