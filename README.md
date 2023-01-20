@@ -94,7 +94,6 @@ $ cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_C_COMPILE
 $ make -j 12
 ```
 
-
 Then, you need the path to the directory you cloned in the following environment variable:
 
 ```bash
@@ -106,6 +105,18 @@ You also need to build three binary files in `FSE19/common`:
 $ cd $FSE_HOME/common
 $ bash run.sh
 ```
+
+The tool requires also the `z3` solver. 
+We have tested the tool with version 4.8 of z3, [link](https://github.com/Z3Prover/z3/releases/tag/z3-4.8.10).
+To install is from the `tar.gz` file:
+
+```bash
+$ wget https://github.com/Z3Prover/z3/releases/download/z3-4.8.10/z3-solver-4.8.10.0.tar.gz
+$ tar xzfv z3-solver-4.8.10.0.tar.gz
+$ cd z3-solver-4.8.10.0
+# python setup.py install
+```
+The last instruction may require installing the `python-pip` package.
 
 Then, you may run the experiments for Mips:
 ```bash
