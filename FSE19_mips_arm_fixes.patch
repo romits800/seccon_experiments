@@ -4972,9 +4972,6 @@ index 797082d..f370153 100644
      // (* Presharing a *)
      a1 = a ^ a0;
      // (* b = a * (pow2 a) *)
-diff --git a/common/analy_backend b/common/analy_backend
-index 21da432..ef36802 100755
-Binary files a/common/analy_backend and b/common/analy_backend differ
 diff --git a/common/analy_backend.cpp b/common/analy_backend.cpp
 index 754fe4b..c2863da 100644
 --- a/common/analy_backend.cpp
