@@ -77,7 +77,7 @@ Our repository contains a patch with fixes and modifications for running the too
 
 ```
 $ cd FSE19
-$ git apply FSE19_mips_arm_fixes.patch
+$ git apply /path/to/this/repo/FSE19_mips_arm_fixes.patch
 ```
 
 To compile LLVM you need to install the following packages:
