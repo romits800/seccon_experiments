@@ -1,3 +1,15 @@
+diff --git a/LLVM/llvm/.gitignore b/LLVM/llvm/.gitignore
+index 1f3f1a9..4553be5 100644
+--- a/LLVM/llvm/.gitignore
++++ b/LLVM/llvm/.gitignore
+@@ -44,6 +44,7 @@ compile_commands.json
+ #==============================================================================#
+ # External projects that are tracked independently.
+ projects/*
++!projects/LLVMBuild.txt
+ !projects/CMakeLists.txt
+ !projects/Makefile
+ # Clang, which is tracked independently.
 diff --git a/LLVM/llvm/cmake/config-ix.cmake b/LLVM/llvm/cmake/config-ix.cmake
 index f806d9c..1aa789a 100755
 --- a/LLVM/llvm/cmake/config-ix.cmake
@@ -605,6 +617,33 @@ index e688754..7dcf701 100644
                << "; this sort is used to define all the relations\n"
                << "(define-sort s () (_ BitVec " << input_s << "))\n"
                << "\n";
+diff --git a/LLVM/llvm/projects/LLVMBuild.txt b/LLVM/llvm/projects/LLVMBuild.txt
+new file mode 100644
+index 0000000..3c24d1a
+--- /dev/null
++++ b/LLVM/llvm/projects/LLVMBuild.txt
+@@ -0,0 +1,21 @@
++;===- ./projects/LLVMBuild.txt ---------------------------------*- Conf -*--===;
++;
++;                     The LLVM Compiler Infrastructure
++;
++; This file is distributed under the University of Illinois Open Source
++; License. See LICENSE.TXT for details.
++;
++;===------------------------------------------------------------------------===;
++;
++; This is an LLVMBuild description file for the components in this subdirectory.
++;
++; For more information on the LLVMBuild system, please see:
++;
++;   http://llvm.org/docs/LLVMBuild.html
++;
++;===------------------------------------------------------------------------===;
++
++[component_0]
++type = Group
++name = Projects
++parent = $ROOT
 diff --git a/P1/code.cpp b/P1/code.cpp
 index 83b4451..54e7dd4 100644
 --- a/P1/code.cpp
