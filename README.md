@@ -73,12 +73,24 @@ from [here](https://github.com/bobowang2333/FSE19)
 $ git clone https://github.com/bobowang2333/FSE19
 ```
 
+Our repository contains a patch with fixes and modifications for running the tool for MIPS and ARM:
+
+```
+$ cd FSE19
+$ git apply FSE19_mips_arm_fixes.patch
+```
+
+To compile LLVM you need to install the following packages:
+```bash
+# apt-get install gcc-7 g++-7 c++-7 libzip-dev cmake
+```
+
 To compile the tool, run (here we use g++-4.7 but other versions may also work):
 ```
 $ cd FSE19/LLVM
 $ mkdir build
 $ cd build
-$ CXX=g++-4.7 CC=gcc-4.7 cmake -G Unix Makefiles -DLLVM_TARGETS_TO_BUILD="Mips;ARM;Hexagon" ../llvm
+$ cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ../llvm
 ```
 
 Then, you need the path to the directory you cloned in the following environment variable:
@@ -122,7 +134,7 @@ Then compile LLVM:
 ```
 $ mkdir build
 $ cd build
-$ cmake -G "Unix Makefiles"  -DLLVM_TARGETS_TO_BUILD="Mips;ARM;Hexagon" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ..
+$ cmake -G "Unix Makefiles"  -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ..
 ```
 
 Export the directory:

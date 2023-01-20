@@ -1,0 +1,5058 @@
+diff --git a/LLVM/llvm/cmake/config-ix.cmake b/LLVM/llvm/cmake/config-ix.cmake
+index f806d9c..1aa789a 100755
+--- a/LLVM/llvm/cmake/config-ix.cmake
++++ b/LLVM/llvm/cmake/config-ix.cmake
+@@ -522,23 +522,24 @@ include(AddOCaml)
+ if(WIN32)
+   message(STATUS "OCaml bindings disabled.")
+ else()
+-  find_package(OCaml)
+-  if( NOT OCAML_FOUND )
+-    message(STATUS "OCaml bindings disabled.")
+-  else()
+-    if( OCAML_VERSION VERSION_LESS "4.00.0" )
+-      message(STATUS "OCaml bindings disabled, need OCaml >=4.00.0.")
+-    else()
+-      find_ocamlfind_package(ctypes VERSION 0.3 OPTIONAL)
+-      if( HAVE_OCAML_CTYPES )
+-        message(STATUS "OCaml bindings enabled.")
+-        find_ocamlfind_package(oUnit VERSION 2 OPTIONAL)
+-        set(LLVM_BINDINGS "${LLVM_BINDINGS} ocaml")
+-      else()
+-        message(STATUS "OCaml bindings disabled, need ctypes >=0.3.")
+-      endif()
+-    endif()
+-  endif()
++  message(STATUS "OCaml bindings disabled.")
++#   find_package(OCaml)
++#   if( NOT OCAML_FOUND )
++#     message(STATUS "OCaml bindings disabled.")
++#   else()
++#     if( OCAML_VERSION VERSION_LESS "4.00.0" )
++#       message(STATUS "OCaml bindings disabled, need OCaml >=4.00.0.")
++#     else()
++#       find_ocamlfind_package(ctypes VERSION 0.3 OPTIONAL)
++#       if( HAVE_OCAML_CTYPES )
++#         message(STATUS "OCaml bindings enabled.")
++#         find_ocamlfind_package(oUnit VERSION 2 OPTIONAL)
++#         set(LLVM_BINDINGS "${LLVM_BINDINGS} ocaml")
++#       else()
++#         message(STATUS "OCaml bindings disabled, need ctypes >=0.3.")
++#       endif()
++#     endif()
++#   endif()
+ endif()
+ 
+ string(REPLACE " " ";" LLVM_BINDINGS_LIST "${LLVM_BINDINGS}")
+diff --git a/LLVM/llvm/lib/CodeGen/MachineInstr.cpp b/LLVM/llvm/lib/CodeGen/MachineInstr.cpp
+index b7bbb2c..5b1743f 100644
+--- a/LLVM/llvm/lib/CodeGen/MachineInstr.cpp
++++ b/LLVM/llvm/lib/CodeGen/MachineInstr.cpp
+@@ -1736,6 +1736,7 @@ void MachineInstr::print(raw_ostream &OS, const TargetMachine *TM,
+     }
+ 
+     
++  std::cout <<"Machine Instr name 1" << op_name << std::endl;
+   if (!memoperands_empty()) {
+     if (!HaveSemi) OS << ";"; HaveSemi = true;
+     OS << " mem:";
+@@ -1745,13 +1746,15 @@ void MachineInstr::print(raw_ostream &OS, const TargetMachine *TM,
+       //bobo
+       dbgs() << **i;
+       //bobo: we only consider the mapping between vreg and mem relation in MOV op (factInt) version
+-      if(!op_name.compare("MOV"))
++      if((!op_name.compare("SW")) || (!op_name.compare("LW")) || (!op_name.compare("tST")) || (!op_name.compare("tLD")) || !op_name.compare("MOV"))
+       {
++      std::cout <<"Setting mem_flag_bool" << op_name << std::endl;
+           tmp_mmo_bool = *i;
+           mem_flag_bool = true;
+       }
++      std::cout <<"Machine Instr name" << op_name << std::endl;
+       //bobo: compare "XOR" for factArray version
+-      if((!op_name.compare("XOR")) || (!op_name.compare("MOV")))
++      if((!op_name.compare("SW")) || (!op_name.compare("LW")) ||(!op_name.compare("tEO")) || (!op_name.compare("tST")) || (!op_name.compare("tLD")) || (!op_name.compare("XOR")) || (!op_name.compare("MOV")))
+       {
+           tmp_mmo = *i;
+           // comment begin (before)
+@@ -1778,17 +1781,18 @@ void MachineInstr::print(raw_ostream &OS, const TargetMachine *TM,
+       OS << " " << MRI->getTargetRegisterInfo()->getRegClassName(RC)
+          << ':' << PrintReg(VirtRegs[i]);
+       // bobo begins
+-      if((!op_name.compare("XOR")) || (!op_name.compare("MOV")))
++      if((!op_name.compare("SW")) || (!op_name.compare("LW")) ||(!op_name.compare("tEO")) || (!op_name.compare("tST")) || (!op_name.compare("tLD")) || (!op_name.compare("XOR")) || (!op_name.compare("MOV")))
+       {
+           // bobo added for factArray -> print the left side before "="
+           // print the left side variable
+           if(!left_side)
+           {
+               unsigned Start = 0;
+-              if((!op_name.compare("XOR") || !op_name.compare("MOV")) && getOperand(Start).isReg() &&
++              if((!op_name.compare("SW")) || (!op_name.compare("LW")) ||(!op_name.compare("tEO")) || (!op_name.compare("tST")) || (!op_name.compare("tLD")) || (!op_name.compare("XOR")) || (!op_name.compare("MOV")) && getOperand(Start).isReg() &&
+                  getOperand(Start).isDef() &&
+                  !getOperand(Start).isImplicit())
+               {
++
+                   getOperand(0).print((*outFile), TM);
+                   (*outFile) << " = ";
+                   (*outFile) << " ";
+@@ -1814,6 +1818,7 @@ void MachineInstr::print(raw_ostream &OS, const TargetMachine *TM,
+               // for bool version
+               (*outFile3) << PrintReg(VirtRegs[i]);
+               (*outFile3) << "\n";
++
+               (*outFile2) << *tmp_mmo_bool;
+               (*outFile2) << ' ';
+               // for bool version
+@@ -1833,7 +1838,7 @@ void MachineInstr::print(raw_ostream &OS, const TargetMachine *TM,
+         }
+         if (VirtRegs[i] != VirtRegs[j])
+           OS << "," << PrintReg(VirtRegs[j]);
+-        if((!op_name.compare("XOR")) || (!op_name.compare("MOV")))
++        if((!op_name.compare("tEO")) || (!op_name.compare("tST")) || (!op_name.compare("tLD"))|| (!op_name.compare("XOR")) || (!op_name.compare("MOV")))
+         {
+             if (VirtRegs[i] != VirtRegs[j])
+             {
+diff --git a/LLVM/llvm/lib/CodeGen/RegAllocBasic.cpp b/LLVM/llvm/lib/CodeGen/RegAllocBasic.cpp
+index 7fec9f2..7ad6d84 100644
+--- a/LLVM/llvm/lib/CodeGen/RegAllocBasic.cpp
++++ b/LLVM/llvm/lib/CodeGen/RegAllocBasic.cpp
+@@ -280,10 +280,13 @@ unsigned RABasic::selectOrSplit(LiveInterval &VirtReg, unsigned last_reg_index,
+     //newly added
+       std::string toCheck = std::to_string(reg_index);
+       std::string s;
++      //std::cout << "Loading forBackend.txt." << std::endl;
+       std::ifstream fin("forBackend.txt");
+       bool continue_flag = false;
++      //std::cout << "Loaded forBackend.txt." << std::endl;
+       if(!(fin.peek() == std::ifstream::traits_type::eof())) // forbackend file is not empty
+       {
++          //std::cout << "Inside forBackend.txt." << std::endl;
+           //bobo wrote before
+          /*
+           while(fin >> s)
+diff --git a/LLVM/llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp b/LLVM/llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp
+index 73a0549..efaa648 100644
+--- a/LLVM/llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp
++++ b/LLVM/llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp
+@@ -8738,9 +8738,12 @@ SDValue DAGCombiner::visitLOAD(SDNode *N) {
+           else{
+                 while(fin >> s)
+                 {
++                std::cout << "Reading from file3: " << s << std::endl;
+                   if(!s.compare("HD_SENSITIVE"))
+                   {
+                       fin >> s;
++                std::cout << "Reading from file4: " << s << std::endl;
++                std::cout << "addr: " << checkAddr << std::endl;
+                       if(!checkAddr.compare(s))
+                       {
+                           combine_flag = false;
+diff --git a/LLVM/llvm/lib/CodeGen/SelectionDAG/LegalizeTypes.cpp b/LLVM/llvm/lib/CodeGen/SelectionDAG/LegalizeTypes.cpp
+index 670e8b0..d15b360 100644
+--- a/LLVM/llvm/lib/CodeGen/SelectionDAG/LegalizeTypes.cpp
++++ b/LLVM/llvm/lib/CodeGen/SelectionDAG/LegalizeTypes.cpp
+@@ -479,6 +479,7 @@ void DAGTypeLegalizer::Modify_xor(void)
+         std::string checkOpcode = sdnToCheck->getOperationName(&DAG);
+         unsigned  stop_mark = 0;
+         
++        std::cout << "Checkbegin: " << checkOpcode << std::endl;
+         std::ifstream fin("forBackend.txt");
+         if(checkOpcode.compare("store") == 0)
+         {
+@@ -498,9 +499,12 @@ void DAGTypeLegalizer::Modify_xor(void)
+                     std::string s;
+                         while(fin >> s)
+                         {
++                std::cout << "Reading from file: " << s << std::endl;
+                             if(!s.compare("HD_SENSITIVE"))
+                             {
+                                 fin >> s;
++                std::cout << "Reading from file2: " << s << std::endl;
++                std::cout << "InterVar_name: " << InterVar_name << std::endl;
+                                 //if(!InterVar_name.compare("n2"))
+                                 if(!InterVar_name.compare(s))
+                                 {
+@@ -699,10 +703,12 @@ void DAGTypeLegalizer::swap_load_order(void)
+ std::string DAGTypeLegalizer::showName(SDNode *sdnToCheck)
+ {
+     MachineMemOperand *MMO;
+-    if (const StoreSDNode *ST = dyn_cast<StoreSDNode>(sdnToCheck))
++    if (const StoreSDNode *ST = dyn_cast<StoreSDNode>(sdnToCheck)) {
+         MMO = ST->getMemOperand();
+-    else if(const LoadSDNode *LD = dyn_cast<LoadSDNode>(sdnToCheck))
++    }
++    else if(const LoadSDNode *LD = dyn_cast<LoadSDNode>(sdnToCheck)) {
+         MMO = LD->getMemOperand();
++    }
+     else
+     {
+         std::cout << "this is not a load or store instr" << std::endl;
+diff --git a/LLVM/llvm/lib/Target/X86/MachineCountPass.cpp b/LLVM/llvm/lib/Target/X86/MachineCountPass.cpp
+index a12dde3..7113ac8 100644
+--- a/LLVM/llvm/lib/Target/X86/MachineCountPass.cpp
++++ b/LLVM/llvm/lib/Target/X86/MachineCountPass.cpp
+@@ -7,7 +7,7 @@
+ //
+ 
+ #include "X86.h"
+-#include "llvm/pass.h"
++#include "llvm/Pass.h"
+ #include "llvm/CodeGen/MachineBasicBlock.h"
+ #include "llvm/CodeGen/MachineFunction.h"
+ #include "llvm/CodeGen/MachineFunctionPass.h"
+diff --git a/LLVM/llvm/lib/Transforms/aliasAnaly/aliasAnaly.cpp b/LLVM/llvm/lib/Transforms/aliasAnaly/aliasAnaly.cpp
+index 3216699..d19935b 100644
+--- a/LLVM/llvm/lib/Transforms/aliasAnaly/aliasAnaly.cpp
++++ b/LLVM/llvm/lib/Transforms/aliasAnaly/aliasAnaly.cpp
+@@ -118,7 +118,7 @@ struct aliasAnaly : public ModulePass {
+     // Use SMT-Lib
+     else {
+       std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 8);
+-      f << "(set-option :fixedpoint.engine datalog)\n"
++      f << "(set-option :fp.engine datalog)\n"
+         << "; This sort is used to define all relations. It is the size of an "
+         << "unsigned on the target machine.\n"
+         << "(define-sort s () (_ BitVec " << unsigned_size_bits << "))\n"
+diff --git a/LLVM/llvm/lib/Transforms/backup/assign/assign.cpp b/LLVM/llvm/lib/Transforms/backup/assign/assign.cpp
+index 3c7cee4..b8998b4 100644
+--- a/LLVM/llvm/lib/Transforms/backup/assign/assign.cpp
++++ b/LLVM/llvm/lib/Transforms/backup/assign/assign.cpp
+@@ -101,7 +101,7 @@ cl::opt<std::string> InputFileName("input", cl::desc("specify the type file"), c
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "(define-sort s () (_ BitVec " << input_s << "))\n"
+               << "\n";
+diff --git a/LLVM/llvm/lib/Transforms/backup/fact/fact.cpp b/LLVM/llvm/lib/Transforms/backup/fact/fact.cpp
+index 2d7c931..bcd3490 100644
+--- a/LLVM/llvm/lib/Transforms/backup/fact/fact.cpp
++++ b/LLVM/llvm/lib/Transforms/backup/fact/fact.cpp
+@@ -125,7 +125,7 @@ cl::opt<std::string> InputFileName("input", cl::desc("specify the type file"), c
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_ind, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "(define-sort s () (_ BitVec " << input_s << "))\n"
+               << "\n";
+diff --git a/LLVM/llvm/lib/Transforms/contract/contract.cpp b/LLVM/llvm/lib/Transforms/contract/contract.cpp
+index 4cdf9fe..d03a384 100644
+--- a/LLVM/llvm/lib/Transforms/contract/contract.cpp
++++ b/LLVM/llvm/lib/Transforms/contract/contract.cpp
+@@ -269,7 +269,7 @@ cl::opt<std::string> ShareFileName("group", cl::desc("specify the shared_variabl
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_ind, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "(define-sort s () (_ BitVec " << input_s << "))\n"
+               << "\n";
+diff --git a/LLVM/llvm/lib/Transforms/factArray/factArray.cpp b/LLVM/llvm/lib/Transforms/factArray/factArray.cpp
+index 532cfa5..07bff49 100644
+--- a/LLVM/llvm/lib/Transforms/factArray/factArray.cpp
++++ b/LLVM/llvm/lib/Transforms/factArray/factArray.cpp
+@@ -615,7 +615,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_ind, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "\n";
+             f << "; assignment (assign from to)\n"
+diff --git a/LLVM/llvm/lib/Transforms/factBool/factBool.cpp b/LLVM/llvm/lib/Transforms/factBool/factBool.cpp
+index e8df1d9..d8d2268 100644
+--- a/LLVM/llvm/lib/Transforms/factBool/factBool.cpp
++++ b/LLVM/llvm/lib/Transforms/factBool/factBool.cpp
+@@ -220,7 +220,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_ind, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "(define-sort s () (_ BitVec " << input_s << "))\n"
+               << "\n";
+diff --git a/LLVM/llvm/lib/Transforms/factCombine/factCombine.cpp b/LLVM/llvm/lib/Transforms/factCombine/factCombine.cpp
+index 0b0648f..d35136e 100644
+--- a/LLVM/llvm/lib/Transforms/factCombine/factCombine.cpp
++++ b/LLVM/llvm/lib/Transforms/factCombine/factCombine.cpp
+@@ -384,7 +384,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_ind, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "(define-sort s () (_ BitVec " << input_s << "))\n"
+               << "\n";
+diff --git a/LLVM/llvm/lib/Transforms/factInt/1 b/LLVM/llvm/lib/Transforms/factInt/1
+deleted file mode 100644
+index 55dc690..0000000
+--- a/LLVM/llvm/lib/Transforms/factInt/1
++++ /dev/null
+@@ -1,106 +0,0 @@
+-/*** simple assignment facts generation ***/
+-/*** output: z3 fix-point datalog file ***/
+-/*** author: Jingbo Wang ***/
+-
+-#include "llvm/Pass.h"
+-#include "llvm/IR/Instruction.h"
+-#include "llvm/IR/Module.h"
+-#include "llvm/IR/Instructions.h"
+-#include "llvm/Support/raw_ostream.h"
+-#include "llvm/Support/CommandLine.h"
+-#include "llvm/Support/FileSystem.h"
+-#include "genFact.h"
+-#include <string>
+-
+-using namespace llvm;
+-// #define ASSIGNMENT_DEBUG
+-
+-    struct assignFact : public FunctionPass {
+-        static char ID;
+-        assignFact() : FunctionPass(ID) {}
+-
+-        void printSpec(raw_fd_ostream &f) {
+-            //Using SMT-LIB
+-            std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 8);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
+-              << "; this sort is used to define all the relations\n"
+-              << "(define-sort s () (_ BitVec " << unsigned_size_bits << "))\n"
+-              << "\n"
+-              << "; assignment (assign from to)\n"
+-              << "(declare-rel assign(s, s))\n"
+-              << "; DEP relation: (DEP xxx, xxx)\n"
+-              << "(declare-rel DEP (s, s))\n"
+-              << "\n"
+-              << "(declare-var var s)\n"
+-              << "(declare-var prev s)\n"
+-              << "(declare-var to s)\n"
+-              << "(declare-var from s)\n"
+-              << "\n";
+-            // define the DEP relation
+-            f << "; the DEP relation defines what it depends on\n"
+-             << "(rule (=> (assign to from) (DEP to from)))\n"
+-             << "\n"
+-             << "; transitive closure of its assignments"
+-             << "(rule (=> (and (assign to from) (DEP from prev)) (DEP to prev)))\n"
+-            << "\n";
+-        }
+-
+-        std::map<Instruction*, int> getIDMap(Function &F){
+-            std::map<Instruction*, int> inst_map;
+-            Function::iterator f_it;
+-            BasicBlock::iterator bb_it;
+-            static int inst_num = 1;
+-            for(f_it = F.begin(); f_it != F.end(); f_it++)
+-            {
+-                BasicBlock *bb = &*f_it;
+-                for(bb_it = bb->begin(); bb_it != bb->end(); bb_it++)
+-                {
+-                    Instruction *inst = &*bb_it;
+-                    inst_map.insert(std::pair<Instruction*, int>(inst, inst_num));
+-                    inst_num++;
+-                }
+-            }
+-            return inst_map;
+-        }
+-
+-        virtual bool runOnFunction(Function &F) {
+-            /** generate the ID map: instrs => ID **/
+-            std::map<Instruction*, int> ID_map;
+-            ID_map = getIDMap(F);
+-
+-            std::string funcName = F.getName().str();
+-            std::string path;
+-            path = funcName + ".smt2";
+-            assert(path.size() && "empty output file path");
+-
+-            /** attempt to open a stream to the passed path, crash a failure **/
+-            std::error_code ec;
+-            raw_fd_ostream *outFile = new raw_fd_ostream(path.c_str(), ec, sys::fs::OpenFlags::F_Text);
+-            /** error code with a value of 0 indicates no error **/
+-            if(ec.value())
+-            {
+-                errs() << "[ERROR] Unable to open file " << path << ": " << ec.message() << '\n';
+-                exit(EXIT_FAILURE);
+-            }
+-
+-            /** add the prepared specification to the output datalog file **/
+-            printSpec(*outFile);
+-
+-            /** TODO: add more facts **/
+-            /** genFact **/
+-            assign::genFact fact(outFile, ID_map);
+-            fact.visit(F);
+-
+-            (*outFile) << ";###### End Facts\n";
+-            outFile->close();
+-            delete outFile;
+-            
+-            /** IR was not modified **/
+-            return false;
+-        }
+-    };  /** struct assign **/
+-    char assignFact::ID = 0;
+-    static RegisterPass<assignFact> X("assignFact", "datalog based front-end for simple assignment analysis",
+-            false, /** unmodified CFG **/ 
+-            true); /** analysis pass **/
+-
+diff --git a/LLVM/llvm/lib/Transforms/factInt/factInt.cpp b/LLVM/llvm/lib/Transforms/factInt/factInt.cpp
+index b9432f8..5ee9ae4 100644
+--- a/LLVM/llvm/lib/Transforms/factInt/factInt.cpp
++++ b/LLVM/llvm/lib/Transforms/factInt/factInt.cpp
+@@ -180,12 +180,31 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+                 else
+                 {
+                     int num = ID_map[inst];
++
++                    //std::cout << num << std::endl;
++                    //inst->dump();
++                    //std::cout << inst << std::endl;
++
+                     std::stringstream stream;
+                     stream << "#x" << std::setfill('0') << std::setw(input_s/4) << std::hex << num;
+                     std::string instr_id = stream.str();
++
++                    //std::cout << instr_id << std::endl;
++
+                     if(inst->hasName())
+                     {
+                         std::string var_name = inst->getName().str();
++                        //std::cout << "beg1: " << var_name << " "  << instr_id << std::endl;
++                        alloca_var_id.insert(std::pair<std::string, std::string>(var_name, instr_id));
++                    } else {
++                        // romy: added for the arguments that dont have name
++                        std::stringstream ss;
++                        ss << num;
++                        std::string var_name = ss.str();
++                        /*if (var_name == "1") {
++                            var_name = "r1";
++                        }*/
++                        //std::cout << "beg2: " << var_name << " "  << instr_id << std::endl;
+                         alloca_var_id.insert(std::pair<std::string, std::string>(var_name, instr_id));
+                     }
+                     
+@@ -260,6 +279,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+                 //++tmp;
+                 std::string fact;
+                 fact = "(rule (share " + std::get<2>(it->second) + " " + std::get<3>(it->second) + "))";
++                //std::cout << fact << std::endl;
+                 f << ";share_register_variable_pair: " << std::get<0>(it->second) << " " << std::get<1>(it->second) << "\n";
+                 f << fact;
+                 f << "\n";
+@@ -269,7 +289,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_ind, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "(define-sort s () (_ BitVec " << input_s << "))\n"
+               << "\n";
+@@ -798,6 +818,11 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+                 for(bb_it = bb->begin(); bb_it != bb->end(); bb_it++)
+                 {
+                     Instruction *inst = &*bb_it;
++
++                    //std::cout << "getIDMap" << std::endl;
++                    //inst->dump();
++                    //std::cout << inst_num << std::endl;
++
+                     inst_map.insert(std::pair<Instruction*, int>(inst, inst_num));
+                     inst_num++;
+                 }
+@@ -807,6 +832,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+ 
+         virtual bool runOnFunction(Function &F) {
+             /** generate the ID map: instrs => ID (use the input file) **/
++            //std::cout << "runOnFunction" << std::endl;
+             std::map<Instruction*, int> ID_map;
+             ID_map = getIDMap(F);
+ 
+@@ -853,6 +879,10 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+                 exit(EXIT_FAILURE);
+             }
+             
++
++            //std::cout << "RAND_VAR: " << RAND_VAR.size() << "CONSTANT_VAR: " << CONSTANT_VAR.size() << "KEY_VAR: " << KEY_VAR.size() << "Index: " << index << " " << index_num << std::endl;
++
++            //index_num = ceil(((float)(RAND_VAR.size() + CONSTANT_VAR.size() + KEY_VAR.size()))/4);
+             /** add the prepared specification to the output datalog file **/
+             printSpec(*outFile, input_s, index, input_bitset);
+             printRule(*outFile, index, input_bitset);
+@@ -867,6 +897,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+             /** TODO: add more facts **/
+             /** genFact **/
+             assign::genFact fact(outFile, ID_map, RAND_VAR, CONSTANT_VAR, KEY_VAR, input_s, index, index_num, input_bitset);
++            //std::cout << "runOnFunction 9: " << std::endl;
+             fact.visit(F);
+ 
+             /** PRINT query **/
+diff --git a/LLVM/llvm/lib/Transforms/factInt/genFact.cpp b/LLVM/llvm/lib/Transforms/factInt/genFact.cpp
+index bd74e89..72c77bf 100644
+--- a/LLVM/llvm/lib/Transforms/factInt/genFact.cpp
++++ b/LLVM/llvm/lib/Transforms/factInt/genFact.cpp
+@@ -141,8 +141,9 @@ namespace assign{
+         std::string fact;
+         /** only both value and pointer are both instr, then we build this relation **/
+         fact = createStore(ptr, val);
+-        if(fact.size())
++        if(fact.size()) {
+             writeFact(&I, fact);
++        }
+     }
+     
+     void genFact::visitTruncInst(TruncInst &I)
+@@ -157,6 +158,12 @@ namespace assign{
+     {
+         Value *op1 = I.getOperand(0);
+         std::string fact;
++        //fact = createZExtInst(ptr, op1);
++        //op1->dump();
++        //I->dump();
++        //std::cout << "visitZExtInst: " << std::endl;
++        //std::cout << "visitZExtInst: " << I->dump() << std::endl;
++        // TODO(Romy): there is some issue here
+         fact = createZExtInst(&I, op1);
+         writeFact(&I, fact);
+     }
+@@ -233,7 +240,10 @@ namespace assign{
+     
+     std::string genFact::createZExtInst(Value *to, Value *from)
+     {
++        //to->dump();
++        //from->dump();
+         Instruction *to_inst = cast<Instruction>(to);
++        // Romy: There is some issue here
+         Instruction *from_inst = cast<Instruction>(from);
+         int to_num = IDMap[to_inst];
+         int from_num = IDMap[from_inst];
+@@ -492,8 +502,8 @@ namespace assign{
+ 
+     void genFact::writeFact(Value *v, std::string fact)
+     {
+-        assert(fact.size() && "empty string passed to this func");
+         assert(v && "NULL Value passed");
++        assert(fact.size() && "empty string passed to this func");
+         (*datalogFiles) << getCommentMark() << ' ' << *v << '\n' << fact << '\n';
+     }
+ 
+diff --git a/LLVM/llvm/lib/Transforms/factPass/factPass.cpp b/LLVM/llvm/lib/Transforms/factPass/factPass.cpp
+index 8b04d76..5f5df4b 100644
+--- a/LLVM/llvm/lib/Transforms/factPass/factPass.cpp
++++ b/LLVM/llvm/lib/Transforms/factPass/factPass.cpp
+@@ -189,6 +189,13 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+                     {
+                         std::string var_name = inst->getName().str();
+                         alloca_var_id.insert(std::pair<std::string, std::string>(var_name, instr_id));
++                    } else {
++                        std::stringstream ss;
++                        ss << num;
++                        std::string var_name = ss.str();
++
++                        alloca_var_id.insert(std::pair<std::string, std::string>(var_name, instr_id));
++                    
+                     }
+                     
+                 }
+@@ -373,7 +380,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_ind, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "(define-sort s () (_ BitVec " << input_s << "))\n"
+               << "\n";
+@@ -1290,6 +1297,8 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+             std::vector<xor_pair> xor_assign;
+             
+             assign::genFact fact(outFile, keyFile, ID_map, RAND_VAR, CONSTANT_VAR, KEY_VAR, input_s, index, index_num, input_bitset, REC_ALL_INC, REC_RAND_VAR, RAND_var, KEY_SENSITIVE_var, KEY_IND_var);
++
++
+             fact.visit(F);
+             //fact.cal_EqualAssign(F, equal_assign);
+             fact.cal_XorAssign(F, xor_assign);
+@@ -1306,9 +1315,9 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+             findEqual(F, ID_map, input_s, new_equal_assign, ID_find_set, ID_count);
+             HD_SENSITIVE(*outFile, share_map, xor_assign, KEY_SEN_LIST, ID_map, F, input_s, ID_find_set, ID_count);
+             //test
+-            (*outFile) << xor_assign.size() << "\n";
++            //(*outFile) << xor_assign.size() << "\n";
+             //(*outFile) << equal_assign.size() << "\n";
+-            (*outFile) << share_map.size() << "\n";
++            //(*outFile) << share_map.size() << "\n";
+             
+             /** PRINT query **/
+             printQuery(*outFile);
+diff --git a/LLVM/llvm/lib/Transforms/fact_preCalcul/fact_preCalcul.cpp b/LLVM/llvm/lib/Transforms/fact_preCalcul/fact_preCalcul.cpp
+index e688754..7dcf701 100644
+--- a/LLVM/llvm/lib/Transforms/fact_preCalcul/fact_preCalcul.cpp
++++ b/LLVM/llvm/lib/Transforms/fact_preCalcul/fact_preCalcul.cpp
+@@ -276,7 +276,7 @@ cl::opt<std::string> ShareFileName("share", cl::desc("specify the shared_variabl
+         void printSpec(raw_fd_ostream &f, unsigned input_s, unsigned input_ind, unsigned input_bitset) {
+             //Using SMT-LIB
+             std::string unsigned_size_bits = std::to_string(sizeof(unsigned) * 2);
+-            f << "(set-option :fixedpoint.engine datalog)\n"
++            f << "(set-option :fp.engine datalog)\n"
+               << "; this sort is used to define all the relations\n"
+               << "(define-sort s () (_ BitVec " << input_s << "))\n"
+               << "\n";
+diff --git a/P1/code.cpp b/P1/code.cpp
+index 83b4451..54e7dd4 100644
+--- a/P1/code.cpp
++++ b/P1/code.cpp
+@@ -8,8 +8,8 @@ bool compute(bool r1, bool r2, bool st2_orig, bool st10_orig){
+   bool sTT10;
+   st10 = st10_orig ^ r1;
+   st2 = st2_orig ^ r1;
+-  r24  = st2 ^0;
+-  r25  = st10 ^0;
++  r24  = st2 ^ 0;
++  r25  = st10 ^ 0;
+   sTT2 = r25 ^ 0;
+   sTT10 = r24 ^ 0;
+   return(sTT2 - sTT10);
+diff --git a/P3/compute.smt2 b/P3/compute.smt2
+index 0c5a899..93d243f 100644
+--- a/P3/compute.smt2
++++ b/P3/compute.smt2
+@@ -1,9 +1,9 @@
+-(set-option :fixedpoint.engine datalog)
++(set-option :fp.engine datalog)
+ ; this sort is used to define all the relations
+ (define-sort s () (_ BitVec 16))
+ 
+ (define-sort BitSet () (_ BitVec 4))
+-(define-sort ind () (_ BitVec 1))
++(define-sort ind () (_ BitVec 4))
+ ; assignment (assign from to)
+ (declare-rel assign(s s))
+ (declare-rel TDEP (s s))
+@@ -130,43 +130,43 @@
+ ; defining the recursive function ;;;;;;;
+ ;; BV [AND] [RAND_VAR] ;; Times begin from 1 
+ (rule (=> (and (REC_RAND_VAR var_x Times X) (REC_RAND_VAR var_y Times Y) (BVAND_REC var_x var_y var_z Times) (= tmp (bvand X Y))) (REC_RAND_VAR var_z Times tmp)))
+-(rule (=> (and (BVAND_REC var_x var_y var_z Times) (not (= Times #b0)) (= Times_New (bvsub Times #b1))) (BVAND_REC var_x var_y var_z Times_New)))
++(rule (=> (and (BVAND_REC var_x var_y var_z Times) (not (= Times #b0000)) (= Times_New (bvsub Times #b0001))) (BVAND_REC var_x var_y var_z Times_New)))
+ ;; BV [AND] = [KEY] && [ALL_INC] ;;; for the [NO KEY] rule ;;;;;;
+-;(rule (=> (and (REC_ALL_INC var_x Times X) (KEY_NUMBER Times KEY_NUM) (BVAND X KEY_NUM int_res0) (= Times #b1)) (BVAND_ALL_KEY_REC var_x Times int_res0)))
+-;(rule (=> (and (BVAND_ALL_KEY_REC var_x Times_New int_res0) (REC_ALL_INC var_x Times X) (KEY_NUMBER Times KEY_NUM) (BVAND X KEY_NUM int_res1) (= Times_New (bvsub Times #b1)) (not (= Times #b1)) (BVOR int_res0 int_res1 int_res2)) (BVAND_ALL_KEY_REC var_x Times int_res2)))
++;(rule (=> (and (REC_ALL_INC var_x Times X) (KEY_NUMBER Times KEY_NUM) (BVAND X KEY_NUM int_res0) (= Times #b0001)) (BVAND_ALL_KEY_REC var_x Times int_res0)))
++;(rule (=> (and (BVAND_ALL_KEY_REC var_x Times_New int_res0) (REC_ALL_INC var_x Times X) (KEY_NUMBER Times KEY_NUM) (BVAND X KEY_NUM int_res1) (= Times_New (bvsub Times #b0001)) (not (= Times #b0001)) (BVOR int_res0 int_res1 int_res2)) (BVAND_ALL_KEY_REC var_x Times int_res2)))
+ ;; BV [OR] [RAND_VAR]
+ (rule (=> (and (REC_RAND_VAR var_x Times X) (REC_RAND_VAR var_y Times Y) (BVOR_RAND_REC var_x var_y var_z Times) (BVOR X Y XY)) (REC_RAND_VAR var_z Times XY)))
+-(rule (=> (and (BVOR_RAND_REC var_x var_y var_z Times) (not (= Times #b0)) (= Times_New (bvsub Times #b1))) (BVOR_RAND_REC var_x var_y var_z Times_New)))
++(rule (=> (and (BVOR_RAND_REC var_x var_y var_z Times) (not (= Times #b0000)) (= Times_New (bvsub Times #b0001))) (BVOR_RAND_REC var_x var_y var_z Times_New)))
+ ;; BV [OR] [ALL_INC]
+ (rule (=> (and (REC_ALL_INC var_x Times X) (REC_ALL_INC var_y Times Y) (BVOR_ALL_REC var_x var_y var_z Times) (BVOR X Y XY)) (REC_ALL_INC var_z Times XY)))
+-(rule (=> (and (BVOR_ALL_REC var_x var_y var_z Times) (not (= Times #b0)) (= Times_New (bvsub Times #b1))) (BVOR_ALL_REC var_x var_y var_z Times_New)))
++(rule (=> (and (BVOR_ALL_REC var_x var_y var_z Times) (not (= Times #b0000)) (= Times_New (bvsub Times #b0001))) (BVOR_ALL_REC var_x var_y var_z Times_New)))
+ ;; BV [Intersect] [ALL_INC]
+-(rule (=> (and (REC_ALL_INC var_x Times X) (REC_ALL_INC var_y Times Y) (= Times #b1) (BV_Intersect X Y XY)(INTERSECT_LABEL var_x var_y)) (BV_INTERSECT_REC var_x var_y Times XY)))
+-(rule (=> (and (REC_RAND_VAR var_x Times X) (REC_ALL_INC var_y Times Y) (not (= Times #b1)) (BV_Intersect X Y XY) (INTERSECT_LABEL var_x var_y) (= Times_New (bvsub Times #b1)) (BV_INTERSECT_REC var_x var_y Times_New XY_past) (BVOR XY XY_past int_res0)) (BV_INTERSECT_REC var_x var_y Times int_res0)))
++(rule (=> (and (REC_ALL_INC var_x Times X) (REC_ALL_INC var_y Times Y) (= Times #b0001) (BV_Intersect X Y XY)(INTERSECT_LABEL var_x var_y)) (BV_INTERSECT_REC var_x var_y Times XY)))
++(rule (=> (and (REC_RAND_VAR var_x Times X) (REC_ALL_INC var_y Times Y) (not (= Times #b0001)) (BV_Intersect X Y XY) (INTERSECT_LABEL var_x var_y) (= Times_New (bvsub Times #b0001)) (BV_INTERSECT_REC var_x var_y Times_New XY_past) (BVOR XY XY_past int_res0)) (BV_INTERSECT_REC var_x var_y Times int_res0)))
+ ;; BV [DIFF] [RAND_VAR][ALL_INC]
+-(rule (=> (and (REC_RAND_VAR var_x Times X) (REC_ALL_INC var_y Times Y) (= Times #b1) (BV_Diff X Y XY) (DIFF_LABEL var_x var_y)) (BV_DIFF_REC var_x var_y Times XY)))
+-(rule (=> (and (REC_RAND_VAR var_x Times X) (REC_ALL_INC var_y Times Y) (not (= Times #b1)) (BV_Diff X Y XY) (DIFF_LABEL var_x var_y) (= Times_New (bvsub Times #b1)) (BV_DIFF_REC var_x var_y Times_New XY_past) (BVOR XY XY_past int_res0)) (BV_DIFF_REC var_x var_y Times int_res0)))
++(rule (=> (and (REC_RAND_VAR var_x Times X) (REC_ALL_INC var_y Times Y) (= Times #b0001) (BV_Diff X Y XY) (DIFF_LABEL var_x var_y)) (BV_DIFF_REC var_x var_y Times XY)))
++(rule (=> (and (REC_RAND_VAR var_x Times X) (REC_ALL_INC var_y Times Y) (not (= Times #b0001)) (BV_Diff X Y XY) (DIFF_LABEL var_x var_y) (= Times_New (bvsub Times #b0001)) (BV_DIFF_REC var_x var_y Times_New XY_past) (BVOR XY XY_past int_res0)) (BV_DIFF_REC var_x var_y Times int_res0)))
+ ;; BV [SAME] [ALL_INC] [ALL_INC]
+-(rule (=> (and (REC_ALL_INC var_x Times X) (REC_ALL_INC var_y Times Y) (= Times #b1) (SET_SUM X Y XY)(CHECK_SAME var_x var_y)) (BV_SAME_REC var_x var_y Times XY)))
+-(rule (=> (and (REC_ALL_INC var_x Times X) (REC_ALL_INC var_y Times Y) (not (= Times #b1)) (SET_SUM X Y XY) (CHECK_SAME var_x var_y) (= Times_New (bvsub Times #b1)) (BV_SAME_REC var_x var_y Times_New XY_past) (BVOR XY XY_past int_res0)) (BV_SAME_REC var_x var_y Times int_res0)))
++(rule (=> (and (REC_ALL_INC var_x Times X) (REC_ALL_INC var_y Times Y) (= Times #b0001) (SET_SUM X Y XY)(CHECK_SAME var_x var_y)) (BV_SAME_REC var_x var_y Times XY)))
++(rule (=> (and (REC_ALL_INC var_x Times X) (REC_ALL_INC var_y Times Y) (not (= Times #b0001)) (SET_SUM X Y XY) (CHECK_SAME var_x var_y) (= Times_New (bvsub Times #b0001)) (BV_SAME_REC var_x var_y Times_New XY_past) (BVOR XY XY_past int_res0)) (BV_SAME_REC var_x var_y Times int_res0)))
+ ;; BV [SET_SUM] [RAND_VAR] [RAND_VAR]
+ (rule (=> (and (REC_RAND_VAR var_x Times X) (REC_RAND_VAR var_y Times Y) (SET_SUM_REC var_x var_y var_z Times) (SET_SUM X Y XY)) (REC_RAND_VAR var_z Times XY)))
+-(rule (=> (and (SET_SUM_REC var_x var_y var_z Times) (not (= Times_New #b0)) (= Times_New (bvsub Times #b1))) (SET_SUM_REC var_x var_y var_z Times_New)))
++(rule (=> (and (SET_SUM_REC var_x var_y var_z Times) (not (= Times_New #b0000)) (= Times_New (bvsub Times #b0001))) (SET_SUM_REC var_x var_y var_z Times_New)))
+ ;; BV [XOR_RUD1_ALL_INC_REC] => generate the ALL_INC
+ (rule (=> (and (REC_RAND_VAR var_x Times X_R) (REC_RAND_VAR var_y Times Y_R) (REC_ALL_INC var_x Times X_A) (REC_ALL_INC var_y Times Y_A) (RAND_NUMBER Times RAND_NUM) (XOR_RUD1_ALL_INC X_A Y_A X_R Y_R RAND_NUM XY) (XOR_RUD1_ALL_INC_REC var_x var_y var_z Times)) (REC_ALL_INC var_z Times XY)))
+-(rule (=> (and (XOR_RUD1_ALL_INC_REC var_x var_y var_z Times) (= Times_New (bvsub Times #b1)) (not (= Times_New #b0))) (XOR_RUD1_ALL_INC_REC var_x var_y var_z Times_New)))
++(rule (=> (and (XOR_RUD1_ALL_INC_REC var_x var_y var_z Times) (= Times_New (bvsub Times #b0001)) (not (= Times_New #b0000))) (XOR_RUD1_ALL_INC_REC var_x var_y var_z Times_New)))
+ ;; BV [BV_EQUAL] ;; generate the same bit vector [RAND_VAR] => [RAND_VAR]
+ (rule (=> (and (REC_RAND_VAR var_x Times X) (BV_EQUAL_RAND_REC var_x var_y Times)) (REC_RAND_VAR var_y Times X)))
+-(rule (=> (and (BV_EQUAL_RAND_REC var_x var_y Times) (= Times_New (bvsub Times #b1)) (not (= Times_New #b0))) (BV_EQUAL_RAND_REC var_x var_y Times_New)))
++(rule (=> (and (BV_EQUAL_RAND_REC var_x var_y Times) (= Times_New (bvsub Times #b0001)) (not (= Times_New #b0000))) (BV_EQUAL_RAND_REC var_x var_y Times_New)))
+ ;; BV [BV_EQUAL] ;; [ALL_INC] => [ALL_INC]
+ (rule (=> (and (REC_ALL_INC var_x Times X) (BV_EQUAL_ALL_REC var_x var_y Times)) (REC_ALL_INC var_y Times X)))
+-(rule (=> (and (BV_EQUAL_ALL_REC var_x var_y Times) (= Times_New (bvsub Times #b1)) (not (= Times_New #b0))) (BV_EQUAL_ALL_REC var_x var_y Times_New)))
++(rule (=> (and (BV_EQUAL_ALL_REC var_x var_y Times) (= Times_New (bvsub Times #b0001)) (not (= Times_New #b0000))) (BV_EQUAL_ALL_REC var_x var_y Times_New)))
+ ;; BV [BV_ZERO] ;; [RAND]
+ (rule (=> (and (REC_RAND_VAR var_x Times X) (BV_ZERO_REC var_x var_y Times) (= XY #b0000)) (REC_RAND_VAR var_y Times XY)))
+-(rule (=> (and (BV_ZERO_REC var_x var_y Times) (= Times_New (bvsub Times #b1)) (not (= Times_New #b0))) (BV_ZERO_REC var_x var_y Times_New)))
++(rule (=> (and (BV_ZERO_REC var_x var_y Times) (= Times_New (bvsub Times #b0001)) (not (= Times_New #b0000))) (BV_ZERO_REC var_x var_y Times_New)))
+ ;; BV [IS EMPTY] [RAND_VAR] ;;;; for the [NO KEY] rule
+-;(rule (=> (and (REC_RAND_VAR var_x Times X) (= Times #b1) (ISEMPTY X int_bool0)) (BV_IS_EMPTY_REC var_x Times int_bool0)))
+-;(rule (=> (and (REC_RAND_VAR var_x Times X) (ISEMPTY X int_bool0) (not (= Times #b1)) (= Times_New (bvsub Times #b1)) (BV_IS_EMPTY_REC var_x Times_New int_bool1)) (BV_IS_EMPTY_REC var_x Times (and int_bool0 int_bool1))))
++;(rule (=> (and (REC_RAND_VAR var_x Times X) (= Times #b0001) (ISEMPTY X int_bool0)) (BV_IS_EMPTY_REC var_x Times int_bool0)))
++;(rule (=> (and (REC_RAND_VAR var_x Times X) (ISEMPTY X int_bool0) (not (= Times #b0001)) (= Times_New (bvsub Times #b0001)) (BV_IS_EMPTY_REC var_x Times_New int_bool1)) (BV_IS_EMPTY_REC var_x Times (and int_bool0 int_bool1))))
+ 
+ ; [RULE] define the assign relation
+ (rule (=> (assign to from) (TDEP to from)))
+@@ -325,149 +325,2161 @@
+ (rule (=> (and (load_assign from1 from) (store_assign to from1) (HD_SENSITIVE to from2)) (HD_SENSITIVE_2 to from2)))
+ (rule (=> (and (load_assign from1 from) (store_assign to from1) (HD_SENSITIVE from2 to)) (HD_SENSITIVE_2 from2 to)))
+ 
+-(rule (Time #b1))
+-(rule (RAND_NUMBER #b1 #b0011))
+-(rule (KEY_NUMBER #b1 #b0100))
+-;share_register_variable_pair: %rx.addr %X
+-(rule (share #x0003 #x000b))
+-;share_register_variable_pair: %X %T1
+-(rule (share #x000b #x0004))
+-;share_register_variable_pair: %T1 %T2
+-(rule (share #x0004 #x0005))
+-;share_register_variable_pair: %T2 %T3
+-(rule (share #x0005 #x0006))
+-;share_register_variable_pair: %R.addr %R2
+-(rule (share #x0001 #x0007))
+-;share_register_variable_pair: %R2 %A1
++(rule (Time #b1100))
++(rule (RAND_NUMBER #b0001 #b1111))
++(rule (KEY_NUMBER #b0001 #b0001))
++(rule (RAND_NUMBER #b0010 #b1111))
++(rule (KEY_NUMBER #b0010 #b0000))
++(rule (RAND_NUMBER #b0011 #b1111))
++(rule (KEY_NUMBER #b0011 #b0000))
++(rule (RAND_NUMBER #b0100 #b1111))
++(rule (KEY_NUMBER #b0100 #b0000))
++(rule (RAND_NUMBER #b0101 #b0000))
++(rule (KEY_NUMBER #b0101 #b1111))
++(rule (RAND_NUMBER #b0110 #b0000))
++(rule (KEY_NUMBER #b0110 #b1111))
++(rule (RAND_NUMBER #b0111 #b0000))
++(rule (KEY_NUMBER #b0111 #b1111))
++(rule (RAND_NUMBER #b1000 #b0000))
++(rule (KEY_NUMBER #b1000 #b1111))
++(rule (RAND_NUMBER #b1001 #b1111))
++(rule (KEY_NUMBER #b1001 #b0001))
++(rule (RAND_NUMBER #b1010 #b1111))
++(rule (KEY_NUMBER #b1010 #b0000))
++(rule (RAND_NUMBER #b1011 #b1111))
++(rule (KEY_NUMBER #b1011 #b0000))
++(rule (RAND_NUMBER #b1100 #b1111))
++(rule (KEY_NUMBER #b1100 #b0000))
++;share_register_variable_pair: %33 %tmp0
++(rule (share #x0021 #x0031))
++;share_register_variable_pair: %tmp0 %34
++(rule (share #x0031 #x0022))
++;share_register_variable_pair: %34 %tmp1
++(rule (share #x0022 #x0032))
++;share_register_variable_pair: %tmp1 %35
++(rule (share #x0032 #x0023))
++;share_register_variable_pair: %35 %tmp2
++(rule (share #x0023 #x0033))
++;share_register_variable_pair: %tmp2 %36
++(rule (share #x0033 #x0024))
++;share_register_variable_pair: %36 %tmp3
++(rule (share #x0024 #x0034))
++;share_register_variable_pair: %tmp3 %37
++(rule (share #x0034 #x0025))
++;share_register_variable_pair: %37 %tmp4
++(rule (share #x0025 #x0035))
++;share_register_variable_pair: %tmp4 %38
++(rule (share #x0035 #x0026))
++;share_register_variable_pair: %38 %tmp5
++(rule (share #x0026 #x0036))
++;share_register_variable_pair: %tmp5 %39
++(rule (share #x0036 #x0027))
++;share_register_variable_pair: %39 %tmp6
++(rule (share #x0027 #x0037))
++;share_register_variable_pair: %tmp6 %40
++(rule (share #x0037 #x0028))
++;share_register_variable_pair: %40 %tmp7
++(rule (share #x0028 #x0038))
++;share_register_variable_pair: %tmp7 %41
++(rule (share #x0038 #x0029))
++;share_register_variable_pair: %41 %tmp8
++(rule (share #x0029 #x0039))
++;share_register_variable_pair: %tmp8 %42
++(rule (share #x0039 #x002a))
++;share_register_variable_pair: %42 %tmp9
++(rule (share #x002a #x003a))
++;share_register_variable_pair: %tmp9 %43
++(rule (share #x003a #x002b))
++;share_register_variable_pair: %43 %tmp10
++(rule (share #x002b #x003b))
++;share_register_variable_pair: %tmp10 %44
++(rule (share #x003b #x002c))
++;share_register_variable_pair: %44 %tmp11
++(rule (share #x002c #x003c))
++;share_register_variable_pair: %tmp11 %45
++(rule (share #x003c #x002d))
++;share_register_variable_pair: %45 %tmp12
++(rule (share #x002d #x003d))
++;share_register_variable_pair: %tmp12 %46
++(rule (share #x003d #x002e))
++;share_register_variable_pair: %46 %tmp13
++(rule (share #x002e #x003e))
++;share_register_variable_pair: %tmp13 %47
++(rule (share #x003e #x002f))
++;share_register_variable_pair: %47 %tmp14
++(rule (share #x002f #x003f))
++;share_register_variable_pair: %tmp14 %48
++(rule (share #x003f #x0030))
++;share_register_variable_pair: %48 %tmp15
++(rule (share #x0030 #x0040))
++;share_register_variable_pair: %4 %1
++(rule (share #x0004 #x0001))
++;share_register_variable_pair: %1 %17
++(rule (share #x0001 #x0011))
++;share_register_variable_pair: %17 %2
++(rule (share #x0011 #x0002))
++;share_register_variable_pair: %2 %18
++(rule (share #x0002 #x0012))
++;share_register_variable_pair: %18 %3
++(rule (share #x0012 #x0003))
++;share_register_variable_pair: %3 %19
++(rule (share #x0003 #x0013))
++;share_register_variable_pair: %19 %4
++(rule (share #x0013 #x0004))
++;share_register_variable_pair: %4 %20
++(rule (share #x0004 #x0014))
++;share_register_variable_pair: %20 %5
++(rule (share #x0014 #x0005))
++;share_register_variable_pair: %5 %21
++(rule (share #x0005 #x0015))
++;share_register_variable_pair: %21 %6
++(rule (share #x0015 #x0006))
++;share_register_variable_pair: %6 %22
++(rule (share #x0006 #x0016))
++;share_register_variable_pair: %22 %7
++(rule (share #x0016 #x0007))
++;share_register_variable_pair: %7 %23
++(rule (share #x0007 #x0017))
++;share_register_variable_pair: %23 %8
++(rule (share #x0017 #x0008))
++;share_register_variable_pair: %8 %24
++(rule (share #x0008 #x0018))
++;share_register_variable_pair: %24 %9
++(rule (share #x0018 #x0009))
++;share_register_variable_pair: %9 %25
++(rule (share #x0009 #x0019))
++;share_register_variable_pair: %25 %10
++(rule (share #x0019 #x000a))
++;share_register_variable_pair: %10 %26
++(rule (share #x000a #x001a))
++;share_register_variable_pair: %26 %11
++(rule (share #x001a #x000b))
++;share_register_variable_pair: %11 %27
++(rule (share #x000b #x001b))
++;share_register_variable_pair: %27 %12
++(rule (share #x001b #x000c))
++;share_register_variable_pair: %12 %28
++(rule (share #x000c #x001c))
++;share_register_variable_pair: %28 %13
++(rule (share #x001c #x000d))
++;share_register_variable_pair: %13 %29
++(rule (share #x000d #x001d))
++;share_register_variable_pair: %29 %14
++(rule (share #x001d #x000e))
++;share_register_variable_pair: %14 %30
++(rule (share #x000e #x001e))
++;share_register_variable_pair: %30 %15
++(rule (share #x001e #x000f))
++;share_register_variable_pair: %15 %31
++(rule (share #x000f #x001f))
++;share_register_variable_pair: %31 %16
++(rule (share #x001f #x0010))
++;share_register_variable_pair: %16 %32
++(rule (share #x0010 #x0020))
++;share_register_variable_pair: %7 %8
+ (rule (share #x0007 #x0008))
+-;share_register_variable_pair: %A1 %A2
++;share_register_variable_pair: %8 %9
+ (rule (share #x0008 #x0009))
+-;share_register_variable_pair: %A2 %A3
++;share_register_variable_pair: %9 %10
+ (rule (share #x0009 #x000a))
++;share_register_variable_pair: %10 %11
++(rule (share #x000a #x000b))
++;share_register_variable_pair: %11 %12
++(rule (share #x000b #x000c))
++;share_register_variable_pair: %12 %13
++(rule (share #x000c #x000d))
++;share_register_variable_pair: %13 %14
++(rule (share #x000d #x000e))
++;share_register_variable_pair: %14 %15
++(rule (share #x000e #x000f))
++;share_register_variable_pair: %15 %16
++(rule (share #x000f #x0010))
++;share_register_variable_pair: %16 %17
++(rule (share #x0010 #x0011))
++;share_register_variable_pair: %17 %18
++(rule (share #x0011 #x0012))
++;share_register_variable_pair: %18 %19
++(rule (share #x0012 #x0013))
++;share_register_variable_pair: %19 %20
++(rule (share #x0013 #x0014))
++;share_register_variable_pair: %20 %21
++(rule (share #x0014 #x0015))
++;share_register_variable_pair: %21 %22
++(rule (share #x0015 #x0016))
++;share_register_variable_pair: %22 %23
++(rule (share #x0016 #x0017))
++;share_register_variable_pair: %23 %24
++(rule (share #x0017 #x0018))
++;share_register_variable_pair: %24 %25
++(rule (share #x0018 #x0019))
++;share_register_variable_pair: %25 %26
++(rule (share #x0019 #x001a))
++;share_register_variable_pair: %26 %27
++(rule (share #x001a #x001b))
++;share_register_variable_pair: %27 %28
++(rule (share #x001b #x001c))
++;share_register_variable_pair: %28 %29
++(rule (share #x001c #x001d))
++;share_register_variable_pair: %29 %30
++(rule (share #x001d #x001e))
++;share_register_variable_pair: %30 %31
++(rule (share #x001e #x001f))
++;share_register_variable_pair: %31 %32
++(rule (share #x001f #x0020))
++;share_register_variable_pair: %32 %33
++(rule (share #x0020 #x0021))
++;share_register_variable_pair: %33 %34
++(rule (share #x0021 #x0022))
++;share_register_variable_pair: %34 %35
++(rule (share #x0022 #x0023))
++;share_register_variable_pair: %35 %36
++(rule (share #x0023 #x0024))
++;share_register_variable_pair: %36 %37
++(rule (share #x0024 #x0025))
++;share_register_variable_pair: %37 %38
++(rule (share #x0025 #x0026))
++;share_register_variable_pair: %38 %39
++(rule (share #x0026 #x0027))
++;share_register_variable_pair: %39 %40
++(rule (share #x0027 #x0028))
++;share_register_variable_pair: %40 %41
++(rule (share #x0028 #x0029))
++;share_register_variable_pair: %41 %42
++(rule (share #x0029 #x002a))
++;share_register_variable_pair: %42 %43
++(rule (share #x002a #x002b))
++;share_register_variable_pair: %43 %44
++(rule (share #x002b #x002c))
++;share_register_variable_pair: %44 %45
++(rule (share #x002c #x002d))
++;share_register_variable_pair: %45 %46
++(rule (share #x002d #x002e))
++;share_register_variable_pair: %46 %47
++(rule (share #x002e #x002f))
++;share_register_variable_pair: %47 %48
++(rule (share #x002f #x0030))
+ ; user specify the sensitive variable
+ ;### Begin facts 
+-;   %R.addr = alloca i32, align 4
+-;(alloca #x0001 R.addr )
+-;   %x.addr = alloca i32, align 4
+-;(alloca #x0002 x.addr )
+-;   %rx.addr = alloca i32, align 4
+-;(alloca #x0003 rx.addr )
+-;   %T1 = alloca i32, align 4
+-;(alloca #x0004 T1 )
+-;   %T2 = alloca i32, align 4
+-;(alloca #x0005 T2 )
+-;   %T3 = alloca i32, align 4
+-;(alloca #x0006 T3 )
+-;   %R2 = alloca i32, align 4
+-;(alloca #x0007 R2 )
+-;   %A1 = alloca i32, align 4
+-;(alloca #x0008 A1 )
+-;   %A2 = alloca i32, align 4
+-;(alloca #x0009 A2 )
+-;   %A3 = alloca i32, align 4
+-;(alloca #x000a A3 )
+-;   %X = alloca i32, align 4
+-;(alloca #x000b X )
+-;   store i32 %R, i32* %R.addr, align 4
+-;R==> type
+-(rule (RAND #x0001))
+-(rule (REC_RAND_VAR #x0001 #b1 #b0001))
+-(rule (REC_ALL_INC #x0001 #b1 #b0001))
+-
+-;   store i32 %x, i32* %x.addr, align 4
+-;x==> type
++;   %tmp0 = alloca i8, align 1
++;(alloca #x0031 tmp0 )
++;   %tmp1 = alloca i8, align 1
++;(alloca #x0032 tmp1 )
++;   %tmp2 = alloca i8, align 1
++;(alloca #x0033 tmp2 )
++;   %tmp3 = alloca i8, align 1
++;(alloca #x0034 tmp3 )
++;   %tmp4 = alloca i8, align 1
++;(alloca #x0035 tmp4 )
++;   %tmp5 = alloca i8, align 1
++;(alloca #x0036 tmp5 )
++;   %tmp6 = alloca i8, align 1
++;(alloca #x0037 tmp6 )
++;   %tmp7 = alloca i8, align 1
++;(alloca #x0038 tmp7 )
++;   %tmp8 = alloca i8, align 1
++;(alloca #x0039 tmp8 )
++;   %tmp9 = alloca i8, align 1
++;(alloca #x003a tmp9 )
++;   %tmp10 = alloca i8, align 1
++;(alloca #x003b tmp10 )
++;   %tmp11 = alloca i8, align 1
++;(alloca #x003c tmp11 )
++;   %tmp12 = alloca i8, align 1
++;(alloca #x003d tmp12 )
++;   %tmp13 = alloca i8, align 1
++;(alloca #x003e tmp13 )
++;   %tmp14 = alloca i8, align 1
++;(alloca #x003f tmp14 )
++;   %tmp15 = alloca i8, align 1
++;(alloca #x0040 tmp15 )
++;   %st0 = alloca i8, align 1
++;(alloca #x0041 st0 )
++;   %st1 = alloca i8, align 1
++;(alloca #x0042 st1 )
++;   %st2 = alloca i8, align 1
++;(alloca #x0043 st2 )
++;   %st3 = alloca i8, align 1
++;(alloca #x0044 st3 )
++;   %st4 = alloca i8, align 1
++;(alloca #x0045 st4 )
++;   %st5 = alloca i8, align 1
++;(alloca #x0046 st5 )
++;   %st6 = alloca i8, align 1
++;(alloca #x0047 st6 )
++;   %st7 = alloca i8, align 1
++;(alloca #x0048 st7 )
++;   %st8 = alloca i8, align 1
++;(alloca #x0049 st8 )
++;   %st9 = alloca i8, align 1
++;(alloca #x004a st9 )
++;   %st10 = alloca i8, align 1
++;(alloca #x004b st10 )
++;   %st11 = alloca i8, align 1
++;(alloca #x004c st11 )
++;   %st12 = alloca i8, align 1
++;(alloca #x004d st12 )
++;   %st13 = alloca i8, align 1
++;(alloca #x004e st13 )
++;   %st14 = alloca i8, align 1
++;(alloca #x004f st14 )
++;   %st15 = alloca i8, align 1
++;(alloca #x0050 st15 )
++;   store i8 %key0, i8* %1, align 1
++;key0==> type
++(rule (KEY_SENSITIVE #x0001))
++(rule (REC_RAND_VAR #x0001 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b0101 #b0001 ))
++(rule (REC_RAND_VAR #x0001 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0001 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0001 #b1100 #b0000 ))
++
++;   store i8 %key1, i8* %2, align 1
++;key1==> type
+ (rule (KEY_SENSITIVE #x0002))
+-(rule (REC_RAND_VAR #x0002 #b1 #b0000 ))
+-(rule (REC_ALL_INC #x0002 #b1 #b0100 ))
+-
+-;   store i32 %rx, i32* %rx.addr, align 4
+-;rx==> type
+-(rule (RAND #x0003))
+-(rule (REC_RAND_VAR #x0003 #b1 #b0010))
+-(rule (REC_ALL_INC #x0003 #b1 #b0010))
+-
+-;   %0 = load i32* %x.addr, align 4
+-(rule (load_assign #x000f #x0002))
+-;   %1 = load i32* %rx.addr, align 4
+-(rule (load_assign #x0010 #x0003))
+-;   %xor = xor i32 %0, %1
+-(rule (xor_assign_left #x0011 #x000f))
+-;   %xor = xor i32 %0, %1
+-(rule (xor_assign_right #x0011 #x0010))
+-;   store i32 %xor, i32* %X, align 4
+-(rule (store_assign #x000b #x0011))
+-;   %2 = load i32* %X, align 4
+-(rule (load_assign #x0013 #x000b))
+-;   %3 = load i32* %R.addr, align 4
+-(rule (load_assign #x0014 #x0001))
+-;   %xor1 = xor i32 %2, %3
+-(rule (xor_assign_left #x0015 #x0013))
+-;   %xor1 = xor i32 %2, %3
+-(rule (xor_assign_right #x0015 #x0014))
+-;   store i32 %xor1, i32* %T1, align 4
+-(rule (store_assign #x0004 #x0015))
+-;   %4 = load i32* %T1, align 4
+-(rule (load_assign #x0017 #x0004))
+-;   %5 = load i32* %R.addr, align 4
+-(rule (load_assign #x0018 #x0001))
+-;   %xor2 = xor i32 %4, %5
+-(rule (xor_assign_left #x0019 #x0017))
+-;   %xor2 = xor i32 %4, %5
+-(rule (xor_assign_right #x0019 #x0018))
+-;   store i32 %xor2, i32* %T2, align 4
+-(rule (store_assign #x0005 #x0019))
+-;   %6 = load i32* %T2, align 4
+-(rule (load_assign #x001b #x0005))
+-;   %7 = load i32* %X, align 4
+-(rule (load_assign #x001c #x000b))
+-;   %xor3 = xor i32 %6, %7
+-(rule (xor_assign_left #x001d #x001b))
+-;   %xor3 = xor i32 %6, %7
+-(rule (xor_assign_right #x001d #x001c))
+-;   store i32 %xor3, i32* %T3, align 4
+-(rule (store_assign #x0006 #x001d))
+-;   %8 = load i32* %R.addr, align 4
+-(rule (load_assign #x001f #x0001))
+-;   %9 = load i32* %rx.addr, align 4
+-(rule (load_assign #x0020 #x0003))
+-;   %xor4 = xor i32 %8, %9
+-(rule (xor_assign_left #x0021 #x001f))
+-;   %xor4 = xor i32 %8, %9
+-(rule (xor_assign_right #x0021 #x0020))
+-;   store i32 %xor4, i32* %R2, align 4
+-(rule (store_assign #x0007 #x0021))
+-;   %10 = load i32* %X, align 4
+-(rule (load_assign #x0023 #x000b))
+-;   %11 = load i32* %R2, align 4
+-(rule (load_assign #x0024 #x0007))
+-;   %xor5 = xor i32 %10, %11
+-(rule (xor_assign_left #x0025 #x0023))
+-;   %xor5 = xor i32 %10, %11
+-(rule (xor_assign_right #x0025 #x0024))
+-;   store i32 %xor5, i32* %A1, align 4
+-(rule (store_assign #x0008 #x0025))
+-;   %12 = load i32* %A1, align 4
+-(rule (load_assign #x0027 #x0008))
+-;   %13 = load i32* %R2, align 4
+-(rule (load_assign #x0028 #x0007))
+-;   %xor6 = xor i32 %12, %13
+-(rule (xor_assign_left #x0029 #x0027))
+-;   %xor6 = xor i32 %12, %13
+-(rule (xor_assign_right #x0029 #x0028))
+-;   store i32 %xor6, i32* %A2, align 4
+-(rule (store_assign #x0009 #x0029))
+-;   %14 = load i32* %A2, align 4
+-(rule (load_assign #x002b #x0009))
+-;   %15 = load i32* %T3, align 4
+-(rule (load_assign #x002c #x0006))
+-;   %xor7 = xor i32 %14, %15
+-(rule (xor_assign_left #x002d #x002b))
+-;   %xor7 = xor i32 %14, %15
+-(rule (xor_assign_right #x002d #x002c))
+-;   store i32 %xor7, i32* %A3, align 4
+-(rule (store_assign #x000a #x002d))
+-;   %16 = load i32* %A3, align 4
+-(rule (load_assign #x002f #x000a))
++(rule (REC_RAND_VAR #x0002 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b0101 #b0010 ))
++(rule (REC_RAND_VAR #x0002 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0002 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0002 #b1100 #b0000 ))
++
++;   store i8 %key2, i8* %3, align 1
++;key2==> type
++(rule (KEY_SENSITIVE #x0003))
++(rule (REC_RAND_VAR #x0003 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b0101 #b0100 ))
++(rule (REC_RAND_VAR #x0003 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0003 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0003 #b1100 #b0000 ))
++
++;   store i8 %key3, i8* %4, align 1
++;key3==> type
++(rule (KEY_SENSITIVE #x0004))
++(rule (REC_RAND_VAR #x0004 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b0101 #b1000 ))
++(rule (REC_RAND_VAR #x0004 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0004 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0004 #b1100 #b0000 ))
++
++;   store i8 %key4, i8* %5, align 1
++;key4==> type
++(rule (KEY_SENSITIVE #x0005))
++(rule (REC_RAND_VAR #x0005 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b0110 #b0001 ))
++(rule (REC_RAND_VAR #x0005 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0005 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0005 #b1100 #b0000 ))
++
++;   store i8 %key5, i8* %6, align 1
++;key5==> type
++(rule (KEY_SENSITIVE #x0006))
++(rule (REC_RAND_VAR #x0006 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b0110 #b0010 ))
++(rule (REC_RAND_VAR #x0006 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0006 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0006 #b1100 #b0000 ))
++
++;   store i8 %key6, i8* %7, align 1
++;key6==> type
++(rule (KEY_SENSITIVE #x0007))
++(rule (REC_RAND_VAR #x0007 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b0110 #b0100 ))
++(rule (REC_RAND_VAR #x0007 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0007 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0007 #b1100 #b0000 ))
++
++;   store i8 %key7, i8* %8, align 1
++;key7==> type
++(rule (KEY_SENSITIVE #x0008))
++(rule (REC_RAND_VAR #x0008 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b0110 #b1000 ))
++(rule (REC_RAND_VAR #x0008 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0008 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0008 #b1100 #b0000 ))
++
++;   store i8 %key8, i8* %9, align 1
++;key8==> type
++(rule (KEY_SENSITIVE #x0009))
++(rule (REC_RAND_VAR #x0009 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b0111 #b0001 ))
++(rule (REC_RAND_VAR #x0009 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0009 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0009 #b1100 #b0000 ))
++
++;   store i8 %key9, i8* %10, align 1
++;key9==> type
++(rule (KEY_SENSITIVE #x000a))
++(rule (REC_RAND_VAR #x000a #b0001 #b0000 ))
++(rule (REC_ALL_INC #x000a #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b0010 #b0000 ))
++(rule (REC_ALL_INC #x000a #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b0011 #b0000 ))
++(rule (REC_ALL_INC #x000a #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b0100 #b0000 ))
++(rule (REC_ALL_INC #x000a #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b0101 #b0000 ))
++(rule (REC_ALL_INC #x000a #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b0110 #b0000 ))
++(rule (REC_ALL_INC #x000a #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b0111 #b0000 ))
++(rule (REC_ALL_INC #x000a #b0111 #b0010 ))
++(rule (REC_RAND_VAR #x000a #b1000 #b0000 ))
++(rule (REC_ALL_INC #x000a #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b1001 #b0000 ))
++(rule (REC_ALL_INC #x000a #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b1010 #b0000 ))
++(rule (REC_ALL_INC #x000a #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b1011 #b0000 ))
++(rule (REC_ALL_INC #x000a #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x000a #b1100 #b0000 ))
++(rule (REC_ALL_INC #x000a #b1100 #b0000 ))
++
++;   store i8 %key10, i8* %11, align 1
++;key10==> type
++(rule (KEY_SENSITIVE #x000b))
++(rule (REC_RAND_VAR #x000b #b0001 #b0000 ))
++(rule (REC_ALL_INC #x000b #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b0010 #b0000 ))
++(rule (REC_ALL_INC #x000b #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b0011 #b0000 ))
++(rule (REC_ALL_INC #x000b #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b0100 #b0000 ))
++(rule (REC_ALL_INC #x000b #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b0101 #b0000 ))
++(rule (REC_ALL_INC #x000b #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b0110 #b0000 ))
++(rule (REC_ALL_INC #x000b #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b0111 #b0000 ))
++(rule (REC_ALL_INC #x000b #b0111 #b0100 ))
++(rule (REC_RAND_VAR #x000b #b1000 #b0000 ))
++(rule (REC_ALL_INC #x000b #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b1001 #b0000 ))
++(rule (REC_ALL_INC #x000b #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b1010 #b0000 ))
++(rule (REC_ALL_INC #x000b #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b1011 #b0000 ))
++(rule (REC_ALL_INC #x000b #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x000b #b1100 #b0000 ))
++(rule (REC_ALL_INC #x000b #b1100 #b0000 ))
++
++;   store i8 %key11, i8* %12, align 1
++;key11==> type
++(rule (KEY_SENSITIVE #x000c))
++(rule (REC_RAND_VAR #x000c #b0001 #b0000 ))
++(rule (REC_ALL_INC #x000c #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b0010 #b0000 ))
++(rule (REC_ALL_INC #x000c #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b0011 #b0000 ))
++(rule (REC_ALL_INC #x000c #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b0100 #b0000 ))
++(rule (REC_ALL_INC #x000c #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b0101 #b0000 ))
++(rule (REC_ALL_INC #x000c #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b0110 #b0000 ))
++(rule (REC_ALL_INC #x000c #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b0111 #b0000 ))
++(rule (REC_ALL_INC #x000c #b0111 #b1000 ))
++(rule (REC_RAND_VAR #x000c #b1000 #b0000 ))
++(rule (REC_ALL_INC #x000c #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b1001 #b0000 ))
++(rule (REC_ALL_INC #x000c #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b1010 #b0000 ))
++(rule (REC_ALL_INC #x000c #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b1011 #b0000 ))
++(rule (REC_ALL_INC #x000c #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x000c #b1100 #b0000 ))
++(rule (REC_ALL_INC #x000c #b1100 #b0000 ))
++
++;   store i8 %key12, i8* %13, align 1
++;key12==> type
++(rule (KEY_SENSITIVE #x000d))
++(rule (REC_RAND_VAR #x000d #b0001 #b0000 ))
++(rule (REC_ALL_INC #x000d #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b0010 #b0000 ))
++(rule (REC_ALL_INC #x000d #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b0011 #b0000 ))
++(rule (REC_ALL_INC #x000d #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b0100 #b0000 ))
++(rule (REC_ALL_INC #x000d #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b0101 #b0000 ))
++(rule (REC_ALL_INC #x000d #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b0110 #b0000 ))
++(rule (REC_ALL_INC #x000d #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b0111 #b0000 ))
++(rule (REC_ALL_INC #x000d #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b1000 #b0000 ))
++(rule (REC_ALL_INC #x000d #b1000 #b0001 ))
++(rule (REC_RAND_VAR #x000d #b1001 #b0000 ))
++(rule (REC_ALL_INC #x000d #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b1010 #b0000 ))
++(rule (REC_ALL_INC #x000d #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b1011 #b0000 ))
++(rule (REC_ALL_INC #x000d #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x000d #b1100 #b0000 ))
++(rule (REC_ALL_INC #x000d #b1100 #b0000 ))
++
++;   store i8 %key13, i8* %14, align 1
++;key13==> type
++(rule (KEY_SENSITIVE #x000e))
++(rule (REC_RAND_VAR #x000e #b0001 #b0000 ))
++(rule (REC_ALL_INC #x000e #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b0010 #b0000 ))
++(rule (REC_ALL_INC #x000e #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b0011 #b0000 ))
++(rule (REC_ALL_INC #x000e #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b0100 #b0000 ))
++(rule (REC_ALL_INC #x000e #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b0101 #b0000 ))
++(rule (REC_ALL_INC #x000e #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b0110 #b0000 ))
++(rule (REC_ALL_INC #x000e #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b0111 #b0000 ))
++(rule (REC_ALL_INC #x000e #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b1000 #b0000 ))
++(rule (REC_ALL_INC #x000e #b1000 #b0010 ))
++(rule (REC_RAND_VAR #x000e #b1001 #b0000 ))
++(rule (REC_ALL_INC #x000e #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b1010 #b0000 ))
++(rule (REC_ALL_INC #x000e #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b1011 #b0000 ))
++(rule (REC_ALL_INC #x000e #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x000e #b1100 #b0000 ))
++(rule (REC_ALL_INC #x000e #b1100 #b0000 ))
++
++;   store i8 %key14, i8* %15, align 1
++;key14==> type
++(rule (KEY_SENSITIVE #x000f))
++(rule (REC_RAND_VAR #x000f #b0001 #b0000 ))
++(rule (REC_ALL_INC #x000f #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b0010 #b0000 ))
++(rule (REC_ALL_INC #x000f #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b0011 #b0000 ))
++(rule (REC_ALL_INC #x000f #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b0100 #b0000 ))
++(rule (REC_ALL_INC #x000f #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b0101 #b0000 ))
++(rule (REC_ALL_INC #x000f #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b0110 #b0000 ))
++(rule (REC_ALL_INC #x000f #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b0111 #b0000 ))
++(rule (REC_ALL_INC #x000f #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b1000 #b0000 ))
++(rule (REC_ALL_INC #x000f #b1000 #b0100 ))
++(rule (REC_RAND_VAR #x000f #b1001 #b0000 ))
++(rule (REC_ALL_INC #x000f #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b1010 #b0000 ))
++(rule (REC_ALL_INC #x000f #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b1011 #b0000 ))
++(rule (REC_ALL_INC #x000f #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x000f #b1100 #b0000 ))
++(rule (REC_ALL_INC #x000f #b1100 #b0000 ))
++
++;   store i8 %key15, i8* %16, align 1
++;key15==> type
++(rule (KEY_SENSITIVE #x0010))
++(rule (REC_RAND_VAR #x0010 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b1000 #b1000 ))
++(rule (REC_RAND_VAR #x0010 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0010 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0010 #b1100 #b0000 ))
++
++;   store i8 %pt0, i8* %17, align 1
++;pt0==> type
++(rule (CONSTANT #x0011))
++(rule (REC_RAND_VAR #x0011 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b0001 #b0001 ))
++(rule (REC_RAND_VAR #x0011 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b1001 #b0001 ))
++(rule (REC_RAND_VAR #x0011 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0011 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0011 #b1100 #b0000 ))
++
++;   store i8 %pt1, i8* %18, align 1
++;pt1==> type
++(rule (CONSTANT #x0012))
++(rule (REC_RAND_VAR #x0012 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b0001 #b0010 ))
++(rule (REC_RAND_VAR #x0012 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b1001 #b0010 ))
++(rule (REC_RAND_VAR #x0012 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0012 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0012 #b1100 #b0000 ))
++
++;   store i8 %pt2, i8* %19, align 1
++;pt2==> type
++(rule (CONSTANT #x0013))
++(rule (REC_RAND_VAR #x0013 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b0001 #b0100 ))
++(rule (REC_RAND_VAR #x0013 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b1001 #b0100 ))
++(rule (REC_RAND_VAR #x0013 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0013 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0013 #b1100 #b0000 ))
++
++;   store i8 %pt3, i8* %20, align 1
++;pt3==> type
++(rule (CONSTANT #x0014))
++(rule (REC_RAND_VAR #x0014 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b0001 #b1000 ))
++(rule (REC_RAND_VAR #x0014 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b1001 #b1000 ))
++(rule (REC_RAND_VAR #x0014 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0014 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0014 #b1100 #b0000 ))
++
++;   store i8 %pt4, i8* %21, align 1
++;pt4==> type
++(rule (CONSTANT #x0015))
++(rule (REC_RAND_VAR #x0015 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b0010 #b0001 ))
++(rule (REC_RAND_VAR #x0015 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b1010 #b0001 ))
++(rule (REC_RAND_VAR #x0015 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0015 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0015 #b1100 #b0000 ))
++
++;   store i8 %pt5, i8* %22, align 1
++;pt5==> type
++(rule (CONSTANT #x0016))
++(rule (REC_RAND_VAR #x0016 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b0010 #b0010 ))
++(rule (REC_RAND_VAR #x0016 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b1010 #b0010 ))
++(rule (REC_RAND_VAR #x0016 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0016 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0016 #b1100 #b0000 ))
++
++;   store i8 %pt6, i8* %23, align 1
++;pt6==> type
++(rule (CONSTANT #x0017))
++(rule (REC_RAND_VAR #x0017 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b0010 #b0100 ))
++(rule (REC_RAND_VAR #x0017 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b1010 #b0100 ))
++(rule (REC_RAND_VAR #x0017 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0017 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0017 #b1100 #b0000 ))
++
++;   store i8 %pt7, i8* %24, align 1
++;pt7==> type
++(rule (CONSTANT #x0018))
++(rule (REC_RAND_VAR #x0018 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b0010 #b1000 ))
++(rule (REC_RAND_VAR #x0018 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b1010 #b1000 ))
++(rule (REC_RAND_VAR #x0018 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0018 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0018 #b1100 #b0000 ))
++
++;   store i8 %pt8, i8* %25, align 1
++;pt8==> type
++(rule (CONSTANT #x0019))
++(rule (REC_RAND_VAR #x0019 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b0011 #b0001 ))
++(rule (REC_RAND_VAR #x0019 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0019 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b1011 #b0001 ))
++(rule (REC_RAND_VAR #x0019 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0019 #b1100 #b0000 ))
++
++;   store i8 %pt9, i8* %26, align 1
++;pt9==> type
++(rule (CONSTANT #x001a))
++(rule (REC_RAND_VAR #x001a #b0001 #b0000 ))
++(rule (REC_ALL_INC #x001a #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b0010 #b0000 ))
++(rule (REC_ALL_INC #x001a #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b0011 #b0000 ))
++(rule (REC_ALL_INC #x001a #b0011 #b0010 ))
++(rule (REC_RAND_VAR #x001a #b0100 #b0000 ))
++(rule (REC_ALL_INC #x001a #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b0101 #b0000 ))
++(rule (REC_ALL_INC #x001a #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b0110 #b0000 ))
++(rule (REC_ALL_INC #x001a #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b0111 #b0000 ))
++(rule (REC_ALL_INC #x001a #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b1000 #b0000 ))
++(rule (REC_ALL_INC #x001a #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b1001 #b0000 ))
++(rule (REC_ALL_INC #x001a #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b1010 #b0000 ))
++(rule (REC_ALL_INC #x001a #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x001a #b1011 #b0000 ))
++(rule (REC_ALL_INC #x001a #b1011 #b0010 ))
++(rule (REC_RAND_VAR #x001a #b1100 #b0000 ))
++(rule (REC_ALL_INC #x001a #b1100 #b0000 ))
++
++;   store i8 %pt10, i8* %27, align 1
++;pt10==> type
++(rule (CONSTANT #x001b))
++(rule (REC_RAND_VAR #x001b #b0001 #b0000 ))
++(rule (REC_ALL_INC #x001b #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b0010 #b0000 ))
++(rule (REC_ALL_INC #x001b #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b0011 #b0000 ))
++(rule (REC_ALL_INC #x001b #b0011 #b0100 ))
++(rule (REC_RAND_VAR #x001b #b0100 #b0000 ))
++(rule (REC_ALL_INC #x001b #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b0101 #b0000 ))
++(rule (REC_ALL_INC #x001b #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b0110 #b0000 ))
++(rule (REC_ALL_INC #x001b #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b0111 #b0000 ))
++(rule (REC_ALL_INC #x001b #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b1000 #b0000 ))
++(rule (REC_ALL_INC #x001b #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b1001 #b0000 ))
++(rule (REC_ALL_INC #x001b #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b1010 #b0000 ))
++(rule (REC_ALL_INC #x001b #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x001b #b1011 #b0000 ))
++(rule (REC_ALL_INC #x001b #b1011 #b0100 ))
++(rule (REC_RAND_VAR #x001b #b1100 #b0000 ))
++(rule (REC_ALL_INC #x001b #b1100 #b0000 ))
++
++;   store i8 %pt11, i8* %28, align 1
++;pt11==> type
++(rule (CONSTANT #x001c))
++(rule (REC_RAND_VAR #x001c #b0001 #b0000 ))
++(rule (REC_ALL_INC #x001c #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b0010 #b0000 ))
++(rule (REC_ALL_INC #x001c #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b0011 #b0000 ))
++(rule (REC_ALL_INC #x001c #b0011 #b1000 ))
++(rule (REC_RAND_VAR #x001c #b0100 #b0000 ))
++(rule (REC_ALL_INC #x001c #b0100 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b0101 #b0000 ))
++(rule (REC_ALL_INC #x001c #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b0110 #b0000 ))
++(rule (REC_ALL_INC #x001c #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b0111 #b0000 ))
++(rule (REC_ALL_INC #x001c #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b1000 #b0000 ))
++(rule (REC_ALL_INC #x001c #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b1001 #b0000 ))
++(rule (REC_ALL_INC #x001c #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b1010 #b0000 ))
++(rule (REC_ALL_INC #x001c #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x001c #b1011 #b0000 ))
++(rule (REC_ALL_INC #x001c #b1011 #b1000 ))
++(rule (REC_RAND_VAR #x001c #b1100 #b0000 ))
++(rule (REC_ALL_INC #x001c #b1100 #b0000 ))
++
++;   store i8 %pt12, i8* %29, align 1
++;pt12==> type
++(rule (CONSTANT #x001d))
++(rule (REC_RAND_VAR #x001d #b0001 #b0000 ))
++(rule (REC_ALL_INC #x001d #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b0010 #b0000 ))
++(rule (REC_ALL_INC #x001d #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b0011 #b0000 ))
++(rule (REC_ALL_INC #x001d #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b0100 #b0000 ))
++(rule (REC_ALL_INC #x001d #b0100 #b0001 ))
++(rule (REC_RAND_VAR #x001d #b0101 #b0000 ))
++(rule (REC_ALL_INC #x001d #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b0110 #b0000 ))
++(rule (REC_ALL_INC #x001d #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b0111 #b0000 ))
++(rule (REC_ALL_INC #x001d #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b1000 #b0000 ))
++(rule (REC_ALL_INC #x001d #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b1001 #b0000 ))
++(rule (REC_ALL_INC #x001d #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b1010 #b0000 ))
++(rule (REC_ALL_INC #x001d #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b1011 #b0000 ))
++(rule (REC_ALL_INC #x001d #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x001d #b1100 #b0000 ))
++(rule (REC_ALL_INC #x001d #b1100 #b0001 ))
++
++;   store i8 %pt13, i8* %30, align 1
++;pt13==> type
++(rule (CONSTANT #x001e))
++(rule (REC_RAND_VAR #x001e #b0001 #b0000 ))
++(rule (REC_ALL_INC #x001e #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b0010 #b0000 ))
++(rule (REC_ALL_INC #x001e #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b0011 #b0000 ))
++(rule (REC_ALL_INC #x001e #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b0100 #b0000 ))
++(rule (REC_ALL_INC #x001e #b0100 #b0010 ))
++(rule (REC_RAND_VAR #x001e #b0101 #b0000 ))
++(rule (REC_ALL_INC #x001e #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b0110 #b0000 ))
++(rule (REC_ALL_INC #x001e #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b0111 #b0000 ))
++(rule (REC_ALL_INC #x001e #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b1000 #b0000 ))
++(rule (REC_ALL_INC #x001e #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b1001 #b0000 ))
++(rule (REC_ALL_INC #x001e #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b1010 #b0000 ))
++(rule (REC_ALL_INC #x001e #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b1011 #b0000 ))
++(rule (REC_ALL_INC #x001e #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x001e #b1100 #b0000 ))
++(rule (REC_ALL_INC #x001e #b1100 #b0010 ))
++
++;   store i8 %pt14, i8* %31, align 1
++;pt14==> type
++(rule (CONSTANT #x001f))
++(rule (REC_RAND_VAR #x001f #b0001 #b0000 ))
++(rule (REC_ALL_INC #x001f #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b0010 #b0000 ))
++(rule (REC_ALL_INC #x001f #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b0011 #b0000 ))
++(rule (REC_ALL_INC #x001f #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b0100 #b0000 ))
++(rule (REC_ALL_INC #x001f #b0100 #b0100 ))
++(rule (REC_RAND_VAR #x001f #b0101 #b0000 ))
++(rule (REC_ALL_INC #x001f #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b0110 #b0000 ))
++(rule (REC_ALL_INC #x001f #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b0111 #b0000 ))
++(rule (REC_ALL_INC #x001f #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b1000 #b0000 ))
++(rule (REC_ALL_INC #x001f #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b1001 #b0000 ))
++(rule (REC_ALL_INC #x001f #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b1010 #b0000 ))
++(rule (REC_ALL_INC #x001f #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b1011 #b0000 ))
++(rule (REC_ALL_INC #x001f #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x001f #b1100 #b0000 ))
++(rule (REC_ALL_INC #x001f #b1100 #b0100 ))
++
++;   store i8 %pt15, i8* %32, align 1
++;pt15==> type
++(rule (CONSTANT #x0020))
++(rule (REC_RAND_VAR #x0020 #b0001 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b0001 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b0010 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b0010 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b0011 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b0011 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b0100 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b0100 #b1000 ))
++(rule (REC_RAND_VAR #x0020 #b0101 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b0101 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b0110 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b0110 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b0111 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b0111 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b1000 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b1000 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b1001 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b1001 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b1010 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b1010 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b1011 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b1011 #b0000 ))
++(rule (REC_RAND_VAR #x0020 #b1100 #b0000 ))
++(rule (REC_ALL_INC #x0020 #b1100 #b1000 ))
++
++;   store i8 %mask0, i8* %33, align 1
++;mask0==> type
++(rule (RAND #x0021))
++(rule (REC_RAND_VAR #x0021 #b0001 #b0001))
++(rule (REC_ALL_INC #x0021 #b0001 #b0001))
++(rule (REC_RAND_VAR #x0021 #b0010 #b0000))
++(rule (REC_ALL_INC #x0021 #b0010 #b0000))
++(rule (REC_RAND_VAR #x0021 #b0011 #b0000))
++(rule (REC_ALL_INC #x0021 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0021 #b0100 #b0000))
++(rule (REC_ALL_INC #x0021 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0021 #b0101 #b0000))
++(rule (REC_ALL_INC #x0021 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0021 #b0110 #b0000))
++(rule (REC_ALL_INC #x0021 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0021 #b0111 #b0000))
++(rule (REC_ALL_INC #x0021 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0021 #b1000 #b0000))
++(rule (REC_ALL_INC #x0021 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0021 #b1001 #b0001))
++(rule (REC_ALL_INC #x0021 #b1001 #b0001))
++(rule (REC_RAND_VAR #x0021 #b1010 #b0000))
++(rule (REC_ALL_INC #x0021 #b1010 #b0000))
++(rule (REC_RAND_VAR #x0021 #b1011 #b0000))
++(rule (REC_ALL_INC #x0021 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0021 #b1100 #b0000))
++(rule (REC_ALL_INC #x0021 #b1100 #b0000))
++
++;   store i8 %mask1, i8* %34, align 1
++;mask1==> type
++(rule (RAND #x0022))
++(rule (REC_RAND_VAR #x0022 #b0001 #b0010))
++(rule (REC_ALL_INC #x0022 #b0001 #b0010))
++(rule (REC_RAND_VAR #x0022 #b0010 #b0000))
++(rule (REC_ALL_INC #x0022 #b0010 #b0000))
++(rule (REC_RAND_VAR #x0022 #b0011 #b0000))
++(rule (REC_ALL_INC #x0022 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0022 #b0100 #b0000))
++(rule (REC_ALL_INC #x0022 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0022 #b0101 #b0000))
++(rule (REC_ALL_INC #x0022 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0022 #b0110 #b0000))
++(rule (REC_ALL_INC #x0022 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0022 #b0111 #b0000))
++(rule (REC_ALL_INC #x0022 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0022 #b1000 #b0000))
++(rule (REC_ALL_INC #x0022 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0022 #b1001 #b0010))
++(rule (REC_ALL_INC #x0022 #b1001 #b0010))
++(rule (REC_RAND_VAR #x0022 #b1010 #b0000))
++(rule (REC_ALL_INC #x0022 #b1010 #b0000))
++(rule (REC_RAND_VAR #x0022 #b1011 #b0000))
++(rule (REC_ALL_INC #x0022 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0022 #b1100 #b0000))
++(rule (REC_ALL_INC #x0022 #b1100 #b0000))
++
++;   store i8 %mask2, i8* %35, align 1
++;mask2==> type
++(rule (RAND #x0023))
++(rule (REC_RAND_VAR #x0023 #b0001 #b0100))
++(rule (REC_ALL_INC #x0023 #b0001 #b0100))
++(rule (REC_RAND_VAR #x0023 #b0010 #b0000))
++(rule (REC_ALL_INC #x0023 #b0010 #b0000))
++(rule (REC_RAND_VAR #x0023 #b0011 #b0000))
++(rule (REC_ALL_INC #x0023 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0023 #b0100 #b0000))
++(rule (REC_ALL_INC #x0023 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0023 #b0101 #b0000))
++(rule (REC_ALL_INC #x0023 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0023 #b0110 #b0000))
++(rule (REC_ALL_INC #x0023 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0023 #b0111 #b0000))
++(rule (REC_ALL_INC #x0023 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0023 #b1000 #b0000))
++(rule (REC_ALL_INC #x0023 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0023 #b1001 #b0100))
++(rule (REC_ALL_INC #x0023 #b1001 #b0100))
++(rule (REC_RAND_VAR #x0023 #b1010 #b0000))
++(rule (REC_ALL_INC #x0023 #b1010 #b0000))
++(rule (REC_RAND_VAR #x0023 #b1011 #b0000))
++(rule (REC_ALL_INC #x0023 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0023 #b1100 #b0000))
++(rule (REC_ALL_INC #x0023 #b1100 #b0000))
++
++;   store i8 %mask3, i8* %36, align 1
++;mask3==> type
++(rule (RAND #x0024))
++(rule (REC_RAND_VAR #x0024 #b0001 #b1000))
++(rule (REC_ALL_INC #x0024 #b0001 #b1000))
++(rule (REC_RAND_VAR #x0024 #b0010 #b0000))
++(rule (REC_ALL_INC #x0024 #b0010 #b0000))
++(rule (REC_RAND_VAR #x0024 #b0011 #b0000))
++(rule (REC_ALL_INC #x0024 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0024 #b0100 #b0000))
++(rule (REC_ALL_INC #x0024 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0024 #b0101 #b0000))
++(rule (REC_ALL_INC #x0024 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0024 #b0110 #b0000))
++(rule (REC_ALL_INC #x0024 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0024 #b0111 #b0000))
++(rule (REC_ALL_INC #x0024 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0024 #b1000 #b0000))
++(rule (REC_ALL_INC #x0024 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0024 #b1001 #b1000))
++(rule (REC_ALL_INC #x0024 #b1001 #b1000))
++(rule (REC_RAND_VAR #x0024 #b1010 #b0000))
++(rule (REC_ALL_INC #x0024 #b1010 #b0000))
++(rule (REC_RAND_VAR #x0024 #b1011 #b0000))
++(rule (REC_ALL_INC #x0024 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0024 #b1100 #b0000))
++(rule (REC_ALL_INC #x0024 #b1100 #b0000))
++
++;   store i8 %mask4, i8* %37, align 1
++;mask4==> type
++(rule (RAND #x0025))
++(rule (REC_RAND_VAR #x0025 #b0001 #b0000))
++(rule (REC_ALL_INC #x0025 #b0001 #b0000))
++(rule (REC_RAND_VAR #x0025 #b0010 #b0001))
++(rule (REC_ALL_INC #x0025 #b0010 #b0001))
++(rule (REC_RAND_VAR #x0025 #b0011 #b0000))
++(rule (REC_ALL_INC #x0025 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0025 #b0100 #b0000))
++(rule (REC_ALL_INC #x0025 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0025 #b0101 #b0000))
++(rule (REC_ALL_INC #x0025 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0025 #b0110 #b0000))
++(rule (REC_ALL_INC #x0025 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0025 #b0111 #b0000))
++(rule (REC_ALL_INC #x0025 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0025 #b1000 #b0000))
++(rule (REC_ALL_INC #x0025 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0025 #b1001 #b0000))
++(rule (REC_ALL_INC #x0025 #b1001 #b0000))
++(rule (REC_RAND_VAR #x0025 #b1010 #b0001))
++(rule (REC_ALL_INC #x0025 #b1010 #b0001))
++(rule (REC_RAND_VAR #x0025 #b1011 #b0000))
++(rule (REC_ALL_INC #x0025 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0025 #b1100 #b0000))
++(rule (REC_ALL_INC #x0025 #b1100 #b0000))
++
++;   store i8 %mask5, i8* %38, align 1
++;mask5==> type
++(rule (RAND #x0026))
++(rule (REC_RAND_VAR #x0026 #b0001 #b0000))
++(rule (REC_ALL_INC #x0026 #b0001 #b0000))
++(rule (REC_RAND_VAR #x0026 #b0010 #b0010))
++(rule (REC_ALL_INC #x0026 #b0010 #b0010))
++(rule (REC_RAND_VAR #x0026 #b0011 #b0000))
++(rule (REC_ALL_INC #x0026 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0026 #b0100 #b0000))
++(rule (REC_ALL_INC #x0026 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0026 #b0101 #b0000))
++(rule (REC_ALL_INC #x0026 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0026 #b0110 #b0000))
++(rule (REC_ALL_INC #x0026 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0026 #b0111 #b0000))
++(rule (REC_ALL_INC #x0026 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0026 #b1000 #b0000))
++(rule (REC_ALL_INC #x0026 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0026 #b1001 #b0000))
++(rule (REC_ALL_INC #x0026 #b1001 #b0000))
++(rule (REC_RAND_VAR #x0026 #b1010 #b0010))
++(rule (REC_ALL_INC #x0026 #b1010 #b0010))
++(rule (REC_RAND_VAR #x0026 #b1011 #b0000))
++(rule (REC_ALL_INC #x0026 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0026 #b1100 #b0000))
++(rule (REC_ALL_INC #x0026 #b1100 #b0000))
++
++;   store i8 %mask6, i8* %39, align 1
++;mask6==> type
++(rule (RAND #x0027))
++(rule (REC_RAND_VAR #x0027 #b0001 #b0000))
++(rule (REC_ALL_INC #x0027 #b0001 #b0000))
++(rule (REC_RAND_VAR #x0027 #b0010 #b0100))
++(rule (REC_ALL_INC #x0027 #b0010 #b0100))
++(rule (REC_RAND_VAR #x0027 #b0011 #b0000))
++(rule (REC_ALL_INC #x0027 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0027 #b0100 #b0000))
++(rule (REC_ALL_INC #x0027 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0027 #b0101 #b0000))
++(rule (REC_ALL_INC #x0027 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0027 #b0110 #b0000))
++(rule (REC_ALL_INC #x0027 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0027 #b0111 #b0000))
++(rule (REC_ALL_INC #x0027 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0027 #b1000 #b0000))
++(rule (REC_ALL_INC #x0027 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0027 #b1001 #b0000))
++(rule (REC_ALL_INC #x0027 #b1001 #b0000))
++(rule (REC_RAND_VAR #x0027 #b1010 #b0100))
++(rule (REC_ALL_INC #x0027 #b1010 #b0100))
++(rule (REC_RAND_VAR #x0027 #b1011 #b0000))
++(rule (REC_ALL_INC #x0027 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0027 #b1100 #b0000))
++(rule (REC_ALL_INC #x0027 #b1100 #b0000))
++
++;   store i8 %mask7, i8* %40, align 1
++;mask7==> type
++(rule (RAND #x0028))
++(rule (REC_RAND_VAR #x0028 #b0001 #b0000))
++(rule (REC_ALL_INC #x0028 #b0001 #b0000))
++(rule (REC_RAND_VAR #x0028 #b0010 #b1000))
++(rule (REC_ALL_INC #x0028 #b0010 #b1000))
++(rule (REC_RAND_VAR #x0028 #b0011 #b0000))
++(rule (REC_ALL_INC #x0028 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0028 #b0100 #b0000))
++(rule (REC_ALL_INC #x0028 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0028 #b0101 #b0000))
++(rule (REC_ALL_INC #x0028 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0028 #b0110 #b0000))
++(rule (REC_ALL_INC #x0028 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0028 #b0111 #b0000))
++(rule (REC_ALL_INC #x0028 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0028 #b1000 #b0000))
++(rule (REC_ALL_INC #x0028 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0028 #b1001 #b0000))
++(rule (REC_ALL_INC #x0028 #b1001 #b0000))
++(rule (REC_RAND_VAR #x0028 #b1010 #b1000))
++(rule (REC_ALL_INC #x0028 #b1010 #b1000))
++(rule (REC_RAND_VAR #x0028 #b1011 #b0000))
++(rule (REC_ALL_INC #x0028 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0028 #b1100 #b0000))
++(rule (REC_ALL_INC #x0028 #b1100 #b0000))
++
++;   store i8 %mask8, i8* %41, align 1
++;mask8==> type
++(rule (RAND #x0029))
++(rule (REC_RAND_VAR #x0029 #b0001 #b0000))
++(rule (REC_ALL_INC #x0029 #b0001 #b0000))
++(rule (REC_RAND_VAR #x0029 #b0010 #b0000))
++(rule (REC_ALL_INC #x0029 #b0010 #b0000))
++(rule (REC_RAND_VAR #x0029 #b0011 #b0001))
++(rule (REC_ALL_INC #x0029 #b0011 #b0001))
++(rule (REC_RAND_VAR #x0029 #b0100 #b0000))
++(rule (REC_ALL_INC #x0029 #b0100 #b0000))
++(rule (REC_RAND_VAR #x0029 #b0101 #b0000))
++(rule (REC_ALL_INC #x0029 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0029 #b0110 #b0000))
++(rule (REC_ALL_INC #x0029 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0029 #b0111 #b0000))
++(rule (REC_ALL_INC #x0029 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0029 #b1000 #b0000))
++(rule (REC_ALL_INC #x0029 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0029 #b1001 #b0000))
++(rule (REC_ALL_INC #x0029 #b1001 #b0000))
++(rule (REC_RAND_VAR #x0029 #b1010 #b0000))
++(rule (REC_ALL_INC #x0029 #b1010 #b0000))
++(rule (REC_RAND_VAR #x0029 #b1011 #b0001))
++(rule (REC_ALL_INC #x0029 #b1011 #b0001))
++(rule (REC_RAND_VAR #x0029 #b1100 #b0000))
++(rule (REC_ALL_INC #x0029 #b1100 #b0000))
++
++;   store i8 %mask9, i8* %42, align 1
++;mask9==> type
++(rule (RAND #x002a))
++(rule (REC_RAND_VAR #x002a #b0001 #b0000))
++(rule (REC_ALL_INC #x002a #b0001 #b0000))
++(rule (REC_RAND_VAR #x002a #b0010 #b0000))
++(rule (REC_ALL_INC #x002a #b0010 #b0000))
++(rule (REC_RAND_VAR #x002a #b0011 #b0010))
++(rule (REC_ALL_INC #x002a #b0011 #b0010))
++(rule (REC_RAND_VAR #x002a #b0100 #b0000))
++(rule (REC_ALL_INC #x002a #b0100 #b0000))
++(rule (REC_RAND_VAR #x002a #b0101 #b0000))
++(rule (REC_ALL_INC #x002a #b0101 #b0000))
++(rule (REC_RAND_VAR #x002a #b0110 #b0000))
++(rule (REC_ALL_INC #x002a #b0110 #b0000))
++(rule (REC_RAND_VAR #x002a #b0111 #b0000))
++(rule (REC_ALL_INC #x002a #b0111 #b0000))
++(rule (REC_RAND_VAR #x002a #b1000 #b0000))
++(rule (REC_ALL_INC #x002a #b1000 #b0000))
++(rule (REC_RAND_VAR #x002a #b1001 #b0000))
++(rule (REC_ALL_INC #x002a #b1001 #b0000))
++(rule (REC_RAND_VAR #x002a #b1010 #b0000))
++(rule (REC_ALL_INC #x002a #b1010 #b0000))
++(rule (REC_RAND_VAR #x002a #b1011 #b0010))
++(rule (REC_ALL_INC #x002a #b1011 #b0010))
++(rule (REC_RAND_VAR #x002a #b1100 #b0000))
++(rule (REC_ALL_INC #x002a #b1100 #b0000))
++
++;   store i8 %mask10, i8* %43, align 1
++;mask10==> type
++(rule (RAND #x002b))
++(rule (REC_RAND_VAR #x002b #b0001 #b0000))
++(rule (REC_ALL_INC #x002b #b0001 #b0000))
++(rule (REC_RAND_VAR #x002b #b0010 #b0000))
++(rule (REC_ALL_INC #x002b #b0010 #b0000))
++(rule (REC_RAND_VAR #x002b #b0011 #b0100))
++(rule (REC_ALL_INC #x002b #b0011 #b0100))
++(rule (REC_RAND_VAR #x002b #b0100 #b0000))
++(rule (REC_ALL_INC #x002b #b0100 #b0000))
++(rule (REC_RAND_VAR #x002b #b0101 #b0000))
++(rule (REC_ALL_INC #x002b #b0101 #b0000))
++(rule (REC_RAND_VAR #x002b #b0110 #b0000))
++(rule (REC_ALL_INC #x002b #b0110 #b0000))
++(rule (REC_RAND_VAR #x002b #b0111 #b0000))
++(rule (REC_ALL_INC #x002b #b0111 #b0000))
++(rule (REC_RAND_VAR #x002b #b1000 #b0000))
++(rule (REC_ALL_INC #x002b #b1000 #b0000))
++(rule (REC_RAND_VAR #x002b #b1001 #b0000))
++(rule (REC_ALL_INC #x002b #b1001 #b0000))
++(rule (REC_RAND_VAR #x002b #b1010 #b0000))
++(rule (REC_ALL_INC #x002b #b1010 #b0000))
++(rule (REC_RAND_VAR #x002b #b1011 #b0100))
++(rule (REC_ALL_INC #x002b #b1011 #b0100))
++(rule (REC_RAND_VAR #x002b #b1100 #b0000))
++(rule (REC_ALL_INC #x002b #b1100 #b0000))
++
++;   store i8 %mask11, i8* %44, align 1
++;mask11==> type
++(rule (RAND #x002c))
++(rule (REC_RAND_VAR #x002c #b0001 #b0000))
++(rule (REC_ALL_INC #x002c #b0001 #b0000))
++(rule (REC_RAND_VAR #x002c #b0010 #b0000))
++(rule (REC_ALL_INC #x002c #b0010 #b0000))
++(rule (REC_RAND_VAR #x002c #b0011 #b1000))
++(rule (REC_ALL_INC #x002c #b0011 #b1000))
++(rule (REC_RAND_VAR #x002c #b0100 #b0000))
++(rule (REC_ALL_INC #x002c #b0100 #b0000))
++(rule (REC_RAND_VAR #x002c #b0101 #b0000))
++(rule (REC_ALL_INC #x002c #b0101 #b0000))
++(rule (REC_RAND_VAR #x002c #b0110 #b0000))
++(rule (REC_ALL_INC #x002c #b0110 #b0000))
++(rule (REC_RAND_VAR #x002c #b0111 #b0000))
++(rule (REC_ALL_INC #x002c #b0111 #b0000))
++(rule (REC_RAND_VAR #x002c #b1000 #b0000))
++(rule (REC_ALL_INC #x002c #b1000 #b0000))
++(rule (REC_RAND_VAR #x002c #b1001 #b0000))
++(rule (REC_ALL_INC #x002c #b1001 #b0000))
++(rule (REC_RAND_VAR #x002c #b1010 #b0000))
++(rule (REC_ALL_INC #x002c #b1010 #b0000))
++(rule (REC_RAND_VAR #x002c #b1011 #b1000))
++(rule (REC_ALL_INC #x002c #b1011 #b1000))
++(rule (REC_RAND_VAR #x002c #b1100 #b0000))
++(rule (REC_ALL_INC #x002c #b1100 #b0000))
++
++;   store i8 %mask12, i8* %45, align 1
++;mask12==> type
++(rule (RAND #x002d))
++(rule (REC_RAND_VAR #x002d #b0001 #b0000))
++(rule (REC_ALL_INC #x002d #b0001 #b0000))
++(rule (REC_RAND_VAR #x002d #b0010 #b0000))
++(rule (REC_ALL_INC #x002d #b0010 #b0000))
++(rule (REC_RAND_VAR #x002d #b0011 #b0000))
++(rule (REC_ALL_INC #x002d #b0011 #b0000))
++(rule (REC_RAND_VAR #x002d #b0100 #b0001))
++(rule (REC_ALL_INC #x002d #b0100 #b0001))
++(rule (REC_RAND_VAR #x002d #b0101 #b0000))
++(rule (REC_ALL_INC #x002d #b0101 #b0000))
++(rule (REC_RAND_VAR #x002d #b0110 #b0000))
++(rule (REC_ALL_INC #x002d #b0110 #b0000))
++(rule (REC_RAND_VAR #x002d #b0111 #b0000))
++(rule (REC_ALL_INC #x002d #b0111 #b0000))
++(rule (REC_RAND_VAR #x002d #b1000 #b0000))
++(rule (REC_ALL_INC #x002d #b1000 #b0000))
++(rule (REC_RAND_VAR #x002d #b1001 #b0000))
++(rule (REC_ALL_INC #x002d #b1001 #b0000))
++(rule (REC_RAND_VAR #x002d #b1010 #b0000))
++(rule (REC_ALL_INC #x002d #b1010 #b0000))
++(rule (REC_RAND_VAR #x002d #b1011 #b0000))
++(rule (REC_ALL_INC #x002d #b1011 #b0000))
++(rule (REC_RAND_VAR #x002d #b1100 #b0001))
++(rule (REC_ALL_INC #x002d #b1100 #b0001))
++
++;   store i8 %mask13, i8* %46, align 1
++;mask13==> type
++(rule (RAND #x002e))
++(rule (REC_RAND_VAR #x002e #b0001 #b0000))
++(rule (REC_ALL_INC #x002e #b0001 #b0000))
++(rule (REC_RAND_VAR #x002e #b0010 #b0000))
++(rule (REC_ALL_INC #x002e #b0010 #b0000))
++(rule (REC_RAND_VAR #x002e #b0011 #b0000))
++(rule (REC_ALL_INC #x002e #b0011 #b0000))
++(rule (REC_RAND_VAR #x002e #b0100 #b0010))
++(rule (REC_ALL_INC #x002e #b0100 #b0010))
++(rule (REC_RAND_VAR #x002e #b0101 #b0000))
++(rule (REC_ALL_INC #x002e #b0101 #b0000))
++(rule (REC_RAND_VAR #x002e #b0110 #b0000))
++(rule (REC_ALL_INC #x002e #b0110 #b0000))
++(rule (REC_RAND_VAR #x002e #b0111 #b0000))
++(rule (REC_ALL_INC #x002e #b0111 #b0000))
++(rule (REC_RAND_VAR #x002e #b1000 #b0000))
++(rule (REC_ALL_INC #x002e #b1000 #b0000))
++(rule (REC_RAND_VAR #x002e #b1001 #b0000))
++(rule (REC_ALL_INC #x002e #b1001 #b0000))
++(rule (REC_RAND_VAR #x002e #b1010 #b0000))
++(rule (REC_ALL_INC #x002e #b1010 #b0000))
++(rule (REC_RAND_VAR #x002e #b1011 #b0000))
++(rule (REC_ALL_INC #x002e #b1011 #b0000))
++(rule (REC_RAND_VAR #x002e #b1100 #b0010))
++(rule (REC_ALL_INC #x002e #b1100 #b0010))
++
++;   store i8 %mask14, i8* %47, align 1
++;mask14==> type
++(rule (RAND #x002f))
++(rule (REC_RAND_VAR #x002f #b0001 #b0000))
++(rule (REC_ALL_INC #x002f #b0001 #b0000))
++(rule (REC_RAND_VAR #x002f #b0010 #b0000))
++(rule (REC_ALL_INC #x002f #b0010 #b0000))
++(rule (REC_RAND_VAR #x002f #b0011 #b0000))
++(rule (REC_ALL_INC #x002f #b0011 #b0000))
++(rule (REC_RAND_VAR #x002f #b0100 #b0100))
++(rule (REC_ALL_INC #x002f #b0100 #b0100))
++(rule (REC_RAND_VAR #x002f #b0101 #b0000))
++(rule (REC_ALL_INC #x002f #b0101 #b0000))
++(rule (REC_RAND_VAR #x002f #b0110 #b0000))
++(rule (REC_ALL_INC #x002f #b0110 #b0000))
++(rule (REC_RAND_VAR #x002f #b0111 #b0000))
++(rule (REC_ALL_INC #x002f #b0111 #b0000))
++(rule (REC_RAND_VAR #x002f #b1000 #b0000))
++(rule (REC_ALL_INC #x002f #b1000 #b0000))
++(rule (REC_RAND_VAR #x002f #b1001 #b0000))
++(rule (REC_ALL_INC #x002f #b1001 #b0000))
++(rule (REC_RAND_VAR #x002f #b1010 #b0000))
++(rule (REC_ALL_INC #x002f #b1010 #b0000))
++(rule (REC_RAND_VAR #x002f #b1011 #b0000))
++(rule (REC_ALL_INC #x002f #b1011 #b0000))
++(rule (REC_RAND_VAR #x002f #b1100 #b0100))
++(rule (REC_ALL_INC #x002f #b1100 #b0100))
++
++;   store i8 %mask15, i8* %48, align 1
++;mask15==> type
++(rule (RAND #x0030))
++(rule (REC_RAND_VAR #x0030 #b0001 #b0000))
++(rule (REC_ALL_INC #x0030 #b0001 #b0000))
++(rule (REC_RAND_VAR #x0030 #b0010 #b0000))
++(rule (REC_ALL_INC #x0030 #b0010 #b0000))
++(rule (REC_RAND_VAR #x0030 #b0011 #b0000))
++(rule (REC_ALL_INC #x0030 #b0011 #b0000))
++(rule (REC_RAND_VAR #x0030 #b0100 #b1000))
++(rule (REC_ALL_INC #x0030 #b0100 #b1000))
++(rule (REC_RAND_VAR #x0030 #b0101 #b0000))
++(rule (REC_ALL_INC #x0030 #b0101 #b0000))
++(rule (REC_RAND_VAR #x0030 #b0110 #b0000))
++(rule (REC_ALL_INC #x0030 #b0110 #b0000))
++(rule (REC_RAND_VAR #x0030 #b0111 #b0000))
++(rule (REC_ALL_INC #x0030 #b0111 #b0000))
++(rule (REC_RAND_VAR #x0030 #b1000 #b0000))
++(rule (REC_ALL_INC #x0030 #b1000 #b0000))
++(rule (REC_RAND_VAR #x0030 #b1001 #b0000))
++(rule (REC_ALL_INC #x0030 #b1001 #b0000))
++(rule (REC_RAND_VAR #x0030 #b1010 #b0000))
++(rule (REC_ALL_INC #x0030 #b1010 #b0000))
++(rule (REC_RAND_VAR #x0030 #b1011 #b0000))
++(rule (REC_ALL_INC #x0030 #b1011 #b0000))
++(rule (REC_RAND_VAR #x0030 #b1100 #b1000))
++(rule (REC_ALL_INC #x0030 #b1100 #b1000))
++
++;   %49 = load i8* %1, align 1
++(rule (load_assign #x0081 #x0001))
++;   %50 = zext i8 %49 to i32
++(rule (zext_assign #x0082 #x0081))
++;   %51 = load i8* %33, align 1
++(rule (load_assign #x0083 #x0021))
++;   %52 = zext i8 %51 to i32
++(rule (zext_assign #x0084 #x0083))
++;   %53 = xor i32 %50, %52
++(rule (xor_assign_left #x0085 #x0082))
++;   %53 = xor i32 %50, %52
++(rule (xor_assign_right #x0085 #x0084))
++;   %54 = trunc i32 %53 to i8
++(rule (trunc_assign #x0086 #x0085))
++;   store i8 %54, i8* %tmp0, align 1
++(rule (store_assign #x0031 #x0086))
++;   %55 = load i8* %17, align 1
++(rule (load_assign #x0088 #x0011))
++;   %56 = zext i8 %55 to i32
++(rule (zext_assign #x0089 #x0088))
++;   %57 = load i8* %tmp0, align 1
++(rule (load_assign #x008a #x0031))
++;   %58 = zext i8 %57 to i32
++(rule (zext_assign #x008b #x008a))
++;   %59 = xor i32 %56, %58
++(rule (xor_assign_left #x008c #x0089))
++;   %59 = xor i32 %56, %58
++(rule (xor_assign_right #x008c #x008b))
++;   %60 = trunc i32 %59 to i8
++(rule (trunc_assign #x008d #x008c))
++;   store volatile i8 %60, i8* %st0, align 1
++(rule (store_assign #x0041 #x008d))
++;   %61 = load i8* %2, align 1
++(rule (load_assign #x008f #x0002))
++;   %62 = zext i8 %61 to i32
++(rule (zext_assign #x0090 #x008f))
++;   %63 = load i8* %34, align 1
++(rule (load_assign #x0091 #x0022))
++;   %64 = zext i8 %63 to i32
++(rule (zext_assign #x0092 #x0091))
++;   %65 = xor i32 %62, %64
++(rule (xor_assign_left #x0093 #x0090))
++;   %65 = xor i32 %62, %64
++(rule (xor_assign_right #x0093 #x0092))
++;   %66 = trunc i32 %65 to i8
++(rule (trunc_assign #x0094 #x0093))
++;   store i8 %66, i8* %tmp1, align 1
++(rule (store_assign #x0032 #x0094))
++;   %67 = load i8* %18, align 1
++(rule (load_assign #x0096 #x0012))
++;   %68 = zext i8 %67 to i32
++(rule (zext_assign #x0097 #x0096))
++;   %69 = load i8* %tmp1, align 1
++(rule (load_assign #x0098 #x0032))
++;   %70 = zext i8 %69 to i32
++(rule (zext_assign #x0099 #x0098))
++;   %71 = xor i32 %68, %70
++(rule (xor_assign_left #x009a #x0097))
++;   %71 = xor i32 %68, %70
++(rule (xor_assign_right #x009a #x0099))
++;   %72 = trunc i32 %71 to i8
++(rule (trunc_assign #x009b #x009a))
++;   store volatile i8 %72, i8* %st1, align 1
++(rule (store_assign #x0042 #x009b))
++;   %73 = load i8* %3, align 1
++(rule (load_assign #x009d #x0003))
++;   %74 = zext i8 %73 to i32
++(rule (zext_assign #x009e #x009d))
++;   %75 = load i8* %35, align 1
++(rule (load_assign #x009f #x0023))
++;   %76 = zext i8 %75 to i32
++(rule (zext_assign #x00a0 #x009f))
++;   %77 = xor i32 %74, %76
++(rule (xor_assign_left #x00a1 #x009e))
++;   %77 = xor i32 %74, %76
++(rule (xor_assign_right #x00a1 #x00a0))
++;   %78 = trunc i32 %77 to i8
++(rule (trunc_assign #x00a2 #x00a1))
++;   store i8 %78, i8* %tmp2, align 1
++(rule (store_assign #x0033 #x00a2))
++;   %79 = load i8* %19, align 1
++(rule (load_assign #x00a4 #x0013))
++;   %80 = zext i8 %79 to i32
++(rule (zext_assign #x00a5 #x00a4))
++;   %81 = load i8* %tmp2, align 1
++(rule (load_assign #x00a6 #x0033))
++;   %82 = zext i8 %81 to i32
++(rule (zext_assign #x00a7 #x00a6))
++;   %83 = xor i32 %80, %82
++(rule (xor_assign_left #x00a8 #x00a5))
++;   %83 = xor i32 %80, %82
++(rule (xor_assign_right #x00a8 #x00a7))
++;   %84 = trunc i32 %83 to i8
++(rule (trunc_assign #x00a9 #x00a8))
++;   store volatile i8 %84, i8* %st2, align 1
++(rule (store_assign #x0043 #x00a9))
++;   %85 = load i8* %4, align 1
++(rule (load_assign #x00ab #x0004))
++;   %86 = zext i8 %85 to i32
++(rule (zext_assign #x00ac #x00ab))
++;   %87 = load i8* %36, align 1
++(rule (load_assign #x00ad #x0024))
++;   %88 = zext i8 %87 to i32
++(rule (zext_assign #x00ae #x00ad))
++;   %89 = xor i32 %86, %88
++(rule (xor_assign_left #x00af #x00ac))
++;   %89 = xor i32 %86, %88
++(rule (xor_assign_right #x00af #x00ae))
++;   %90 = trunc i32 %89 to i8
++(rule (trunc_assign #x00b0 #x00af))
++;   store i8 %90, i8* %tmp3, align 1
++(rule (store_assign #x0034 #x00b0))
++;   %91 = load i8* %20, align 1
++(rule (load_assign #x00b2 #x0014))
++;   %92 = zext i8 %91 to i32
++(rule (zext_assign #x00b3 #x00b2))
++;   %93 = load i8* %tmp3, align 1
++(rule (load_assign #x00b4 #x0034))
++;   %94 = zext i8 %93 to i32
++(rule (zext_assign #x00b5 #x00b4))
++;   %95 = xor i32 %92, %94
++(rule (xor_assign_left #x00b6 #x00b3))
++;   %95 = xor i32 %92, %94
++(rule (xor_assign_right #x00b6 #x00b5))
++;   %96 = trunc i32 %95 to i8
++(rule (trunc_assign #x00b7 #x00b6))
++;   store volatile i8 %96, i8* %st3, align 1
++(rule (store_assign #x0044 #x00b7))
++;   %97 = load i8* %5, align 1
++(rule (load_assign #x00b9 #x0005))
++;   %98 = zext i8 %97 to i32
++(rule (zext_assign #x00ba #x00b9))
++;   %99 = load i8* %37, align 1
++(rule (load_assign #x00bb #x0025))
++;   %100 = zext i8 %99 to i32
++(rule (zext_assign #x00bc #x00bb))
++;   %101 = xor i32 %98, %100
++(rule (xor_assign_left #x00bd #x00ba))
++;   %101 = xor i32 %98, %100
++(rule (xor_assign_right #x00bd #x00bc))
++;   %102 = trunc i32 %101 to i8
++(rule (trunc_assign #x00be #x00bd))
++;   store i8 %102, i8* %tmp4, align 1
++(rule (store_assign #x0035 #x00be))
++;   %103 = load i8* %21, align 1
++(rule (load_assign #x00c0 #x0015))
++;   %104 = zext i8 %103 to i32
++(rule (zext_assign #x00c1 #x00c0))
++;   %105 = load i8* %tmp4, align 1
++(rule (load_assign #x00c2 #x0035))
++;   %106 = zext i8 %105 to i32
++(rule (zext_assign #x00c3 #x00c2))
++;   %107 = xor i32 %104, %106
++(rule (xor_assign_left #x00c4 #x00c1))
++;   %107 = xor i32 %104, %106
++(rule (xor_assign_right #x00c4 #x00c3))
++;   %108 = trunc i32 %107 to i8
++(rule (trunc_assign #x00c5 #x00c4))
++;   store volatile i8 %108, i8* %st4, align 1
++(rule (store_assign #x0045 #x00c5))
++;   %109 = load i8* %6, align 1
++(rule (load_assign #x00c7 #x0006))
++;   %110 = zext i8 %109 to i32
++(rule (zext_assign #x00c8 #x00c7))
++;   %111 = load i8* %38, align 1
++(rule (load_assign #x00c9 #x0026))
++;   %112 = zext i8 %111 to i32
++(rule (zext_assign #x00ca #x00c9))
++;   %113 = xor i32 %110, %112
++(rule (xor_assign_left #x00cb #x00c8))
++;   %113 = xor i32 %110, %112
++(rule (xor_assign_right #x00cb #x00ca))
++;   %114 = trunc i32 %113 to i8
++(rule (trunc_assign #x00cc #x00cb))
++;   store i8 %114, i8* %tmp5, align 1
++(rule (store_assign #x0036 #x00cc))
++;   %115 = load i8* %22, align 1
++(rule (load_assign #x00ce #x0016))
++;   %116 = zext i8 %115 to i32
++(rule (zext_assign #x00cf #x00ce))
++;   %117 = load i8* %tmp5, align 1
++(rule (load_assign #x00d0 #x0036))
++;   %118 = zext i8 %117 to i32
++(rule (zext_assign #x00d1 #x00d0))
++;   %119 = xor i32 %116, %118
++(rule (xor_assign_left #x00d2 #x00cf))
++;   %119 = xor i32 %116, %118
++(rule (xor_assign_right #x00d2 #x00d1))
++;   %120 = trunc i32 %119 to i8
++(rule (trunc_assign #x00d3 #x00d2))
++;   store volatile i8 %120, i8* %st5, align 1
++(rule (store_assign #x0046 #x00d3))
++;   %121 = load i8* %7, align 1
++(rule (load_assign #x00d5 #x0007))
++;   %122 = zext i8 %121 to i32
++(rule (zext_assign #x00d6 #x00d5))
++;   %123 = load i8* %39, align 1
++(rule (load_assign #x00d7 #x0027))
++;   %124 = zext i8 %123 to i32
++(rule (zext_assign #x00d8 #x00d7))
++;   %125 = xor i32 %122, %124
++(rule (xor_assign_left #x00d9 #x00d6))
++;   %125 = xor i32 %122, %124
++(rule (xor_assign_right #x00d9 #x00d8))
++;   %126 = trunc i32 %125 to i8
++(rule (trunc_assign #x00da #x00d9))
++;   store i8 %126, i8* %tmp6, align 1
++(rule (store_assign #x0037 #x00da))
++;   %127 = load i8* %23, align 1
++(rule (load_assign #x00dc #x0017))
++;   %128 = zext i8 %127 to i32
++(rule (zext_assign #x00dd #x00dc))
++;   %129 = load i8* %tmp6, align 1
++(rule (load_assign #x00de #x0037))
++;   %130 = zext i8 %129 to i32
++(rule (zext_assign #x00df #x00de))
++;   %131 = xor i32 %128, %130
++(rule (xor_assign_left #x00e0 #x00dd))
++;   %131 = xor i32 %128, %130
++(rule (xor_assign_right #x00e0 #x00df))
++;   %132 = trunc i32 %131 to i8
++(rule (trunc_assign #x00e1 #x00e0))
++;   store volatile i8 %132, i8* %st6, align 1
++(rule (store_assign #x0047 #x00e1))
++;   %133 = load i8* %8, align 1
++(rule (load_assign #x00e3 #x0008))
++;   %134 = zext i8 %133 to i32
++(rule (zext_assign #x00e4 #x00e3))
++;   %135 = load i8* %40, align 1
++(rule (load_assign #x00e5 #x0028))
++;   %136 = zext i8 %135 to i32
++(rule (zext_assign #x00e6 #x00e5))
++;   %137 = xor i32 %134, %136
++(rule (xor_assign_left #x00e7 #x00e4))
++;   %137 = xor i32 %134, %136
++(rule (xor_assign_right #x00e7 #x00e6))
++;   %138 = trunc i32 %137 to i8
++(rule (trunc_assign #x00e8 #x00e7))
++;   store i8 %138, i8* %tmp7, align 1
++(rule (store_assign #x0038 #x00e8))
++;   %139 = load i8* %24, align 1
++(rule (load_assign #x00ea #x0018))
++;   %140 = zext i8 %139 to i32
++(rule (zext_assign #x00eb #x00ea))
++;   %141 = load i8* %tmp7, align 1
++(rule (load_assign #x00ec #x0038))
++;   %142 = zext i8 %141 to i32
++(rule (zext_assign #x00ed #x00ec))
++;   %143 = xor i32 %140, %142
++(rule (xor_assign_left #x00ee #x00eb))
++;   %143 = xor i32 %140, %142
++(rule (xor_assign_right #x00ee #x00ed))
++;   %144 = trunc i32 %143 to i8
++(rule (trunc_assign #x00ef #x00ee))
++;   store volatile i8 %144, i8* %st7, align 1
++(rule (store_assign #x0048 #x00ef))
++;   %145 = load i8* %9, align 1
++(rule (load_assign #x00f1 #x0009))
++;   %146 = zext i8 %145 to i32
++(rule (zext_assign #x00f2 #x00f1))
++;   %147 = load i8* %41, align 1
++(rule (load_assign #x00f3 #x0029))
++;   %148 = zext i8 %147 to i32
++(rule (zext_assign #x00f4 #x00f3))
++;   %149 = xor i32 %146, %148
++(rule (xor_assign_left #x00f5 #x00f2))
++;   %149 = xor i32 %146, %148
++(rule (xor_assign_right #x00f5 #x00f4))
++;   %150 = trunc i32 %149 to i8
++(rule (trunc_assign #x00f6 #x00f5))
++;   store i8 %150, i8* %tmp8, align 1
++(rule (store_assign #x0039 #x00f6))
++;   %151 = load i8* %25, align 1
++(rule (load_assign #x00f8 #x0019))
++;   %152 = zext i8 %151 to i32
++(rule (zext_assign #x00f9 #x00f8))
++;   %153 = load i8* %tmp8, align 1
++(rule (load_assign #x00fa #x0039))
++;   %154 = zext i8 %153 to i32
++(rule (zext_assign #x00fb #x00fa))
++;   %155 = xor i32 %152, %154
++(rule (xor_assign_left #x00fc #x00f9))
++;   %155 = xor i32 %152, %154
++(rule (xor_assign_right #x00fc #x00fb))
++;   %156 = trunc i32 %155 to i8
++(rule (trunc_assign #x00fd #x00fc))
++;   store volatile i8 %156, i8* %st8, align 1
++(rule (store_assign #x0049 #x00fd))
++;   %157 = load i8* %10, align 1
++(rule (load_assign #x00ff #x000a))
++;   %158 = zext i8 %157 to i32
++(rule (zext_assign #x0100 #x00ff))
++;   %159 = load i8* %42, align 1
++(rule (load_assign #x0101 #x002a))
++;   %160 = zext i8 %159 to i32
++(rule (zext_assign #x0102 #x0101))
++;   %161 = xor i32 %158, %160
++(rule (xor_assign_left #x0103 #x0100))
++;   %161 = xor i32 %158, %160
++(rule (xor_assign_right #x0103 #x0102))
++;   %162 = trunc i32 %161 to i8
++(rule (trunc_assign #x0104 #x0103))
++;   store i8 %162, i8* %tmp9, align 1
++(rule (store_assign #x003a #x0104))
++;   %163 = load i8* %26, align 1
++(rule (load_assign #x0106 #x001a))
++;   %164 = zext i8 %163 to i32
++(rule (zext_assign #x0107 #x0106))
++;   %165 = load i8* %tmp9, align 1
++(rule (load_assign #x0108 #x003a))
++;   %166 = zext i8 %165 to i32
++(rule (zext_assign #x0109 #x0108))
++;   %167 = xor i32 %164, %166
++(rule (xor_assign_left #x010a #x0107))
++;   %167 = xor i32 %164, %166
++(rule (xor_assign_right #x010a #x0109))
++;   %168 = trunc i32 %167 to i8
++(rule (trunc_assign #x010b #x010a))
++;   store volatile i8 %168, i8* %st9, align 1
++(rule (store_assign #x004a #x010b))
++;   %169 = load i8* %11, align 1
++(rule (load_assign #x010d #x000b))
++;   %170 = zext i8 %169 to i32
++(rule (zext_assign #x010e #x010d))
++;   %171 = load i8* %43, align 1
++(rule (load_assign #x010f #x002b))
++;   %172 = zext i8 %171 to i32
++(rule (zext_assign #x0110 #x010f))
++;   %173 = xor i32 %170, %172
++(rule (xor_assign_left #x0111 #x010e))
++;   %173 = xor i32 %170, %172
++(rule (xor_assign_right #x0111 #x0110))
++;   %174 = trunc i32 %173 to i8
++(rule (trunc_assign #x0112 #x0111))
++;   store i8 %174, i8* %tmp10, align 1
++(rule (store_assign #x003b #x0112))
++;   %175 = load i8* %27, align 1
++(rule (load_assign #x0114 #x001b))
++;   %176 = zext i8 %175 to i32
++(rule (zext_assign #x0115 #x0114))
++;   %177 = load i8* %tmp10, align 1
++(rule (load_assign #x0116 #x003b))
++;   %178 = zext i8 %177 to i32
++(rule (zext_assign #x0117 #x0116))
++;   %179 = xor i32 %176, %178
++(rule (xor_assign_left #x0118 #x0115))
++;   %179 = xor i32 %176, %178
++(rule (xor_assign_right #x0118 #x0117))
++;   %180 = trunc i32 %179 to i8
++(rule (trunc_assign #x0119 #x0118))
++;   store volatile i8 %180, i8* %st10, align 1
++(rule (store_assign #x004b #x0119))
++;   %181 = load i8* %12, align 1
++(rule (load_assign #x011b #x000c))
++;   %182 = zext i8 %181 to i32
++(rule (zext_assign #x011c #x011b))
++;   %183 = load i8* %44, align 1
++(rule (load_assign #x011d #x002c))
++;   %184 = zext i8 %183 to i32
++(rule (zext_assign #x011e #x011d))
++;   %185 = xor i32 %182, %184
++(rule (xor_assign_left #x011f #x011c))
++;   %185 = xor i32 %182, %184
++(rule (xor_assign_right #x011f #x011e))
++;   %186 = trunc i32 %185 to i8
++(rule (trunc_assign #x0120 #x011f))
++;   store i8 %186, i8* %tmp11, align 1
++(rule (store_assign #x003c #x0120))
++;   %187 = load i8* %28, align 1
++(rule (load_assign #x0122 #x001c))
++;   %188 = zext i8 %187 to i32
++(rule (zext_assign #x0123 #x0122))
++;   %189 = load i8* %tmp11, align 1
++(rule (load_assign #x0124 #x003c))
++;   %190 = zext i8 %189 to i32
++(rule (zext_assign #x0125 #x0124))
++;   %191 = xor i32 %188, %190
++(rule (xor_assign_left #x0126 #x0123))
++;   %191 = xor i32 %188, %190
++(rule (xor_assign_right #x0126 #x0125))
++;   %192 = trunc i32 %191 to i8
++(rule (trunc_assign #x0127 #x0126))
++;   store volatile i8 %192, i8* %st11, align 1
++(rule (store_assign #x004c #x0127))
++;   %193 = load i8* %13, align 1
++(rule (load_assign #x0129 #x000d))
++;   %194 = zext i8 %193 to i32
++(rule (zext_assign #x012a #x0129))
++;   %195 = load i8* %45, align 1
++(rule (load_assign #x012b #x002d))
++;   %196 = zext i8 %195 to i32
++(rule (zext_assign #x012c #x012b))
++;   %197 = xor i32 %194, %196
++(rule (xor_assign_left #x012d #x012a))
++;   %197 = xor i32 %194, %196
++(rule (xor_assign_right #x012d #x012c))
++;   %198 = trunc i32 %197 to i8
++(rule (trunc_assign #x012e #x012d))
++;   store i8 %198, i8* %tmp12, align 1
++(rule (store_assign #x003d #x012e))
++;   %199 = load i8* %29, align 1
++(rule (load_assign #x0130 #x001d))
++;   %200 = zext i8 %199 to i32
++(rule (zext_assign #x0131 #x0130))
++;   %201 = load i8* %tmp12, align 1
++(rule (load_assign #x0132 #x003d))
++;   %202 = zext i8 %201 to i32
++(rule (zext_assign #x0133 #x0132))
++;   %203 = xor i32 %200, %202
++(rule (xor_assign_left #x0134 #x0131))
++;   %203 = xor i32 %200, %202
++(rule (xor_assign_right #x0134 #x0133))
++;   %204 = trunc i32 %203 to i8
++(rule (trunc_assign #x0135 #x0134))
++;   store volatile i8 %204, i8* %st12, align 1
++(rule (store_assign #x004d #x0135))
++;   %205 = load i8* %14, align 1
++(rule (load_assign #x0137 #x000e))
++;   %206 = zext i8 %205 to i32
++(rule (zext_assign #x0138 #x0137))
++;   %207 = load i8* %46, align 1
++(rule (load_assign #x0139 #x002e))
++;   %208 = zext i8 %207 to i32
++(rule (zext_assign #x013a #x0139))
++;   %209 = xor i32 %206, %208
++(rule (xor_assign_left #x013b #x0138))
++;   %209 = xor i32 %206, %208
++(rule (xor_assign_right #x013b #x013a))
++;   %210 = trunc i32 %209 to i8
++(rule (trunc_assign #x013c #x013b))
++;   store i8 %210, i8* %tmp13, align 1
++(rule (store_assign #x003e #x013c))
++;   %211 = load i8* %30, align 1
++(rule (load_assign #x013e #x001e))
++;   %212 = zext i8 %211 to i32
++(rule (zext_assign #x013f #x013e))
++;   %213 = load i8* %tmp13, align 1
++(rule (load_assign #x0140 #x003e))
++;   %214 = zext i8 %213 to i32
++(rule (zext_assign #x0141 #x0140))
++;   %215 = xor i32 %212, %214
++(rule (xor_assign_left #x0142 #x013f))
++;   %215 = xor i32 %212, %214
++(rule (xor_assign_right #x0142 #x0141))
++;   %216 = trunc i32 %215 to i8
++(rule (trunc_assign #x0143 #x0142))
++;   store volatile i8 %216, i8* %st13, align 1
++(rule (store_assign #x004e #x0143))
++;   %217 = load i8* %15, align 1
++(rule (load_assign #x0145 #x000f))
++;   %218 = zext i8 %217 to i32
++(rule (zext_assign #x0146 #x0145))
++;   %219 = load i8* %47, align 1
++(rule (load_assign #x0147 #x002f))
++;   %220 = zext i8 %219 to i32
++(rule (zext_assign #x0148 #x0147))
++;   %221 = xor i32 %218, %220
++(rule (xor_assign_left #x0149 #x0146))
++;   %221 = xor i32 %218, %220
++(rule (xor_assign_right #x0149 #x0148))
++;   %222 = trunc i32 %221 to i8
++(rule (trunc_assign #x014a #x0149))
++;   store i8 %222, i8* %tmp14, align 1
++(rule (store_assign #x003f #x014a))
++;   %223 = load i8* %31, align 1
++(rule (load_assign #x014c #x001f))
++;   %224 = zext i8 %223 to i32
++(rule (zext_assign #x014d #x014c))
++;   %225 = load i8* %tmp14, align 1
++(rule (load_assign #x014e #x003f))
++;   %226 = zext i8 %225 to i32
++(rule (zext_assign #x014f #x014e))
++;   %227 = xor i32 %224, %226
++(rule (xor_assign_left #x0150 #x014d))
++;   %227 = xor i32 %224, %226
++(rule (xor_assign_right #x0150 #x014f))
++;   %228 = trunc i32 %227 to i8
++(rule (trunc_assign #x0151 #x0150))
++;   store volatile i8 %228, i8* %st14, align 1
++(rule (store_assign #x004f #x0151))
++;   %229 = load i8* %16, align 1
++(rule (load_assign #x0153 #x0010))
++;   %230 = zext i8 %229 to i32
++(rule (zext_assign #x0154 #x0153))
++;   %231 = load i8* %48, align 1
++(rule (load_assign #x0155 #x0030))
++;   %232 = zext i8 %231 to i32
++(rule (zext_assign #x0156 #x0155))
++;   %233 = xor i32 %230, %232
++(rule (xor_assign_left #x0157 #x0154))
++;   %233 = xor i32 %230, %232
++(rule (xor_assign_right #x0157 #x0156))
++;   %234 = trunc i32 %233 to i8
++(rule (trunc_assign #x0158 #x0157))
++;   store i8 %234, i8* %tmp15, align 1
++(rule (store_assign #x0040 #x0158))
++;   %235 = load i8* %32, align 1
++(rule (load_assign #x015a #x0020))
++;   %236 = zext i8 %235 to i32
++(rule (zext_assign #x015b #x015a))
++;   %237 = load i8* %tmp15, align 1
++(rule (load_assign #x015c #x0040))
++;   %238 = zext i8 %237 to i32
++(rule (zext_assign #x015d #x015c))
++;   %239 = xor i32 %236, %238
++(rule (xor_assign_left #x015e #x015b))
++;   %239 = xor i32 %236, %238
++(rule (xor_assign_right #x015e #x015d))
++;   %240 = trunc i32 %239 to i8
++(rule (trunc_assign #x015f #x015e))
++;   store volatile i8 %240, i8* %st15, align 1
++(rule (store_assign #x0050 #x015f))
+ ;query KEY_IND type
+ (query KEY_IND :print-answer true)
+ ;query KEY_SENSITIVE type
+diff --git a/P3/forBackend.txt b/P3/forBackend.txt
+index da980b9..b556dad 100644
+--- a/P3/forBackend.txt
++++ b/P3/forBackend.txt
+@@ -1 +1,16 @@
+-HD_SENSITIVE X rx.addr 3
++HD_SENSITIVE tmp0 57
++HD_SENSITIVE tmp1 65
++HD_SENSITIVE tmp2 73
++HD_SENSITIVE tmp3 81
++HD_SENSITIVE tmp4 89
++HD_SENSITIVE tmp5 97
++HD_SENSITIVE tmp6 105
++HD_SENSITIVE tmp7 113
++HD_SENSITIVE tmp8 121
++HD_SENSITIVE tmp9 129
++HD_SENSITIVE tmp10 137
++HD_SENSITIVE tmp11 145
++HD_SENSITIVE tmp12 153
++HD_SENSITIVE tmp13 161
++HD_SENSITIVE tmp14 169
++HD_SENSITIVE tmp15 177
+diff --git a/P3/memBool.log b/P3/memBool.log
+index 1b78b9e..d99bce5 100644
+--- a/P3/memBool.log
++++ b/P3/memBool.log
+@@ -1,21 +1,305 @@
+ BEGIN
+-[%vreg0 -> %EDI] GR32
+-[%vreg1 -> %ESI] GR32
+-[%vreg4 -> %EDX] GR32
+-[%vreg9 -> %EAX] GR32
++[%vreg0 -> %EDI] GR32_with_sub_8bit_in_GR8
++[%vreg1 -> %ESI] GR32_with_sub_8bit_in_GR8
++[%vreg2 -> %EDX] GR32_with_sub_8bit_in_GR8
++[%vreg3 -> %ECX] GR32_with_sub_8bit_in_GR8
++[%vreg4 -> %R8D] GR32_with_sub_8bit_in_GR8
++[%vreg5 -> %R9D] GR32_with_sub_8bit_in_GR8
++[%vreg12 -> %AL] GR8
++[%vreg13 -> %AL] GR8
++[%vreg14 -> %AL] GR8
++[%vreg15 -> %AL] GR8
++[%vreg16 -> %AL] GR8
++[%vreg17 -> %AL] GR8
++[%vreg18 -> %AL] GR8
++[%vreg19 -> %AL] GR8
++[%vreg20 -> %AL] GR8
++[%vreg21 -> %AL] GR8
++[%vreg22 -> %AL] GR8
++[%vreg23 -> %AL] GR8
++[%vreg24 -> %AL] GR8
++[%vreg25 -> %AL] GR8
++[%vreg26 -> %AL] GR8
++[%vreg27 -> %AL] GR8
++[%vreg28 -> %AL] GR8
++[%vreg29 -> %AL] GR8
++[%vreg30 -> %AL] GR8
++[%vreg31 -> %AL] GR8
++[%vreg32 -> %AL] GR8
++[%vreg33 -> %AL] GR8
++[%vreg34 -> %AL] GR8
++[%vreg35 -> %AL] GR8
++[%vreg36 -> %AL] GR8
++[%vreg37 -> %AL] GR8
++[%vreg38 -> %AL] GR8
++[%vreg39 -> %AL] GR8
++[%vreg40 -> %AL] GR8
++[%vreg41 -> %AL] GR8
++[%vreg42 -> %AL] GR8
++[%vreg43 -> %AL] GR8
++[%vreg44 -> %AL] GR8
++[%vreg45 -> %AL] GR8
++[%vreg46 -> %AL] GR8
++[%vreg47 -> %AL] GR8
++[%vreg48 -> %AL] GR8
++[%vreg49 -> %AL] GR8
++[%vreg50 -> %AL] GR8
++[%vreg51 -> %AL] GR8
++[%vreg52 -> %AL] GR8
++[%vreg53 -> %AL] GR8
++[%vreg54 -> %ECX] GR32
++[%vreg56 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg58 -> %ECX] GR32
++[%vreg60 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg62 -> %ECX] GR32
++[%vreg64 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg66 -> %ECX] GR32
++[%vreg68 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg70 -> %ECX] GR32
++[%vreg72 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg74 -> %ECX] GR32
++[%vreg76 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg78 -> %ECX] GR32
++[%vreg80 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg82 -> %ECX] GR32
++[%vreg84 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg86 -> %ECX] GR32
++[%vreg88 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg90 -> %ECX] GR32
++[%vreg92 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg94 -> %ECX] GR32
++[%vreg96 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg98 -> %ECX] GR32
++[%vreg100 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg102 -> %ECX] GR32
++[%vreg104 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg106 -> %ECX] GR32
++[%vreg108 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg110 -> %ECX] GR32
++[%vreg112 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg114 -> %ECX] GR32
++[%vreg116 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg118 -> %ECX] GR32
++[%vreg120 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg122 -> %ECX] GR32
++[%vreg124 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg126 -> %ECX] GR32
++[%vreg128 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg130 -> %ECX] GR32
++[%vreg132 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg134 -> %ECX] GR32
++[%vreg136 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg138 -> %ECX] GR32
++[%vreg140 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg142 -> %ECX] GR32
++[%vreg144 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg146 -> %ECX] GR32
++[%vreg148 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg150 -> %ECX] GR32
++[%vreg152 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg154 -> %ECX] GR32
++[%vreg156 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg158 -> %ECX] GR32
++[%vreg160 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg162 -> %ECX] GR32
++[%vreg164 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg166 -> %ECX] GR32
++[%vreg168 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg170 -> %ECX] GR32
++[%vreg172 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg174 -> %ECX] GR32
++[%vreg176 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg178 -> %ECX] GR32
++[%vreg180 -> %EAX] GR32_with_sub_8bit_in_GR8
+ END
+-ST4[%R.addr] %vreg0
+-ST4[%x.addr] %vreg1
+-ST4[%rx.addr] %vreg4
+-ST4[%X] %vreg4
+-ST4[%T1] %vreg4
+-ST4[%T2] %vreg4
+-ST4[%T3] %vreg4
+-LD4[%R.addr] %vreg9
+-ST4[%R2] %vreg9
+-ST4[%A1] %vreg9
+-ST4[%A2] %vreg9
+-ST4[%A3] %vreg9
++LD1[FixedStack-1](align=16) %vreg53
++ST1[%7] %vreg53
++LD1[FixedStack-2](align=8) %vreg52
++ST1[%8] %vreg52
++LD1[FixedStack-3](align=16) %vreg51
++ST1[%9] %vreg51
++LD1[FixedStack-4](align=8) %vreg50
++ST1[%10] %vreg50
++LD1[FixedStack-5](align=16) %vreg49
++ST1[%11] %vreg49
++LD1[FixedStack-6](align=8) %vreg48
++ST1[%12] %vreg48
++LD1[FixedStack-7](align=16) %vreg47
++ST1[%13] %vreg47
++LD1[FixedStack-8](align=8) %vreg46
++ST1[%14] %vreg46
++LD1[FixedStack-9](align=16) %vreg45
++ST1[%15] %vreg45
++LD1[FixedStack-10](align=8) %vreg44
++ST1[%16] %vreg44
++LD1[FixedStack-11](align=16) %vreg43
++ST1[%17] %vreg43
++LD1[FixedStack-12](align=8) %vreg42
++ST1[%18] %vreg42
++LD1[FixedStack-13](align=16) %vreg41
++ST1[%19] %vreg41
++LD1[FixedStack-14](align=8) %vreg40
++ST1[%20] %vreg40
++LD1[FixedStack-15](align=16) %vreg39
++ST1[%21] %vreg39
++LD1[FixedStack-16](align=8) %vreg38
++ST1[%22] %vreg38
++LD1[FixedStack-17](align=16) %vreg37
++ST1[%23] %vreg37
++LD1[FixedStack-18](align=8) %vreg36
++ST1[%24] %vreg36
++LD1[FixedStack-19](align=16) %vreg35
++ST1[%25] %vreg35
++LD1[FixedStack-20](align=8) %vreg34
++ST1[%26] %vreg34
++LD1[FixedStack-21](align=16) %vreg33
++ST1[%27] %vreg33
++LD1[FixedStack-22](align=8) %vreg32
++ST1[%28] %vreg32
++LD1[FixedStack-23](align=16) %vreg31
++ST1[%29] %vreg31
++LD1[FixedStack-24](align=8) %vreg30
++ST1[%30] %vreg30
++LD1[FixedStack-25](align=16) %vreg29
++ST1[%31] %vreg29
++LD1[FixedStack-26](align=8) %vreg28
++ST1[%32] %vreg28
++LD1[FixedStack-27](align=16) %vreg27
++ST1[%33] %vreg27
++LD1[FixedStack-28](align=8) %vreg26
++ST1[%34] %vreg26
++LD1[FixedStack-29](align=16) %vreg25
++ST1[%35] %vreg25
++LD1[FixedStack-30](align=8) %vreg24
++ST1[%36] %vreg24
++LD1[FixedStack-31](align=16) %vreg23
++ST1[%37] %vreg23
++LD1[FixedStack-32](align=8) %vreg22
++ST1[%38] %vreg22
++LD1[FixedStack-33](align=16) %vreg21
++ST1[%39] %vreg21
++LD1[FixedStack-34](align=8) %vreg20
++ST1[%40] %vreg20
++LD1[FixedStack-35](align=16) %vreg19
++ST1[%41] %vreg19
++LD1[FixedStack-36](align=8) %vreg18
++ST1[%42] %vreg18
++LD1[FixedStack-37](align=16) %vreg17
++ST1[%43] %vreg17
++LD1[FixedStack-38](align=8) %vreg16
++ST1[%44] %vreg16
++LD1[FixedStack-39](align=16) %vreg15
++ST1[%45] %vreg15
++LD1[FixedStack-40](align=8) %vreg14
++ST1[%46] %vreg14
++LD1[FixedStack-41](align=16) %vreg13
++ST1[%47] %vreg13
++LD1[FixedStack-42](align=8) %vreg12
++ST1[%48] %vreg12
++ST1[%1] %vreg0
++ST1[%2] %vreg1
++ST1[%3] %vreg2
++ST1[%4] %vreg3
++ST1[%5] %vreg4
++ST1[%6] %vreg5
++LD1[%1] %vreg54
++LD1[%33] %vreg56
++ST1[%tmp0] %vreg56
++LD1[%17] %vreg58
++LD1[%tmp0] %vreg60
++Volatile ST1[%st0] %vreg60
++LD1[%2] %vreg62
++LD1[%34] %vreg64
++ST1[%tmp1] %vreg64
++LD1[%18] %vreg66
++LD1[%tmp1] %vreg68
++Volatile ST1[%st1] %vreg68
++LD1[%3] %vreg70
++LD1[%35] %vreg72
++ST1[%tmp2] %vreg72
++LD1[%19] %vreg74
++LD1[%tmp2] %vreg76
++Volatile ST1[%st2] %vreg76
++LD1[%4] %vreg78
++LD1[%36] %vreg80
++ST1[%tmp3] %vreg80
++LD1[%20] %vreg82
++LD1[%tmp3] %vreg84
++Volatile ST1[%st3] %vreg84
++LD1[%5] %vreg86
++LD1[%37] %vreg88
++ST1[%tmp4] %vreg88
++LD1[%21] %vreg90
++LD1[%tmp4] %vreg92
++Volatile ST1[%st4] %vreg92
++LD1[%6] %vreg94
++LD1[%38] %vreg96
++ST1[%tmp5] %vreg96
++LD1[%22] %vreg98
++LD1[%tmp5] %vreg100
++Volatile ST1[%st5] %vreg100
++LD1[%7] %vreg102
++LD1[%39] %vreg104
++ST1[%tmp6] %vreg104
++LD1[%23] %vreg106
++LD1[%tmp6] %vreg108
++Volatile ST1[%st6] %vreg108
++LD1[%8] %vreg110
++LD1[%40] %vreg112
++ST1[%tmp7] %vreg112
++LD1[%24] %vreg114
++LD1[%tmp7] %vreg116
++Volatile ST1[%st7] %vreg116
++LD1[%9] %vreg118
++LD1[%41] %vreg120
++ST1[%tmp8] %vreg120
++LD1[%25] %vreg122
++LD1[%tmp8] %vreg124
++Volatile ST1[%st8] %vreg124
++LD1[%10] %vreg126
++LD1[%42] %vreg128
++ST1[%tmp9] %vreg128
++LD1[%26] %vreg130
++LD1[%tmp9] %vreg132
++Volatile ST1[%st9] %vreg132
++LD1[%11] %vreg134
++LD1[%43] %vreg136
++ST1[%tmp10] %vreg136
++LD1[%27] %vreg138
++LD1[%tmp10] %vreg140
++Volatile ST1[%st10] %vreg140
++LD1[%12] %vreg142
++LD1[%44] %vreg144
++ST1[%tmp11] %vreg144
++LD1[%28] %vreg146
++LD1[%tmp11] %vreg148
++Volatile ST1[%st11] %vreg148
++LD1[%13] %vreg150
++LD1[%45] %vreg152
++ST1[%tmp12] %vreg152
++LD1[%29] %vreg154
++LD1[%tmp12] %vreg156
++Volatile ST1[%st12] %vreg156
++LD1[%14] %vreg158
++LD1[%46] %vreg160
++ST1[%tmp13] %vreg160
++LD1[%30] %vreg162
++LD1[%tmp13] %vreg164
++Volatile ST1[%st13] %vreg164
++LD1[%15] %vreg166
++LD1[%47] %vreg168
++ST1[%tmp14] %vreg168
++LD1[%31] %vreg170
++LD1[%tmp14] %vreg172
++Volatile ST1[%st14] %vreg172
++LD1[%16] %vreg174
++LD1[%48] %vreg176
++ST1[%tmp15] %vreg176
++LD1[%32] %vreg178
++LD1[%tmp15] %vreg180
++Volatile ST1[%st15] %vreg180
++Deleting identity copy.
++Deleting identity copy.
+ Deleting identity copy.
+ Deleting identity copy.
+ Deleting identity copy.
+diff --git a/P3/memOperand.log b/P3/memOperand.log
+index aaebceb..96a2f23 100644
+--- a/P3/memOperand.log
++++ b/P3/memOperand.log
+@@ -1,33 +1,343 @@
+ BEGIN
+-[%vreg0 -> %EDI] GR32
+-[%vreg1 -> %ESI] GR32
+-[%vreg4 -> %EDX] GR32
+-[%vreg9 -> %EAX] GR32
++[%vreg0 -> %EDI] GR32_with_sub_8bit_in_GR8
++[%vreg1 -> %ESI] GR32_with_sub_8bit_in_GR8
++[%vreg2 -> %EDX] GR32_with_sub_8bit_in_GR8
++[%vreg3 -> %ECX] GR32_with_sub_8bit_in_GR8
++[%vreg4 -> %R8D] GR32_with_sub_8bit_in_GR8
++[%vreg5 -> %R9D] GR32_with_sub_8bit_in_GR8
++[%vreg12 -> %AL] GR8
++[%vreg13 -> %AL] GR8
++[%vreg14 -> %AL] GR8
++[%vreg15 -> %AL] GR8
++[%vreg16 -> %AL] GR8
++[%vreg17 -> %AL] GR8
++[%vreg18 -> %AL] GR8
++[%vreg19 -> %AL] GR8
++[%vreg20 -> %AL] GR8
++[%vreg21 -> %AL] GR8
++[%vreg22 -> %AL] GR8
++[%vreg23 -> %AL] GR8
++[%vreg24 -> %AL] GR8
++[%vreg25 -> %AL] GR8
++[%vreg26 -> %AL] GR8
++[%vreg27 -> %AL] GR8
++[%vreg28 -> %AL] GR8
++[%vreg29 -> %AL] GR8
++[%vreg30 -> %AL] GR8
++[%vreg31 -> %AL] GR8
++[%vreg32 -> %AL] GR8
++[%vreg33 -> %AL] GR8
++[%vreg34 -> %AL] GR8
++[%vreg35 -> %AL] GR8
++[%vreg36 -> %AL] GR8
++[%vreg37 -> %AL] GR8
++[%vreg38 -> %AL] GR8
++[%vreg39 -> %AL] GR8
++[%vreg40 -> %AL] GR8
++[%vreg41 -> %AL] GR8
++[%vreg42 -> %AL] GR8
++[%vreg43 -> %AL] GR8
++[%vreg44 -> %AL] GR8
++[%vreg45 -> %AL] GR8
++[%vreg46 -> %AL] GR8
++[%vreg47 -> %AL] GR8
++[%vreg48 -> %AL] GR8
++[%vreg49 -> %AL] GR8
++[%vreg50 -> %AL] GR8
++[%vreg51 -> %AL] GR8
++[%vreg52 -> %AL] GR8
++[%vreg53 -> %AL] GR8
++[%vreg54 -> %ECX] GR32
++[%vreg56 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg58 -> %ECX] GR32
++[%vreg60 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg62 -> %ECX] GR32
++[%vreg64 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg66 -> %ECX] GR32
++[%vreg68 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg70 -> %ECX] GR32
++[%vreg72 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg74 -> %ECX] GR32
++[%vreg76 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg78 -> %ECX] GR32
++[%vreg80 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg82 -> %ECX] GR32
++[%vreg84 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg86 -> %ECX] GR32
++[%vreg88 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg90 -> %ECX] GR32
++[%vreg92 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg94 -> %ECX] GR32
++[%vreg96 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg98 -> %ECX] GR32
++[%vreg100 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg102 -> %ECX] GR32
++[%vreg104 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg106 -> %ECX] GR32
++[%vreg108 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg110 -> %ECX] GR32
++[%vreg112 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg114 -> %ECX] GR32
++[%vreg116 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg118 -> %ECX] GR32
++[%vreg120 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg122 -> %ECX] GR32
++[%vreg124 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg126 -> %ECX] GR32
++[%vreg128 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg130 -> %ECX] GR32
++[%vreg132 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg134 -> %ECX] GR32
++[%vreg136 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg138 -> %ECX] GR32
++[%vreg140 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg142 -> %ECX] GR32
++[%vreg144 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg146 -> %ECX] GR32
++[%vreg148 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg150 -> %ECX] GR32
++[%vreg152 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg154 -> %ECX] GR32
++[%vreg156 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg158 -> %ECX] GR32
++[%vreg160 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg162 -> %ECX] GR32
++[%vreg164 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg166 -> %ECX] GR32
++[%vreg168 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg170 -> %ECX] GR32
++[%vreg172 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg174 -> %ECX] GR32
++[%vreg176 -> %EAX] GR32_with_sub_8bit_in_GR8
++[%vreg178 -> %ECX] GR32
++[%vreg180 -> %EAX] GR32_with_sub_8bit_in_GR8
+ END
+ 
+ 
+ 
+-MOV ST4[%R.addr] %vreg0 
+-MOV ST4[%x.addr] %vreg1 
+-MOV ST4[%rx.addr] %vreg4 
+-%vreg4<def,tied1> =  XOR LD4[%x.addr] %vreg4 
+-MOV ST4[%X] %vreg4 
+-%vreg4<def,tied1> =  XOR LD4[%R.addr] %vreg4 
+-MOV ST4[%T1] %vreg4 
+-%vreg4<def,tied1> =  XOR LD4[%R.addr] %vreg4 
+-MOV ST4[%T2] %vreg4 
+-%vreg4<def,tied1> =  XOR LD4[%X] %vreg4 
+-MOV ST4[%T3] %vreg4 
+-%vreg9<def> =  MOV LD4[%R.addr] %vreg9 
+-%vreg9<def,tied1> =  XOR LD4[%rx.addr] %vreg9 
+-MOV ST4[%R2] %vreg9 
+-%vreg9<def,tied1> =  XOR LD4[%X] %vreg9 
+-MOV ST4[%A1] %vreg9 
+-%vreg9<def,tied1> =  XOR LD4[%R2] %vreg9 
+-MOV ST4[%A2] %vreg9 
+-%vreg9<def,tied1> =  XOR LD4[%T3] %vreg9 
+-MOV ST4[%A3] %vreg9 
+ 
++
++
++%vreg53<def> =  MOV LD1[FixedStack-1](align=16) %vreg53 
++MOV ST1[%7] %vreg53 
++%vreg52<def> =  MOV LD1[FixedStack-2](align=8) %vreg52 
++MOV ST1[%8] %vreg52 
++%vreg51<def> =  MOV LD1[FixedStack-3](align=16) %vreg51 
++MOV ST1[%9] %vreg51 
++%vreg50<def> =  MOV LD1[FixedStack-4](align=8) %vreg50 
++MOV ST1[%10] %vreg50 
++%vreg49<def> =  MOV LD1[FixedStack-5](align=16) %vreg49 
++MOV ST1[%11] %vreg49 
++%vreg48<def> =  MOV LD1[FixedStack-6](align=8) %vreg48 
++MOV ST1[%12] %vreg48 
++%vreg47<def> =  MOV LD1[FixedStack-7](align=16) %vreg47 
++MOV ST1[%13] %vreg47 
++%vreg46<def> =  MOV LD1[FixedStack-8](align=8) %vreg46 
++MOV ST1[%14] %vreg46 
++%vreg45<def> =  MOV LD1[FixedStack-9](align=16) %vreg45 
++MOV ST1[%15] %vreg45 
++%vreg44<def> =  MOV LD1[FixedStack-10](align=8) %vreg44 
++MOV ST1[%16] %vreg44 
++%vreg43<def> =  MOV LD1[FixedStack-11](align=16) %vreg43 
++MOV ST1[%17] %vreg43 
++%vreg42<def> =  MOV LD1[FixedStack-12](align=8) %vreg42 
++MOV ST1[%18] %vreg42 
++%vreg41<def> =  MOV LD1[FixedStack-13](align=16) %vreg41 
++MOV ST1[%19] %vreg41 
++%vreg40<def> =  MOV LD1[FixedStack-14](align=8) %vreg40 
++MOV ST1[%20] %vreg40 
++%vreg39<def> =  MOV LD1[FixedStack-15](align=16) %vreg39 
++MOV ST1[%21] %vreg39 
++%vreg38<def> =  MOV LD1[FixedStack-16](align=8) %vreg38 
++MOV ST1[%22] %vreg38 
++%vreg37<def> =  MOV LD1[FixedStack-17](align=16) %vreg37 
++MOV ST1[%23] %vreg37 
++%vreg36<def> =  MOV LD1[FixedStack-18](align=8) %vreg36 
++MOV ST1[%24] %vreg36 
++%vreg35<def> =  MOV LD1[FixedStack-19](align=16) %vreg35 
++MOV ST1[%25] %vreg35 
++%vreg34<def> =  MOV LD1[FixedStack-20](align=8) %vreg34 
++MOV ST1[%26] %vreg34 
++%vreg33<def> =  MOV LD1[FixedStack-21](align=16) %vreg33 
++MOV ST1[%27] %vreg33 
++%vreg32<def> =  MOV LD1[FixedStack-22](align=8) %vreg32 
++MOV ST1[%28] %vreg32 
++%vreg31<def> =  MOV LD1[FixedStack-23](align=16) %vreg31 
++MOV ST1[%29] %vreg31 
++%vreg30<def> =  MOV LD1[FixedStack-24](align=8) %vreg30 
++MOV ST1[%30] %vreg30 
++%vreg29<def> =  MOV LD1[FixedStack-25](align=16) %vreg29 
++MOV ST1[%31] %vreg29 
++%vreg28<def> =  MOV LD1[FixedStack-26](align=8) %vreg28 
++MOV ST1[%32] %vreg28 
++%vreg27<def> =  MOV LD1[FixedStack-27](align=16) %vreg27 
++MOV ST1[%33] %vreg27 
++%vreg26<def> =  MOV LD1[FixedStack-28](align=8) %vreg26 
++MOV ST1[%34] %vreg26 
++%vreg25<def> =  MOV LD1[FixedStack-29](align=16) %vreg25 
++MOV ST1[%35] %vreg25 
++%vreg24<def> =  MOV LD1[FixedStack-30](align=8) %vreg24 
++MOV ST1[%36] %vreg24 
++%vreg23<def> =  MOV LD1[FixedStack-31](align=16) %vreg23 
++MOV ST1[%37] %vreg23 
++%vreg22<def> =  MOV LD1[FixedStack-32](align=8) %vreg22 
++MOV ST1[%38] %vreg22 
++%vreg21<def> =  MOV LD1[FixedStack-33](align=16) %vreg21 
++MOV ST1[%39] %vreg21 
++%vreg20<def> =  MOV LD1[FixedStack-34](align=8) %vreg20 
++MOV ST1[%40] %vreg20 
++%vreg19<def> =  MOV LD1[FixedStack-35](align=16) %vreg19 
++MOV ST1[%41] %vreg19 
++%vreg18<def> =  MOV LD1[FixedStack-36](align=8) %vreg18 
++MOV ST1[%42] %vreg18 
++%vreg17<def> =  MOV LD1[FixedStack-37](align=16) %vreg17 
++MOV ST1[%43] %vreg17 
++%vreg16<def> =  MOV LD1[FixedStack-38](align=8) %vreg16 
++MOV ST1[%44] %vreg16 
++%vreg15<def> =  MOV LD1[FixedStack-39](align=16) %vreg15 
++MOV ST1[%45] %vreg15 
++%vreg14<def> =  MOV LD1[FixedStack-40](align=8) %vreg14 
++MOV ST1[%46] %vreg14 
++%vreg13<def> =  MOV LD1[FixedStack-41](align=16) %vreg13 
++MOV ST1[%47] %vreg13 
++%vreg12<def> =  MOV LD1[FixedStack-42](align=8) %vreg12 
++MOV ST1[%48] %vreg12 
++MOV ST1[%1] %vreg0 
++MOV ST1[%2] %vreg1 
++MOV ST1[%3] %vreg2 
++MOV ST1[%4] %vreg3 
++MOV ST1[%5] %vreg4 
++MOV ST1[%6] %vreg5 
++%vreg54<def> =  MOV LD1[%1] %vreg54 
++%vreg56<def> =  MOV LD1[%33] %vreg56 
++%vreg56<def,tied1> =  XOR %vreg56 %vreg54 
++MOV ST1[%tmp0] %vreg56 
++%vreg58<def> =  MOV LD1[%17] %vreg58 
++%vreg60<def> =  MOV LD1[%tmp0] %vreg60 
++%vreg60<def,tied1> =  XOR %vreg60 %vreg58 
++MOV Volatile ST1[%st0] %vreg60 
++%vreg62<def> =  MOV LD1[%2] %vreg62 
++%vreg64<def> =  MOV LD1[%34] %vreg64 
++%vreg64<def,tied1> =  XOR %vreg64 %vreg62 
++MOV ST1[%tmp1] %vreg64 
++%vreg66<def> =  MOV LD1[%18] %vreg66 
++%vreg68<def> =  MOV LD1[%tmp1] %vreg68 
++%vreg68<def,tied1> =  XOR %vreg68 %vreg66 
++MOV Volatile ST1[%st1] %vreg68 
++%vreg70<def> =  MOV LD1[%3] %vreg70 
++%vreg72<def> =  MOV LD1[%35] %vreg72 
++%vreg72<def,tied1> =  XOR %vreg72 %vreg70 
++MOV ST1[%tmp2] %vreg72 
++%vreg74<def> =  MOV LD1[%19] %vreg74 
++%vreg76<def> =  MOV LD1[%tmp2] %vreg76 
++%vreg76<def,tied1> =  XOR %vreg76 %vreg74 
++MOV Volatile ST1[%st2] %vreg76 
++%vreg78<def> =  MOV LD1[%4] %vreg78 
++%vreg80<def> =  MOV LD1[%36] %vreg80 
++%vreg80<def,tied1> =  XOR %vreg80 %vreg78 
++MOV ST1[%tmp3] %vreg80 
++%vreg82<def> =  MOV LD1[%20] %vreg82 
++%vreg84<def> =  MOV LD1[%tmp3] %vreg84 
++%vreg84<def,tied1> =  XOR %vreg84 %vreg82 
++MOV Volatile ST1[%st3] %vreg84 
++%vreg86<def> =  MOV LD1[%5] %vreg86 
++%vreg88<def> =  MOV LD1[%37] %vreg88 
++%vreg88<def,tied1> =  XOR %vreg88 %vreg86 
++MOV ST1[%tmp4] %vreg88 
++%vreg90<def> =  MOV LD1[%21] %vreg90 
++%vreg92<def> =  MOV LD1[%tmp4] %vreg92 
++%vreg92<def,tied1> =  XOR %vreg92 %vreg90 
++MOV Volatile ST1[%st4] %vreg92 
++%vreg94<def> =  MOV LD1[%6] %vreg94 
++%vreg96<def> =  MOV LD1[%38] %vreg96 
++%vreg96<def,tied1> =  XOR %vreg96 %vreg94 
++MOV ST1[%tmp5] %vreg96 
++%vreg98<def> =  MOV LD1[%22] %vreg98 
++%vreg100<def> =  MOV LD1[%tmp5] %vreg100 
++%vreg100<def,tied1> =  XOR %vreg100 %vreg98 
++MOV Volatile ST1[%st5] %vreg100 
++%vreg102<def> =  MOV LD1[%7] %vreg102 
++%vreg104<def> =  MOV LD1[%39] %vreg104 
++%vreg104<def,tied1> =  XOR %vreg104 %vreg102 
++MOV ST1[%tmp6] %vreg104 
++%vreg106<def> =  MOV LD1[%23] %vreg106 
++%vreg108<def> =  MOV LD1[%tmp6] %vreg108 
++%vreg108<def,tied1> =  XOR %vreg108 %vreg106 
++MOV Volatile ST1[%st6] %vreg108 
++%vreg110<def> =  MOV LD1[%8] %vreg110 
++%vreg112<def> =  MOV LD1[%40] %vreg112 
++%vreg112<def,tied1> =  XOR %vreg112 %vreg110 
++MOV ST1[%tmp7] %vreg112 
++%vreg114<def> =  MOV LD1[%24] %vreg114 
++%vreg116<def> =  MOV LD1[%tmp7] %vreg116 
++%vreg116<def,tied1> =  XOR %vreg116 %vreg114 
++MOV Volatile ST1[%st7] %vreg116 
++%vreg118<def> =  MOV LD1[%9] %vreg118 
++%vreg120<def> =  MOV LD1[%41] %vreg120 
++%vreg120<def,tied1> =  XOR %vreg120 %vreg118 
++MOV ST1[%tmp8] %vreg120 
++%vreg122<def> =  MOV LD1[%25] %vreg122 
++%vreg124<def> =  MOV LD1[%tmp8] %vreg124 
++%vreg124<def,tied1> =  XOR %vreg124 %vreg122 
++MOV Volatile ST1[%st8] %vreg124 
++%vreg126<def> =  MOV LD1[%10] %vreg126 
++%vreg128<def> =  MOV LD1[%42] %vreg128 
++%vreg128<def,tied1> =  XOR %vreg128 %vreg126 
++MOV ST1[%tmp9] %vreg128 
++%vreg130<def> =  MOV LD1[%26] %vreg130 
++%vreg132<def> =  MOV LD1[%tmp9] %vreg132 
++%vreg132<def,tied1> =  XOR %vreg132 %vreg130 
++MOV Volatile ST1[%st9] %vreg132 
++%vreg134<def> =  MOV LD1[%11] %vreg134 
++%vreg136<def> =  MOV LD1[%43] %vreg136 
++%vreg136<def,tied1> =  XOR %vreg136 %vreg134 
++MOV ST1[%tmp10] %vreg136 
++%vreg138<def> =  MOV LD1[%27] %vreg138 
++%vreg140<def> =  MOV LD1[%tmp10] %vreg140 
++%vreg140<def,tied1> =  XOR %vreg140 %vreg138 
++MOV Volatile ST1[%st10] %vreg140 
++%vreg142<def> =  MOV LD1[%12] %vreg142 
++%vreg144<def> =  MOV LD1[%44] %vreg144 
++%vreg144<def,tied1> =  XOR %vreg144 %vreg142 
++MOV ST1[%tmp11] %vreg144 
++%vreg146<def> =  MOV LD1[%28] %vreg146 
++%vreg148<def> =  MOV LD1[%tmp11] %vreg148 
++%vreg148<def,tied1> =  XOR %vreg148 %vreg146 
++MOV Volatile ST1[%st11] %vreg148 
++%vreg150<def> =  MOV LD1[%13] %vreg150 
++%vreg152<def> =  MOV LD1[%45] %vreg152 
++%vreg152<def,tied1> =  XOR %vreg152 %vreg150 
++MOV ST1[%tmp12] %vreg152 
++%vreg154<def> =  MOV LD1[%29] %vreg154 
++%vreg156<def> =  MOV LD1[%tmp12] %vreg156 
++%vreg156<def,tied1> =  XOR %vreg156 %vreg154 
++MOV Volatile ST1[%st12] %vreg156 
++%vreg158<def> =  MOV LD1[%14] %vreg158 
++%vreg160<def> =  MOV LD1[%46] %vreg160 
++%vreg160<def,tied1> =  XOR %vreg160 %vreg158 
++MOV ST1[%tmp13] %vreg160 
++%vreg162<def> =  MOV LD1[%30] %vreg162 
++%vreg164<def> =  MOV LD1[%tmp13] %vreg164 
++%vreg164<def,tied1> =  XOR %vreg164 %vreg162 
++MOV Volatile ST1[%st13] %vreg164 
++%vreg166<def> =  MOV LD1[%15] %vreg166 
++%vreg168<def> =  MOV LD1[%47] %vreg168 
++%vreg168<def,tied1> =  XOR %vreg168 %vreg166 
++MOV ST1[%tmp14] %vreg168 
++%vreg170<def> =  MOV LD1[%31] %vreg170 
++%vreg172<def> =  MOV LD1[%tmp14] %vreg172 
++%vreg172<def,tied1> =  XOR %vreg172 %vreg170 
++MOV Volatile ST1[%st14] %vreg172 
++%vreg174<def> =  MOV LD1[%16] %vreg174 
++%vreg176<def> =  MOV LD1[%48] %vreg176 
++%vreg176<def,tied1> =  XOR %vreg176 %vreg174 
++MOV ST1[%tmp15] %vreg176 
++%vreg178<def> =  MOV LD1[%32] %vreg178 
++%vreg180<def> =  MOV LD1[%tmp15] %vreg180 
++%vreg180<def,tied1> =  XOR %vreg180 %vreg178 
++MOV Volatile ST1[%st15] %vreg180 
++Deleting identity copy.
++Deleting identity copy.
+ Deleting identity copy.
+ Deleting identity copy.
+ Deleting identity copy.
+diff --git a/P3/memOriginal.log b/P3/memOriginal.log
+index b3939f4..89db6ed 100644
+--- a/P3/memOriginal.log
++++ b/P3/memOriginal.log
+@@ -1,50 +1,679 @@
+ ********** MACHINEINSTRS **********
+-ST4[%R.addr] %vreg0
+-ST4[%x.addr] %vreg1
+-ST4[%rx.addr] %vreg2
+-ST4[%X] %vreg3
+-ST4[%T1] %vreg4
+-ST4[%T2] %vreg5
+-ST4[%T3] %vreg6
+-LD4[%R.addr] %vreg7
+-ST4[%R2] %vreg8
+-ST4[%A1] %vreg9
+-ST4[%A2] %vreg10
+-ST4[%A3] %vreg11
++LD1[FixedStack-42](align=8) %vreg12
++LD1[FixedStack-41](align=16) %vreg13
++LD1[FixedStack-40](align=8) %vreg14
++LD1[FixedStack-39](align=16) %vreg15
++LD1[FixedStack-38](align=8) %vreg16
++LD1[FixedStack-37](align=16) %vreg17
++LD1[FixedStack-36](align=8) %vreg18
++LD1[FixedStack-35](align=16) %vreg19
++LD1[FixedStack-34](align=8) %vreg20
++LD1[FixedStack-33](align=16) %vreg21
++LD1[FixedStack-32](align=8) %vreg22
++LD1[FixedStack-31](align=16) %vreg23
++LD1[FixedStack-30](align=8) %vreg24
++LD1[FixedStack-29](align=16) %vreg25
++LD1[FixedStack-28](align=8) %vreg26
++LD1[FixedStack-27](align=16) %vreg27
++LD1[FixedStack-26](align=8) %vreg28
++LD1[FixedStack-25](align=16) %vreg29
++LD1[FixedStack-24](align=8) %vreg30
++LD1[FixedStack-23](align=16) %vreg31
++LD1[FixedStack-22](align=8) %vreg32
++LD1[FixedStack-21](align=16) %vreg33
++LD1[FixedStack-20](align=8) %vreg34
++LD1[FixedStack-19](align=16) %vreg35
++LD1[FixedStack-18](align=8) %vreg36
++LD1[FixedStack-17](align=16) %vreg37
++LD1[FixedStack-16](align=8) %vreg38
++LD1[FixedStack-15](align=16) %vreg39
++LD1[FixedStack-14](align=8) %vreg40
++LD1[FixedStack-13](align=16) %vreg41
++LD1[FixedStack-12](align=8) %vreg42
++LD1[FixedStack-11](align=16) %vreg43
++LD1[FixedStack-10](align=8) %vreg44
++LD1[FixedStack-9](align=16) %vreg45
++LD1[FixedStack-8](align=8) %vreg46
++LD1[FixedStack-7](align=16) %vreg47
++LD1[FixedStack-6](align=8) %vreg48
++LD1[FixedStack-5](align=16) %vreg49
++LD1[FixedStack-4](align=8) %vreg50
++LD1[FixedStack-3](align=16) %vreg51
++LD1[FixedStack-2](align=8) %vreg52
++LD1[FixedStack-1](align=16) %vreg53
++ST1[%1] %vreg11
++ST1[%2] %vreg10
++ST1[%3] %vreg9
++ST1[%4] %vreg8
++ST1[%5] %vreg7
++ST1[%6] %vreg6
++ST1[%7] %vreg53
++ST1[%8] %vreg52
++ST1[%9] %vreg51
++ST1[%10] %vreg50
++ST1[%11] %vreg49
++ST1[%12] %vreg48
++ST1[%13] %vreg47
++ST1[%14] %vreg46
++ST1[%15] %vreg45
++ST1[%16] %vreg44
++ST1[%17] %vreg43
++ST1[%18] %vreg42
++ST1[%19] %vreg41
++ST1[%20] %vreg40
++ST1[%21] %vreg39
++ST1[%22] %vreg38
++ST1[%23] %vreg37
++ST1[%24] %vreg36
++ST1[%25] %vreg35
++ST1[%26] %vreg34
++ST1[%27] %vreg33
++ST1[%28] %vreg32
++ST1[%29] %vreg31
++ST1[%30] %vreg30
++ST1[%31] %vreg29
++ST1[%32] %vreg28
++ST1[%33] %vreg27
++ST1[%34] %vreg26
++ST1[%35] %vreg25
++ST1[%36] %vreg24
++ST1[%37] %vreg23
++ST1[%38] %vreg22
++ST1[%39] %vreg21
++ST1[%40] %vreg20
++ST1[%41] %vreg19
++ST1[%42] %vreg18
++ST1[%43] %vreg17
++ST1[%44] %vreg16
++ST1[%45] %vreg15
++ST1[%46] %vreg14
++ST1[%47] %vreg13
++ST1[%48] %vreg12
++LD1[%1] %vreg54
++LD1[%33] %vreg55
++ST1[%tmp0] %vreg57
++LD1[%17] %vreg58
++LD1[%tmp0] %vreg59
++Volatile ST1[%st0] %vreg61
++LD1[%2] %vreg62
++LD1[%34] %vreg63
++ST1[%tmp1] %vreg65
++LD1[%18] %vreg66
++LD1[%tmp1] %vreg67
++Volatile ST1[%st1] %vreg69
++LD1[%3] %vreg70
++LD1[%35] %vreg71
++ST1[%tmp2] %vreg73
++LD1[%19] %vreg74
++LD1[%tmp2] %vreg75
++Volatile ST1[%st2] %vreg77
++LD1[%4] %vreg78
++LD1[%36] %vreg79
++ST1[%tmp3] %vreg81
++LD1[%20] %vreg82
++LD1[%tmp3] %vreg83
++Volatile ST1[%st3] %vreg85
++LD1[%5] %vreg86
++LD1[%37] %vreg87
++ST1[%tmp4] %vreg89
++LD1[%21] %vreg90
++LD1[%tmp4] %vreg91
++Volatile ST1[%st4] %vreg93
++LD1[%6] %vreg94
++LD1[%38] %vreg95
++ST1[%tmp5] %vreg97
++LD1[%22] %vreg98
++LD1[%tmp5] %vreg99
++Volatile ST1[%st5] %vreg101
++LD1[%7] %vreg102
++LD1[%39] %vreg103
++ST1[%tmp6] %vreg105
++LD1[%23] %vreg106
++LD1[%tmp6] %vreg107
++Volatile ST1[%st6] %vreg109
++LD1[%8] %vreg110
++LD1[%40] %vreg111
++ST1[%tmp7] %vreg113
++LD1[%24] %vreg114
++LD1[%tmp7] %vreg115
++Volatile ST1[%st7] %vreg117
++LD1[%9] %vreg118
++LD1[%41] %vreg119
++ST1[%tmp8] %vreg121
++LD1[%25] %vreg122
++LD1[%tmp8] %vreg123
++Volatile ST1[%st8] %vreg125
++LD1[%10] %vreg126
++LD1[%42] %vreg127
++ST1[%tmp9] %vreg129
++LD1[%26] %vreg130
++LD1[%tmp9] %vreg131
++Volatile ST1[%st9] %vreg133
++LD1[%11] %vreg134
++LD1[%43] %vreg135
++ST1[%tmp10] %vreg137
++LD1[%27] %vreg138
++LD1[%tmp10] %vreg139
++Volatile ST1[%st10] %vreg141
++LD1[%12] %vreg142
++LD1[%44] %vreg143
++ST1[%tmp11] %vreg145
++LD1[%28] %vreg146
++LD1[%tmp11] %vreg147
++Volatile ST1[%st11] %vreg149
++LD1[%13] %vreg150
++LD1[%45] %vreg151
++ST1[%tmp12] %vreg153
++LD1[%29] %vreg154
++LD1[%tmp12] %vreg155
++Volatile ST1[%st12] %vreg157
++LD1[%14] %vreg158
++LD1[%46] %vreg159
++ST1[%tmp13] %vreg161
++LD1[%30] %vreg162
++LD1[%tmp13] %vreg163
++Volatile ST1[%st13] %vreg165
++LD1[%15] %vreg166
++LD1[%47] %vreg167
++ST1[%tmp14] %vreg169
++LD1[%31] %vreg170
++LD1[%tmp14] %vreg171
++Volatile ST1[%st14] %vreg173
++LD1[%16] %vreg174
++LD1[%48] %vreg175
++ST1[%tmp15] %vreg177
++LD1[%32] %vreg178
++LD1[%tmp15] %vreg179
++Volatile ST1[%st15] %vreg181
+ ********** SIMPLE REGISTER COALESCING **********
+-********** Function: _Z7computejjj
+-ST4[%rx.addr] %vreg3
+-ST4[%X] %vreg4
+-ST4[%rx.addr] %vreg4
+-ST4[%T2] %vreg4
+-ST4[%T3] %vreg4
+-LD4[%R.addr] %vreg8
+-LD4[%R.addr] %vreg9
+-ST4[%R2] %vreg9
+-ST4[%A2] %vreg9
+-ST4[%A3] %vreg9
++********** Function: _Z9whiteninghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
++ST1[%6] %vreg5
++ST1[%5] %vreg4
++ST1[%4] %vreg3
++ST1[%3] %vreg2
++ST1[%2] %vreg1
++ST1[%1] %vreg0
++LD1[%33] %vreg56
++ST1[%tmp0] %vreg56
++LD1[%tmp0] %vreg60
++Volatile ST1[%st0] %vreg60
++LD1[%34] %vreg64
++ST1[%tmp1] %vreg64
++LD1[%tmp1] %vreg68
++Volatile ST1[%st1] %vreg68
++LD1[%35] %vreg72
++ST1[%tmp2] %vreg72
++LD1[%tmp2] %vreg76
++Volatile ST1[%st2] %vreg76
++LD1[%36] %vreg80
++ST1[%tmp3] %vreg80
++LD1[%tmp3] %vreg84
++Volatile ST1[%st3] %vreg84
++LD1[%37] %vreg88
++ST1[%tmp4] %vreg88
++LD1[%tmp4] %vreg92
++Volatile ST1[%st4] %vreg92
++LD1[%38] %vreg96
++ST1[%tmp5] %vreg96
++LD1[%tmp5] %vreg100
++Volatile ST1[%st5] %vreg100
++LD1[%39] %vreg104
++ST1[%tmp6] %vreg104
++LD1[%tmp6] %vreg108
++Volatile ST1[%st6] %vreg108
++LD1[%40] %vreg112
++ST1[%tmp7] %vreg112
++LD1[%tmp7] %vreg116
++Volatile ST1[%st7] %vreg116
++LD1[%41] %vreg120
++ST1[%tmp8] %vreg120
++LD1[%tmp8] %vreg124
++Volatile ST1[%st8] %vreg124
++LD1[%42] %vreg128
++ST1[%tmp9] %vreg128
++LD1[%tmp9] %vreg132
++Volatile ST1[%st9] %vreg132
++LD1[%43] %vreg136
++ST1[%tmp10] %vreg136
++LD1[%tmp10] %vreg140
++Volatile ST1[%st10] %vreg140
++LD1[%44] %vreg144
++ST1[%tmp11] %vreg144
++LD1[%tmp11] %vreg148
++Volatile ST1[%st11] %vreg148
++LD1[%45] %vreg152
++ST1[%tmp12] %vreg152
++LD1[%tmp12] %vreg156
++Volatile ST1[%st12] %vreg156
++LD1[%46] %vreg160
++ST1[%tmp13] %vreg160
++LD1[%tmp13] %vreg164
++Volatile ST1[%st13] %vreg164
++LD1[%47] %vreg168
++ST1[%tmp14] %vreg168
++LD1[%tmp14] %vreg172
++Volatile ST1[%st14] %vreg172
++LD1[%48] %vreg176
++ST1[%tmp15] %vreg176
++LD1[%tmp15] %vreg180
++Volatile ST1[%st15] %vreg180
+ ********** MACHINEINSTRS **********
+-ST4[%R.addr] %vreg0
+-ST4[%x.addr] %vreg1
+-ST4[%rx.addr] %vreg4
+-ST4[%X] %vreg4
+-ST4[%T1] %vreg4
+-ST4[%T2] %vreg4
+-ST4[%T3] %vreg4
+-LD4[%R.addr] %vreg9
+-ST4[%R2] %vreg9
+-ST4[%A1] %vreg9
+-ST4[%A2] %vreg9
+-ST4[%A3] %vreg9
+-ST4[%R.addr] %vreg0
+-ST4[%x.addr] %vreg1
+-ST4[%rx.addr] %vreg4
+-ST4[%X] %vreg4
+-ST4[%T1] %vreg4
+-ST4[%T2] %vreg4
+-ST4[%T3] %vreg4
+-LD4[%R.addr] %vreg9
+-ST4[%R2] %vreg9
+-ST4[%A1] %vreg9
+-ST4[%A2] %vreg9
+-ST4[%A3] %vreg9
++LD1[FixedStack-42](align=8) %vreg12
++LD1[FixedStack-41](align=16) %vreg13
++LD1[FixedStack-40](align=8) %vreg14
++LD1[FixedStack-39](align=16) %vreg15
++LD1[FixedStack-38](align=8) %vreg16
++LD1[FixedStack-37](align=16) %vreg17
++LD1[FixedStack-36](align=8) %vreg18
++LD1[FixedStack-35](align=16) %vreg19
++LD1[FixedStack-34](align=8) %vreg20
++LD1[FixedStack-33](align=16) %vreg21
++LD1[FixedStack-32](align=8) %vreg22
++LD1[FixedStack-31](align=16) %vreg23
++LD1[FixedStack-30](align=8) %vreg24
++LD1[FixedStack-29](align=16) %vreg25
++LD1[FixedStack-28](align=8) %vreg26
++LD1[FixedStack-27](align=16) %vreg27
++LD1[FixedStack-26](align=8) %vreg28
++LD1[FixedStack-25](align=16) %vreg29
++LD1[FixedStack-24](align=8) %vreg30
++LD1[FixedStack-23](align=16) %vreg31
++LD1[FixedStack-22](align=8) %vreg32
++LD1[FixedStack-21](align=16) %vreg33
++LD1[FixedStack-20](align=8) %vreg34
++LD1[FixedStack-19](align=16) %vreg35
++LD1[FixedStack-18](align=8) %vreg36
++LD1[FixedStack-17](align=16) %vreg37
++LD1[FixedStack-16](align=8) %vreg38
++LD1[FixedStack-15](align=16) %vreg39
++LD1[FixedStack-14](align=8) %vreg40
++LD1[FixedStack-13](align=16) %vreg41
++LD1[FixedStack-12](align=8) %vreg42
++LD1[FixedStack-11](align=16) %vreg43
++LD1[FixedStack-10](align=8) %vreg44
++LD1[FixedStack-9](align=16) %vreg45
++LD1[FixedStack-8](align=8) %vreg46
++LD1[FixedStack-7](align=16) %vreg47
++LD1[FixedStack-6](align=8) %vreg48
++LD1[FixedStack-5](align=16) %vreg49
++LD1[FixedStack-4](align=8) %vreg50
++LD1[FixedStack-3](align=16) %vreg51
++LD1[FixedStack-2](align=8) %vreg52
++LD1[FixedStack-1](align=16) %vreg53
++ST1[%1] %vreg0
++ST1[%2] %vreg1
++ST1[%3] %vreg2
++ST1[%4] %vreg3
++ST1[%5] %vreg4
++ST1[%6] %vreg5
++ST1[%7] %vreg53
++ST1[%8] %vreg52
++ST1[%9] %vreg51
++ST1[%10] %vreg50
++ST1[%11] %vreg49
++ST1[%12] %vreg48
++ST1[%13] %vreg47
++ST1[%14] %vreg46
++ST1[%15] %vreg45
++ST1[%16] %vreg44
++ST1[%17] %vreg43
++ST1[%18] %vreg42
++ST1[%19] %vreg41
++ST1[%20] %vreg40
++ST1[%21] %vreg39
++ST1[%22] %vreg38
++ST1[%23] %vreg37
++ST1[%24] %vreg36
++ST1[%25] %vreg35
++ST1[%26] %vreg34
++ST1[%27] %vreg33
++ST1[%28] %vreg32
++ST1[%29] %vreg31
++ST1[%30] %vreg30
++ST1[%31] %vreg29
++ST1[%32] %vreg28
++ST1[%33] %vreg27
++ST1[%34] %vreg26
++ST1[%35] %vreg25
++ST1[%36] %vreg24
++ST1[%37] %vreg23
++ST1[%38] %vreg22
++ST1[%39] %vreg21
++ST1[%40] %vreg20
++ST1[%41] %vreg19
++ST1[%42] %vreg18
++ST1[%43] %vreg17
++ST1[%44] %vreg16
++ST1[%45] %vreg15
++ST1[%46] %vreg14
++ST1[%47] %vreg13
++ST1[%48] %vreg12
++LD1[%1] %vreg54
++LD1[%33] %vreg56
++ST1[%tmp0] %vreg56
++LD1[%17] %vreg58
++LD1[%tmp0] %vreg60
++Volatile ST1[%st0] %vreg60
++LD1[%2] %vreg62
++LD1[%34] %vreg64
++ST1[%tmp1] %vreg64
++LD1[%18] %vreg66
++LD1[%tmp1] %vreg68
++Volatile ST1[%st1] %vreg68
++LD1[%3] %vreg70
++LD1[%35] %vreg72
++ST1[%tmp2] %vreg72
++LD1[%19] %vreg74
++LD1[%tmp2] %vreg76
++Volatile ST1[%st2] %vreg76
++LD1[%4] %vreg78
++LD1[%36] %vreg80
++ST1[%tmp3] %vreg80
++LD1[%20] %vreg82
++LD1[%tmp3] %vreg84
++Volatile ST1[%st3] %vreg84
++LD1[%5] %vreg86
++LD1[%37] %vreg88
++ST1[%tmp4] %vreg88
++LD1[%21] %vreg90
++LD1[%tmp4] %vreg92
++Volatile ST1[%st4] %vreg92
++LD1[%6] %vreg94
++LD1[%38] %vreg96
++ST1[%tmp5] %vreg96
++LD1[%22] %vreg98
++LD1[%tmp5] %vreg100
++Volatile ST1[%st5] %vreg100
++LD1[%7] %vreg102
++LD1[%39] %vreg104
++ST1[%tmp6] %vreg104
++LD1[%23] %vreg106
++LD1[%tmp6] %vreg108
++Volatile ST1[%st6] %vreg108
++LD1[%8] %vreg110
++LD1[%40] %vreg112
++ST1[%tmp7] %vreg112
++LD1[%24] %vreg114
++LD1[%tmp7] %vreg116
++Volatile ST1[%st7] %vreg116
++LD1[%9] %vreg118
++LD1[%41] %vreg120
++ST1[%tmp8] %vreg120
++LD1[%25] %vreg122
++LD1[%tmp8] %vreg124
++Volatile ST1[%st8] %vreg124
++LD1[%10] %vreg126
++LD1[%42] %vreg128
++ST1[%tmp9] %vreg128
++LD1[%26] %vreg130
++LD1[%tmp9] %vreg132
++Volatile ST1[%st9] %vreg132
++LD1[%11] %vreg134
++LD1[%43] %vreg136
++ST1[%tmp10] %vreg136
++LD1[%27] %vreg138
++LD1[%tmp10] %vreg140
++Volatile ST1[%st10] %vreg140
++LD1[%12] %vreg142
++LD1[%44] %vreg144
++ST1[%tmp11] %vreg144
++LD1[%28] %vreg146
++LD1[%tmp11] %vreg148
++Volatile ST1[%st11] %vreg148
++LD1[%13] %vreg150
++LD1[%45] %vreg152
++ST1[%tmp12] %vreg152
++LD1[%29] %vreg154
++LD1[%tmp12] %vreg156
++Volatile ST1[%st12] %vreg156
++LD1[%14] %vreg158
++LD1[%46] %vreg160
++ST1[%tmp13] %vreg160
++LD1[%30] %vreg162
++LD1[%tmp13] %vreg164
++Volatile ST1[%st13] %vreg164
++LD1[%15] %vreg166
++LD1[%47] %vreg168
++ST1[%tmp14] %vreg168
++LD1[%31] %vreg170
++LD1[%tmp14] %vreg172
++Volatile ST1[%st14] %vreg172
++LD1[%16] %vreg174
++LD1[%48] %vreg176
++ST1[%tmp15] %vreg176
++LD1[%32] %vreg178
++LD1[%tmp15] %vreg180
++Volatile ST1[%st15] %vreg180
++ST1[%6] %vreg5
++ST1[%5] %vreg4
++ST1[%4] %vreg3
++ST1[%3] %vreg2
++ST1[%2] %vreg1
++ST1[%1] %vreg0
++LD1[FixedStack-42](align=8) %vreg12
++LD1[FixedStack-41](align=16) %vreg13
++LD1[FixedStack-40](align=8) %vreg14
++LD1[FixedStack-39](align=16) %vreg15
++LD1[FixedStack-38](align=8) %vreg16
++LD1[FixedStack-37](align=16) %vreg17
++LD1[FixedStack-36](align=8) %vreg18
++LD1[FixedStack-35](align=16) %vreg19
++LD1[FixedStack-34](align=8) %vreg20
++LD1[FixedStack-33](align=16) %vreg21
++LD1[FixedStack-32](align=8) %vreg22
++LD1[FixedStack-31](align=16) %vreg23
++LD1[FixedStack-30](align=8) %vreg24
++LD1[FixedStack-29](align=16) %vreg25
++LD1[FixedStack-28](align=8) %vreg26
++LD1[FixedStack-27](align=16) %vreg27
++LD1[FixedStack-26](align=8) %vreg28
++LD1[FixedStack-25](align=16) %vreg29
++LD1[FixedStack-24](align=8) %vreg30
++LD1[FixedStack-23](align=16) %vreg31
++LD1[FixedStack-22](align=8) %vreg32
++LD1[FixedStack-21](align=16) %vreg33
++LD1[FixedStack-20](align=8) %vreg34
++LD1[FixedStack-19](align=16) %vreg35
++LD1[FixedStack-18](align=8) %vreg36
++LD1[FixedStack-17](align=16) %vreg37
++LD1[FixedStack-16](align=8) %vreg38
++LD1[FixedStack-15](align=16) %vreg39
++LD1[FixedStack-14](align=8) %vreg40
++LD1[FixedStack-13](align=16) %vreg41
++LD1[FixedStack-12](align=8) %vreg42
++LD1[FixedStack-11](align=16) %vreg43
++LD1[FixedStack-10](align=8) %vreg44
++LD1[FixedStack-9](align=16) %vreg45
++LD1[FixedStack-8](align=8) %vreg46
++LD1[FixedStack-7](align=16) %vreg47
++LD1[FixedStack-6](align=8) %vreg48
++LD1[FixedStack-5](align=16) %vreg49
++LD1[FixedStack-4](align=8) %vreg50
++LD1[FixedStack-3](align=16) %vreg51
++LD1[FixedStack-2](align=8) %vreg52
++LD1[FixedStack-1](align=16) %vreg53
++ST1[%7] %vreg53
++LD1[FixedStack-2](align=8) %vreg52
++ST1[%8] %vreg52
++LD1[FixedStack-3](align=16) %vreg51
++ST1[%9] %vreg51
++LD1[FixedStack-4](align=8) %vreg50
++ST1[%10] %vreg50
++LD1[FixedStack-5](align=16) %vreg49
++ST1[%11] %vreg49
++LD1[FixedStack-6](align=8) %vreg48
++ST1[%12] %vreg48
++LD1[FixedStack-7](align=16) %vreg47
++ST1[%13] %vreg47
++LD1[FixedStack-8](align=8) %vreg46
++ST1[%14] %vreg46
++LD1[FixedStack-9](align=16) %vreg45
++ST1[%15] %vreg45
++LD1[FixedStack-10](align=8) %vreg44
++ST1[%16] %vreg44
++LD1[FixedStack-11](align=16) %vreg43
++ST1[%17] %vreg43
++LD1[FixedStack-12](align=8) %vreg42
++ST1[%18] %vreg42
++LD1[FixedStack-13](align=16) %vreg41
++ST1[%19] %vreg41
++LD1[FixedStack-14](align=8) %vreg40
++ST1[%20] %vreg40
++LD1[FixedStack-15](align=16) %vreg39
++ST1[%21] %vreg39
++LD1[FixedStack-16](align=8) %vreg38
++ST1[%22] %vreg38
++LD1[FixedStack-17](align=16) %vreg37
++ST1[%23] %vreg37
++LD1[FixedStack-18](align=8) %vreg36
++ST1[%24] %vreg36
++LD1[FixedStack-19](align=16) %vreg35
++ST1[%25] %vreg35
++LD1[FixedStack-20](align=8) %vreg34
++ST1[%26] %vreg34
++LD1[FixedStack-21](align=16) %vreg33
++ST1[%27] %vreg33
++LD1[FixedStack-22](align=8) %vreg32
++ST1[%28] %vreg32
++LD1[FixedStack-23](align=16) %vreg31
++ST1[%29] %vreg31
++LD1[FixedStack-24](align=8) %vreg30
++ST1[%30] %vreg30
++LD1[FixedStack-25](align=16) %vreg29
++ST1[%31] %vreg29
++LD1[FixedStack-26](align=8) %vreg28
++ST1[%32] %vreg28
++LD1[FixedStack-27](align=16) %vreg27
++ST1[%33] %vreg27
++LD1[FixedStack-28](align=8) %vreg26
++ST1[%34] %vreg26
++LD1[FixedStack-29](align=16) %vreg25
++ST1[%35] %vreg25
++LD1[FixedStack-30](align=8) %vreg24
++ST1[%36] %vreg24
++LD1[FixedStack-31](align=16) %vreg23
++ST1[%37] %vreg23
++LD1[FixedStack-32](align=8) %vreg22
++ST1[%38] %vreg22
++LD1[FixedStack-33](align=16) %vreg21
++ST1[%39] %vreg21
++LD1[FixedStack-34](align=8) %vreg20
++ST1[%40] %vreg20
++LD1[FixedStack-35](align=16) %vreg19
++ST1[%41] %vreg19
++LD1[FixedStack-36](align=8) %vreg18
++ST1[%42] %vreg18
++LD1[FixedStack-37](align=16) %vreg17
++ST1[%43] %vreg17
++LD1[FixedStack-38](align=8) %vreg16
++ST1[%44] %vreg16
++LD1[FixedStack-39](align=16) %vreg15
++ST1[%45] %vreg15
++LD1[FixedStack-40](align=8) %vreg14
++ST1[%46] %vreg14
++LD1[FixedStack-41](align=16) %vreg13
++ST1[%47] %vreg13
++LD1[FixedStack-42](align=8) %vreg12
++ST1[%48] %vreg12
++ST1[%1] %vreg0
++ST1[%2] %vreg1
++ST1[%3] %vreg2
++ST1[%4] %vreg3
++ST1[%5] %vreg4
++ST1[%6] %vreg5
++LD1[%1] %vreg54
++LD1[%33] %vreg56
++ST1[%tmp0] %vreg56
++LD1[%17] %vreg58
++LD1[%tmp0] %vreg60
++Volatile ST1[%st0] %vreg60
++LD1[%2] %vreg62
++LD1[%34] %vreg64
++ST1[%tmp1] %vreg64
++LD1[%18] %vreg66
++LD1[%tmp1] %vreg68
++Volatile ST1[%st1] %vreg68
++LD1[%3] %vreg70
++LD1[%35] %vreg72
++ST1[%tmp2] %vreg72
++LD1[%19] %vreg74
++LD1[%tmp2] %vreg76
++Volatile ST1[%st2] %vreg76
++LD1[%4] %vreg78
++LD1[%36] %vreg80
++ST1[%tmp3] %vreg80
++LD1[%20] %vreg82
++LD1[%tmp3] %vreg84
++Volatile ST1[%st3] %vreg84
++LD1[%5] %vreg86
++LD1[%37] %vreg88
++ST1[%tmp4] %vreg88
++LD1[%21] %vreg90
++LD1[%tmp4] %vreg92
++Volatile ST1[%st4] %vreg92
++LD1[%6] %vreg94
++LD1[%38] %vreg96
++ST1[%tmp5] %vreg96
++LD1[%22] %vreg98
++LD1[%tmp5] %vreg100
++Volatile ST1[%st5] %vreg100
++LD1[%7] %vreg102
++LD1[%39] %vreg104
++ST1[%tmp6] %vreg104
++LD1[%23] %vreg106
++LD1[%tmp6] %vreg108
++Volatile ST1[%st6] %vreg108
++LD1[%8] %vreg110
++LD1[%40] %vreg112
++ST1[%tmp7] %vreg112
++LD1[%24] %vreg114
++LD1[%tmp7] %vreg116
++Volatile ST1[%st7] %vreg116
++LD1[%9] %vreg118
++LD1[%41] %vreg120
++ST1[%tmp8] %vreg120
++LD1[%25] %vreg122
++LD1[%tmp8] %vreg124
++Volatile ST1[%st8] %vreg124
++LD1[%10] %vreg126
++LD1[%42] %vreg128
++ST1[%tmp9] %vreg128
++LD1[%26] %vreg130
++LD1[%tmp9] %vreg132
++Volatile ST1[%st9] %vreg132
++LD1[%11] %vreg134
++LD1[%43] %vreg136
++ST1[%tmp10] %vreg136
++LD1[%27] %vreg138
++LD1[%tmp10] %vreg140
++Volatile ST1[%st10] %vreg140
++LD1[%12] %vreg142
++LD1[%44] %vreg144
++ST1[%tmp11] %vreg144
++LD1[%28] %vreg146
++LD1[%tmp11] %vreg148
++Volatile ST1[%st11] %vreg148
++LD1[%13] %vreg150
++LD1[%45] %vreg152
++ST1[%tmp12] %vreg152
++LD1[%29] %vreg154
++LD1[%tmp12] %vreg156
++Volatile ST1[%st12] %vreg156
++LD1[%14] %vreg158
++LD1[%46] %vreg160
++ST1[%tmp13] %vreg160
++LD1[%30] %vreg162
++LD1[%tmp13] %vreg164
++Volatile ST1[%st13] %vreg164
++LD1[%15] %vreg166
++LD1[%47] %vreg168
++ST1[%tmp14] %vreg168
++LD1[%31] %vreg170
++LD1[%tmp14] %vreg172
++Volatile ST1[%st14] %vreg172
++LD1[%16] %vreg174
++LD1[%48] %vreg176
++ST1[%tmp15] %vreg176
++LD1[%32] %vreg178
++LD1[%tmp15] %vreg180
++Volatile ST1[%st15] %vreg180
+diff --git a/P3/output.txt b/P3/output.txt
+index 71a3be1..b5e8887 100644
+--- a/P3/output.txt
++++ b/P3/output.txt
+@@ -1,9 +1,32 @@
+-RAND T1
+-RAND T2
+-RAND R2
+-RAND A1
+-RAND A2
+-RAND A3
+-RAND X
+-KEY_IND T3
+-HD_SENSITIVE X rx.addr
++RAND tmp0
++RAND tmp1
++RAND tmp2
++RAND tmp3
++RAND tmp4
++RAND tmp5
++RAND tmp6
++RAND tmp7
++RAND tmp8
++RAND tmp9
++RAND tmp10
++RAND tmp11
++RAND tmp12
++RAND tmp13
++RAND tmp14
++RAND tmp15
++HD_SENSITIVE tmp0
++HD_SENSITIVE tmp1
++HD_SENSITIVE tmp2
++HD_SENSITIVE tmp3
++HD_SENSITIVE tmp4
++HD_SENSITIVE tmp5
++HD_SENSITIVE tmp6
++HD_SENSITIVE tmp7
++HD_SENSITIVE tmp8
++HD_SENSITIVE tmp9
++HD_SENSITIVE tmp10
++HD_SENSITIVE tmp11
++HD_SENSITIVE tmp12
++HD_SENSITIVE tmp13
++HD_SENSITIVE tmp14
++HD_SENSITIVE tmp15
+diff --git a/P3/res.txt b/P3/res.txt
+index a930874..e2e26b6 100644
+--- a/P3/res.txt
++++ b/P3/res.txt
+@@ -1,39 +1,245 @@
+ sat
+-(or (= (:var 0) #x001d) (= (:var 0) #x0006) (= (:var 0) #x002c))
+-sat
+-(or (= (:var 0) #x0002) (= (:var 0) #x000f))
+-sat
+-(or (= (:var 0) #x0003)
+-    (= (:var 0) #x0001)
+-    (= (:var 0) #x0020)
+-    (= (:var 0) #x0010)
++(or (= (:var 0) #x0020)
+     (= (:var 0) #x001f)
++    (= (:var 0) #x001e)
++    (= (:var 0) #x001d)
++    (= (:var 0) #x001c)
++    (= (:var 0) #x001b)
++    (= (:var 0) #x001a)
++    (= (:var 0) #x0019)
+     (= (:var 0) #x0018)
++    (= (:var 0) #x0017)
++    (= (:var 0) #x0016)
++    (= (:var 0) #x0015)
+     (= (:var 0) #x0014)
+-    (= (:var 0) #x0021)
++    (= (:var 0) #x0013)
++    (= (:var 0) #x0012)
+     (= (:var 0) #x0011)
++    (= (:var 0) #x015a)
++    (= (:var 0) #x015b)
++    (= (:var 0) #x014c)
++    (= (:var 0) #x014d)
++    (= (:var 0) #x013e)
++    (= (:var 0) #x013f)
++    (= (:var 0) #x0130)
++    (= (:var 0) #x0131)
++    (= (:var 0) #x0122)
++    (= (:var 0) #x0123)
++    (= (:var 0) #x0114)
++    (= (:var 0) #x0115)
++    (= (:var 0) #x0106)
++    (= (:var 0) #x0107)
++    (= (:var 0) #x00f8)
++    (= (:var 0) #x00f9)
++    (= (:var 0) #x00ea)
++    (= (:var 0) #x00eb)
++    (= (:var 0) #x00dc)
++    (= (:var 0) #x00dd)
++    (= (:var 0) #x00ce)
++    (= (:var 0) #x00cf)
++    (= (:var 0) #x00c0)
++    (= (:var 0) #x00c1)
++    (= (:var 0) #x00b2)
++    (= (:var 0) #x00b3)
++    (= (:var 0) #x00a4)
++    (= (:var 0) #x00a5)
++    (= (:var 0) #x0096)
++    (= (:var 0) #x0097)
++    (= (:var 0) #x0088)
++    (= (:var 0) #x0089))
++sat
++(or (= (:var 0) #x000a)
++    (= (:var 0) #x0006)
++    (= (:var 0) #x0008)
++    (= (:var 0) #x0009)
+     (= (:var 0) #x0007)
+-    (= (:var 0) #x0028)
+-    (= (:var 0) #x0024)
++    (= (:var 0) #x0005)
++    (= (:var 0) #x0002)
++    (= (:var 0) #x0003)
++    (= (:var 0) #x00ab)
++    (= (:var 0) #x0082)
++    (= (:var 0) #x011b)
++    (= (:var 0) #x0129)
++    (= (:var 0) #x010e)
++    (= (:var 0) #x010d)
++    (= (:var 0) #x00e3)
++    (= (:var 0) #x0090)
++    (= (:var 0) #x008f)
++    (= (:var 0) #x009d)
++    (= (:var 0) #x00ba)
++    (= (:var 0) #x00b9)
++    (= (:var 0) #x000c)
++    (= (:var 0) #x0137)
++    (= (:var 0) #x00d5)
++    (= (:var 0) #x00e4)
++    (= (:var 0) #x00f1)
++    (= (:var 0) #x0100)
++    (= (:var 0) #x0145)
++    (= (:var 0) #x000e)
++    (= (:var 0) #x012a)
++    (= (:var 0) #x00c8)
++    (= (:var 0) #x00ac)
++    (= (:var 0) #x00c7)
++    (= (:var 0) #x0081)
++    (= (:var 0) #x009e)
++    (= (:var 0) #x0004)
++    (= (:var 0) #x0001)
++    (= (:var 0) #x00d6)
++    (= (:var 0) #x00f2)
++    (= (:var 0) #x0154)
++    (= (:var 0) #x00ff)
++    (= (:var 0) #x011c)
++    (= (:var 0) #x0010)
++    (= (:var 0) #x0138)
++    (= (:var 0) #x0146)
++    (= (:var 0) #x0153)
+     (= (:var 0) #x000b)
++    (= (:var 0) #x000d)
++    (= (:var 0) #x000f))
++sat
++(or (= (:var 0) #x00bb)
++    (= (:var 0) #x00c9)
++    (= (:var 0) #x00bc)
++    (= (:var 0) #x00cb)
++    (= (:var 0) #x00ec)
++    (= (:var 0) #x00e6)
++    (= (:var 0) #x0147)
++    (= (:var 0) #x0038)
++    (= (:var 0) #x0148)
++    (= (:var 0) #x013b)
++    (= (:var 0) #x0021)
++    (= (:var 0) #x0155)
++    (= (:var 0) #x0102)
+     (= (:var 0) #x0023)
+-    (= (:var 0) #x001c)
+-    (= (:var 0) #x0013)
+-    (= (:var 0) #x0015)
+-    (= (:var 0) #x0004)
+-    (= (:var 0) #x0017)
++    (= (:var 0) #x00f3)
++    (= (:var 0) #x00e5)
++    (= (:var 0) #x00d8)
++    (= (:var 0) #x003b)
+     (= (:var 0) #x0025)
+-    (= (:var 0) #x0008)
+-    (= (:var 0) #x0027)
+-    (= (:var 0) #x0019)
+-    (= (:var 0) #x0005)
+-    (= (:var 0) #x001b)
++    (= (:var 0) #x00f5)
++    (= (:var 0) #x0149)
++    (= (:var 0) #x0108)
++    (= (:var 0) #x00af)
++    (= (:var 0) #x00d1)
++    (= (:var 0) #x0036)
++    (= (:var 0) #x0111)
++    (= (:var 0) #x0110)
++    (= (:var 0) #x0141)
++    (= (:var 0) #x0133)
++    (= (:var 0) #x0140)
++    (= (:var 0) #x00de)
++    (= (:var 0) #x014a)
++    (= (:var 0) #x00b5)
++    (= (:var 0) #x00be)
++    (= (:var 0) #x0033)
++    (= (:var 0) #x0031)
++    (= (:var 0) #x0084)
++    (= (:var 0) #x0083)
++    (= (:var 0) #x00fa)
++    (= (:var 0) #x0117)
++    (= (:var 0) #x0093)
++    (= (:var 0) #x00bd)
++    (= (:var 0) #x012d)
++    (= (:var 0) #x0158)
++    (= (:var 0) #x009f)
++    (= (:var 0) #x0091)
++    (= (:var 0) #x00ae)
++    (= (:var 0) #x010f)
++    (= (:var 0) #x011e)
++    (= (:var 0) #x008a)
++    (= (:var 0) #x011d)
++    (= (:var 0) #x00c3)
++    (= (:var 0) #x00a0)
++    (= (:var 0) #x0124)
++    (= (:var 0) #x00cc)
++    (= (:var 0) #x0116)
++    (= (:var 0) #x003d)
++    (= (:var 0) #x0085)
++    (= (:var 0) #x00d9)
++    (= (:var 0) #x0032)
++    (= (:var 0) #x00df)
++    (= (:var 0) #x013c)
++    (= (:var 0) #x014f)
++    (= (:var 0) #x00b0)
++    (= (:var 0) #x012b)
++    (= (:var 0) #x00c2)
++    (= (:var 0) #x013a)
++    (= (:var 0) #x0112)
++    (= (:var 0) #x0125)
++    (= (:var 0) #x00d0)
++    (= (:var 0) #x00a7)
++    (= (:var 0) #x002c)
++    (= (:var 0) #x003c)
++    (= (:var 0) #x0024)
++    (= (:var 0) #x008b)
++    (= (:var 0) #x003f)
++    (= (:var 0) #x00b4)
++    (= (:var 0) #x0120)
++    (= (:var 0) #x00e7)
++    (= (:var 0) #x00ed)
++    (= (:var 0) #x0034)
++    (= (:var 0) #x015d)
++    (= (:var 0) #x00e8)
++    (= (:var 0) #x0098)
++    (= (:var 0) #x0103)
++    (= (:var 0) #x0086)
++    (= (:var 0) #x00a1)
++    (= (:var 0) #x0099)
++    (= (:var 0) #x0157)
++    (= (:var 0) #x0132)
++    (= (:var 0) #x011f)
++    (= (:var 0) #x003a)
++    (= (:var 0) #x0092)
++    (= (:var 0) #x0035)
++    (= (:var 0) #x00ad)
++    (= (:var 0) #x0040)
++    (= (:var 0) #x00ca)
++    (= (:var 0) #x014e)
++    (= (:var 0) #x00d7)
++    (= (:var 0) #x0094)
++    (= (:var 0) #x00f4)
++    (= (:var 0) #x012e)
++    (= (:var 0) #x0101)
++    (= (:var 0) #x00a2)
++    (= (:var 0) #x012c)
++    (= (:var 0) #x0028)
+     (= (:var 0) #x0029)
+-    (= (:var 0) #x0009)
++    (= (:var 0) #x0139)
++    (= (:var 0) #x0039)
++    (= (:var 0) #x0156)
++    (= (:var 0) #x003e)
++    (= (:var 0) #x0022)
++    (= (:var 0) #x0104)
++    (= (:var 0) #x0026)
++    (= (:var 0) #x0030)
++    (= (:var 0) #x0027)
++    (= (:var 0) #x015c)
++    (= (:var 0) #x002e)
++    (= (:var 0) #x002a)
+     (= (:var 0) #x002b)
+     (= (:var 0) #x002d)
+-    (= (:var 0) #x000a)
+-    (= (:var 0) #x002f))
++    (= (:var 0) #x00f6)
++    (= (:var 0) #x002f)
++    (= (:var 0) #x00fb)
++    (= (:var 0) #x0109)
++    (= (:var 0) #x00a6)
++    (= (:var 0) #x0037)
++    (= (:var 0) #x00da))
+ sat
+-(and (= (:var 0) #x000b) (= (:var 1) #x0003))
++(or (and (= (:var 0) #x0037) (= (:var 1) #x0027))
++    (and (= (:var 0) #x003e) (= (:var 1) #x002e))
++    (and (= (:var 0) #x0038) (= (:var 1) #x0028))
++    (and (= (:var 0) #x003d) (= (:var 1) #x002d))
++    (and (= (:var 0) #x003c) (= (:var 1) #x002c))
++    (and (= (:var 0) #x0040) (= (:var 1) #x0030))
++    (and (= (:var 0) #x0034) (= (:var 1) #x0024))
++    (and (= (:var 0) #x0031) (= (:var 1) #x0021))
++    (and (= (:var 0) #x003f) (= (:var 1) #x002f))
++    (and (= (:var 0) #x0035) (= (:var 1) #x0025))
++    (and (= (:var 0) #x0039) (= (:var 1) #x0029))
++    (and (= (:var 0) #x0033) (= (:var 1) #x0023))
++    (and (= (:var 0) #x0032) (= (:var 1) #x0022))
++    (and (= (:var 0) #x003a) (= (:var 1) #x002a))
++    (and (= (:var 0) #x003b) (= (:var 1) #x002b))
++    (and (= (:var 0) #x0036) (= (:var 1) #x0026)))
+ unsat
+diff --git a/P3/ssa.ll b/P3/ssa.ll
+index df57d16..bce1561 100644
+--- a/P3/ssa.ll
++++ b/P3/ssa.ll
+@@ -1,13 +1,12 @@
+ ; ModuleID = 'ssa.cpp'
+-target datalayout = "e-m:o-i64:64-f80:128-n8:16:32:64-S128"
+-target triple = "x86_64-apple-macosx10.12.0"
++target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-pc-linux-gnu"
+ 
+-; Function Attrs: nounwind ssp uwtable
++; Function Attrs: nounwind uwtable
+ define i32 @_Z7computejjj(i32 %R, i32 %x, i32 %rx) #0 {
+-entry:
+-  %R.addr = alloca i32, align 4
+-  %x.addr = alloca i32, align 4
+-  %rx.addr = alloca i32, align 4
++  %1 = alloca i32, align 4
++  %2 = alloca i32, align 4
++  %3 = alloca i32, align 4
+   %T1 = alloca i32, align 4
+   %T2 = alloca i32, align 4
+   %T3 = alloca i32, align 4
+@@ -16,49 +15,47 @@ entry:
+   %A2 = alloca i32, align 4
+   %A3 = alloca i32, align 4
+   %X = alloca i32, align 4
+-  store i32 %R, i32* %R.addr, align 4
+-  store i32 %x, i32* %x.addr, align 4
+-  store i32 %rx, i32* %rx.addr, align 4
+-  %0 = load i32* %x.addr, align 4
+-  %1 = load i32* %rx.addr, align 4
+-  %xor = xor i32 %0, %1
+-  store i32 %xor, i32* %X, align 4
+-  %2 = load i32* %X, align 4
+-  %3 = load i32* %R.addr, align 4
+-  %xor1 = xor i32 %2, %3
+-  store i32 %xor1, i32* %T1, align 4
+-  %4 = load i32* %T1, align 4
+-  %5 = load i32* %R.addr, align 4
+-  %xor2 = xor i32 %4, %5
+-  store i32 %xor2, i32* %T2, align 4
+-  %6 = load i32* %T2, align 4
++  store i32 %R, i32* %1, align 4
++  store i32 %x, i32* %2, align 4
++  store i32 %rx, i32* %3, align 4
++  %4 = load i32* %2, align 4
++  %5 = load i32* %3, align 4
++  %6 = xor i32 %4, %5
++  store i32 %6, i32* %X, align 4
+   %7 = load i32* %X, align 4
+-  %xor3 = xor i32 %6, %7
+-  store i32 %xor3, i32* %T3, align 4
+-  %8 = load i32* %R.addr, align 4
+-  %9 = load i32* %rx.addr, align 4
+-  %xor4 = xor i32 %8, %9
+-  store i32 %xor4, i32* %R2, align 4
+-  %10 = load i32* %X, align 4
+-  %11 = load i32* %R2, align 4
+-  %xor5 = xor i32 %10, %11
+-  store i32 %xor5, i32* %A1, align 4
+-  %12 = load i32* %A1, align 4
+-  %13 = load i32* %R2, align 4
+-  %xor6 = xor i32 %12, %13
+-  store i32 %xor6, i32* %A2, align 4
+-  %14 = load i32* %A2, align 4
+-  %15 = load i32* %T3, align 4
+-  %xor7 = xor i32 %14, %15
+-  store i32 %xor7, i32* %A3, align 4
+-  %16 = load i32* %A3, align 4
+-  ret i32 %16
++  %8 = load i32* %1, align 4
++  %9 = xor i32 %7, %8
++  store i32 %9, i32* %T1, align 4
++  %10 = load i32* %T1, align 4
++  %11 = load i32* %1, align 4
++  %12 = xor i32 %10, %11
++  store i32 %12, i32* %T2, align 4
++  %13 = load i32* %T2, align 4
++  %14 = load i32* %X, align 4
++  %15 = xor i32 %13, %14
++  store i32 %15, i32* %T3, align 4
++  %16 = load i32* %1, align 4
++  %17 = load i32* %3, align 4
++  %18 = xor i32 %16, %17
++  store i32 %18, i32* %R2, align 4
++  %19 = load i32* %X, align 4
++  %20 = load i32* %R2, align 4
++  %21 = xor i32 %19, %20
++  store i32 %21, i32* %A1, align 4
++  %22 = load i32* %A1, align 4
++  %23 = load i32* %R2, align 4
++  %24 = xor i32 %22, %23
++  store i32 %24, i32* %A2, align 4
++  %25 = load i32* %A2, align 4
++  %26 = load i32* %T3, align 4
++  %27 = xor i32 %25, %26
++  store i32 %27, i32* %A3, align 4
++  %28 = load i32* %A3, align 4
++  ret i32 %28
+ }
+ 
+-attributes #0 = { nounwind ssp uwtable "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "unsafe-fp-math"="false" "use-soft-float"="false" }
++attributes #0 = { nounwind uwtable "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "unsafe-fp-math"="false" "use-soft-float"="false" }
+ 
+-!llvm.module.flags = !{!0}
+-!llvm.ident = !{!1}
++!llvm.ident = !{!0}
+ 
+-!0 = !{i32 1, !"PIC Level", i32 2}
+-!1 = !{!"clang version 3.6.0 (tags/RELEASE_360/final)"}
++!0 = !{!"Ubuntu clang version 3.6.2-3ubuntu2 (tags/RELEASE_362/final) (based on LLVM 3.6.2)"}
+diff --git a/P3/ssa.s b/P3/ssa.s
+index 236b548..4b5c198 100644
+--- a/P3/ssa.s
++++ b/P3/ssa.s
+@@ -1,17 +1,18 @@
+-	.section	__TEXT,__text,regular,pure_instructions
+-	.macosx_version_min 10, 12
+-	.globl	__Z7computejjj
+-	.align	4, 0x90
+-__Z7computejjj:                         ## @_Z7computejjj
++	.text
++	.file	"ssa.ll"
++	.globl	_Z7computejjj
++	.align	16, 0x90
++	.type	_Z7computejjj,@function
++_Z7computejjj:                          # @_Z7computejjj
+ 	.cfi_startproc
+-## BB#0:                                ## %entry
++# BB#0:
+ 	pushq	%rbp
+-Ltmp0:
++.Ltmp0:
+ 	.cfi_def_cfa_offset 16
+-Ltmp1:
++.Ltmp1:
+ 	.cfi_offset %rbp, -16
+ 	movq	%rsp, %rbp
+-Ltmp2:
++.Ltmp2:
+ 	.cfi_def_cfa_register %rbp
+ 	movl	%edi, -4(%rbp)
+ 	movl	%esi, -8(%rbp)
+@@ -35,7 +36,10 @@ Ltmp2:
+ 	movl	%eax, -40(%rbp)
+ 	popq	%rbp
+ 	retq
++.Ltmp3:
++	.size	_Z7computejjj, .Ltmp3-_Z7computejjj
+ 	.cfi_endproc
+ 
+ 
+-.subsections_via_symbols
++	.ident	"Ubuntu clang version 3.6.2-3ubuntu2 (tags/RELEASE_362/final) (based on LLVM 3.6.2)"
++	.section	".note.GNU-stack","",@progbits
+diff --git a/P4/SecMultOpt_wires_1.cpp b/P4/SecMultOpt_wires_1.cpp
+index 3288d22..2c042b4 100644
+--- a/P4/SecMultOpt_wires_1.cpp
++++ b/P4/SecMultOpt_wires_1.cpp
+@@ -1,8 +1,9 @@
+ int SecMult(int a, int b, int a0, int b0, int r0){
+-    int a0, a1;
+-    int  b0, b1;
++    int a1;
++    int b1;
+     int c0, c1;
+-    int r0, r0_prime, p0;
++    int r0_prime, p0;
++    int p0_1, c0_1, c1_1, res;
+     // (* Presharing a *)
+     // a0 = $distr;
+     a1 = a ^ a0;
+@@ -15,9 +16,10 @@ int SecMult(int a, int b, int a0, int b0, int r0){
+     // r0 = $distr;
+     p0 = a0 * b1;
+     r0_prime = r0 ^ p0;
+-    int p0_1, c0_1, c1_1, res;
++    
+     p0_1 = a1 * b0;
+-    r0_prime = r0_prime ^ p0;
++    r0_prime = r0_prime ^ p0_1;
++
+     c0_1 = c0 ^ r0;
+     c1_1 = c1 ^ r0_prime;
+     res = c0_1 ^ c1_1;
+diff --git a/P6 /SecMultLinear_wires_1.cpp b/P6 /SecMultLinear_wires_1.cpp
+index 797082d..f370153 100644
+--- a/P6 /SecMultLinear_wires_1.cpp	
++++ b/P6 /SecMultLinear_wires_1.cpp	
+@@ -1,8 +1,9 @@
+ #include <iostream>
+   int SecMult(int a, int b, int a0, int r0_01, int p0_01){
+-    int a0, a1;
++    int a1;
+     int b0, b1;
+-    int t0, t0_prime, r0_01, r0_10, p0_01;
++    //int t0, t0_prime, r0_01, r0_10, p0_01;
++    int t0, t0_prime, r0_10; 
+     // (* Presharing a *)
+     a1 = a ^ a0;
+     // (* b = a * (pow2 a) *)
+diff --git a/common/analy_backend b/common/analy_backend
+index 21da432..ef36802 100755
+Binary files a/common/analy_backend and b/common/analy_backend differ
+diff --git a/common/analy_backend.cpp b/common/analy_backend.cpp
+index 754fe4b..c2863da 100644
+--- a/common/analy_backend.cpp
++++ b/common/analy_backend.cpp
+@@ -18,6 +18,7 @@ void readBEGIN(string f_name)
+     string s;
+     bool begin_flag = false;
+     bool end_flag = false;
++
+     while(getline(fin, s))
+     {
+         istringstream iss(s);
+@@ -25,6 +26,7 @@ void readBEGIN(string f_name)
+         copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter(tokens));
+         iss.str("");
+         iss.clear();
++
+         if((begin_flag) && (!end_flag))
+         {
+             if(find(tokens.begin(), tokens.end(), "->") != tokens.end())
+@@ -51,8 +53,14 @@ void readBEGIN(string f_name)
+                 break;
+             else
+             {
+-                var.push_back((*it_var).substr(4, v_s-5));
+-                vreg.push_back((*it_vreg));
++                    //std::cout << "Printing" << std::endl;
++                    //std::cout << *it_var << *it_vreg << std::endl;
++                    int is_fixed_stack = (*it_var).find("FixedStack");
++                    if (is_fixed_stack == -1) {
++                    //std::cout << is_fixed_stack << std::endl;
++                        var.push_back((*it_var).substr(4, v_s-5));
++                        vreg.push_back((*it_vreg));
++                    }
+                 //var_vreg.insert(pair<string, string>(((*it_var).substr(4, v_s-5)), *it_vreg));
+             }
+         }
+@@ -62,11 +70,13 @@ void readBEGIN(string f_name)
+         if(!s.compare("END"))
+             end_flag = true;
+     }
++
+ }
+ 
+ /* given a vreg, output all the corresponding variable names in string vector */
+ vector<int> find_multiple (vector<string> vreg, string tofind)
+ {
++
+     vector<string>::iterator i = find(vreg.begin(), vreg.end(), tofind);
+     vector<int> result;
+     while(i != vreg.end())
+@@ -107,6 +117,7 @@ int main(int argc, char *argv[])
+     if(argc < 3)
+         cout << "please input the backend file and name of the output!" << endl;
+     //string f_name = "memOperand.log";
++
+     string f_name = argv[1];
+     readBEGIN(f_name);
+     map<string, string>::iterator iter1, iter2;
+diff --git a/common/interfaceBackend.cpp b/common/interfaceBackend.cpp
+index 3e91b1d..54ab7ff 100644
+--- a/common/interfaceBackend.cpp
++++ b/common/interfaceBackend.cpp
+@@ -53,6 +53,7 @@ void readResult(string f_name)
+             it1 = find(tokens.begin(), tokens.end(), toCheck);
+             ++it1;
+             //test
++            //cout << "Found something in readResult" << endl;
+             cout << *it1 << endl;
+             hd_sensitive.push_back(*it1);
+         }else if(find(tokens.begin(), tokens.end(), toCheck2) != tokens.end())
+@@ -84,6 +85,9 @@ void readMemWrite(string f_name, string w_name)
+             break;
+         unsigned len = s.size();
+         tmp = s.substr(5, len-6);
++
++        //cout << s << endl;
++
+         // handling HD_SENSITIVE
+         if((find(hd_sensitive.begin(), hd_sensitive.end(), tmp) != hd_sensitive.end()) && (!s.substr(0, 2).compare("ST")))
+         {
