@@ -15,7 +15,7 @@ INPUT=$2
 
 bash clean.sh
 
-clang-3.6  -nostdlib -ffreestanding   --target=armv6   -mcpu=cortex-m0 -mthumb -mfloat-abi=soft -o $FILE.ll   -S  -emit-llvm $FILE.cpp
+#clang-3.6  -nostdlib -ffreestanding   --target=armv6   -mcpu=cortex-m0 -mthumb -mfloat-abi=soft -o $FILE.ll   -S  -emit-llvm $FILE.cpp
 
 #clang-3.6 -emit-llvm -S $FILE.cpp -o $FILE.ll
 # generate original - and output memBool.log and others

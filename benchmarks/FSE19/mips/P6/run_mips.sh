@@ -1,6 +1,5 @@
 #e/bin/bash
 
-FSE_HOME=$HOME/didaktoriko/unison/secdivcon/FSE19/
 LLC=${FSE_HOME}/LLVM/build/bin/llc
 OPT=${FSE_HOME}/LLVM/build/bin/opt
 FILE=$1
@@ -14,7 +13,7 @@ INPUT=$2
 
 bash clean.sh
 
-clang-3.6  -nostdlib -ffreestanding   --target=mips   -mcpu=mips32  -mfloat-abi=soft -o $FILE.ll   -S  -emit-llvm $FILE.cpp
+#clang-3.6  -nostdlib -ffreestanding   --target=mips   -mcpu=mips32  -mfloat-abi=soft -o $FILE.ll   -S  -emit-llvm $FILE.cpp
 
 #clang-3.6 -emit-llvm -S $FILE.cpp -o $FILE.ll
 # generate original - and output memBool.log and others

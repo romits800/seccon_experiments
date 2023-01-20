@@ -1,6 +1,5 @@
 #e/bin/bash
 
-FSE_HOME=../../
 LLC=${FSE_HOME}/LLVM/build/bin/llc
 OPT=${FSE_HOME}/LLVM/build/bin/opt
 FILE=$1
@@ -12,7 +11,8 @@ INPUT=$2
 #popd
 #../common/analy_backend  memBool.log shared_variable.txt
 
-clang-3.6  -nostdlib -ffreestanding   --target=mips   -mcpu=mips32  -mfloat-abi=soft -o $FILE.ll   -S  -emit-llvm $FILE.cpp
+bash clean.sh
+#clang-3.6  -nostdlib -ffreestanding   --target=mips   -mcpu=mips32  -mfloat-abi=soft -o $FILE.ll   -S  -emit-llvm $FILE.cpp
 
 #clang-3.6 -emit-llvm -S $FILE.cpp -o $FILE.ll
 # generate original - and output memBool.log and others
