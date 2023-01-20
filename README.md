@@ -94,20 +94,27 @@ $ cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_C_COMPILE
 $ make -j 12
 ```
 
+
 Then, you need the path to the directory you cloned in the following environment variable:
 
 ```bash
 $ export FSE_HOME=/path/to/FSE19
 ```
+You also need to build three binary files in `FSE19/common`:
+
+```bash
+$ cd $FSE_HOME/common
+$ bash run.sh
+```
 
 Then, you may run the experiments for Mips:
-```
+```bash
 $ cd benchmarks/FSE19/mips
 $ bash run_all.sh
 ```
 
 Similarly for ARM Cortex M0:
-```
+```bash
 $ cd benchmarks/FSE19/cm0
 $ bash run_all.sh
 ```
