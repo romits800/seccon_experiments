@@ -5092,3 +5092,12 @@ index 3e91b1d..54ab7ff 100644
          // handling HD_SENSITIVE
          if((find(hd_sensitive.begin(), hd_sensitive.end(), tmp) != hd_sensitive.end()) && (!s.substr(0, 2).compare("ST")))
          {
+diff --git a/common/run.sh b/common/run.sh
+new file mode 100644
+index 0000000..2513d1d
+--- /dev/null
++++ b/common/run.sh
+@@ -0,0 +1,3 @@
++g++ analy_backend.cpp -std=c++11 -o analy_backend_linux
++g++ extract_res.cpp -std=c++11 -o extract_res_linux
++g++ interfaceBackend.cpp -std=c++11 -o interfaceBackend_linux
