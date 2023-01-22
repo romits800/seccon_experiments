@@ -121,13 +121,13 @@ The last instruction may require installing the `python-pip` package: `sudo apt-
 
 Then, you may run the experiments for Mips:
 ```bash
-cd benchmarks/FSE19/mips
+cd path/to/seccon_experiments/benchmarks/FSE19/mips
 bash run_all.sh
 ```
 
 Similarly for ARM Cortex M0:
 ```bash
-cd benchmarks/FSE19/cm0
+cd path/to/seccon_experiments/benchmarks/FSE19/cm0
 bash run_all.sh
 ```
 
