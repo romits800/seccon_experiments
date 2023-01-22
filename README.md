@@ -91,7 +91,7 @@ cd FSE19/LLVM
 mkdir build
 cd build
 cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ../llvm
-make -j 12
+make
 ```
 
 Then, you need the path to the directory you cloned in the following environment variable:
@@ -154,6 +154,7 @@ Then compile LLVM:
 mkdir build
 cd build
 cmake -G "Unix Makefiles"  -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ..
+make
 ```
 
 Export the directory:
