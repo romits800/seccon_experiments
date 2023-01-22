@@ -4,8 +4,7 @@ name=$1
 func=$2
 bsize=$3
 
-#UNI=/home/romi/didaktoriko/unison/unison/src/unison/build/uni
-UNI=/home/romi/didaktoriko/unison/romi_unison/divCon/src/unison/build/uni
+UNI=${DIVCON_PATH}/src/unison/build/uni
 flags="--disable-copy-dominance-constraints --disable-infinite-register-dominance-constraints --disable-operand-symmetry-breaking-constraints --disable-register-symmetry-breaking-constraints --disable-temporary-symmetry-breaking-constraints --disable-wcet-constraints"
 flags="$flags --sec-implementation sec_reg_2_mem_2"
 
