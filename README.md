@@ -166,6 +166,6 @@ export LLVM_UNISON_PATH=/path/to/llvm/build
 To run the experiments do:
 
 ```
-cd benchmarks/nonoptimized/llvm
+cd path/to/seccon_experiments/benchmarks/nonoptimized/llvm
 bash run_all.sh
 ```
