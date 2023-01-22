@@ -11,13 +11,13 @@ To use SecConCG, clone this repo recursively to clone the submodules.
 Then, enter to the `src` directory in `secConCG`:
 
 ```bash
-$ cd secConCG/src
+cd secConCG/src
 ```
 
 and compile the code:
 
 ```bash
-$ make -j 12
+make -j 12
 ```
 
 
@@ -36,17 +36,17 @@ export MINIZINC_PATH=/path/to/MiniZincIDE-2.6.2-bundle-linux-x86_64/bin/
 First, export some necessary environment variables (top directory):
 
 ```bash
-$ . secconenv
+. secconenv
 ```
 
 Then, navigate to the `benchmarks` directory:
 ```bash
-$ cd benchmarks/optimized/
+cd benchmarks/optimized/
 ```
 
 And run the `run_all_many.sh` script:
 ```bash
-$ bash run_all_many.sh &> /dev/null &
+bash run_all_many.sh &> /dev/null &
 ```
 
 | Note: This step may take many hours to finish. |
@@ -57,7 +57,7 @@ $ bash run_all_many.sh &> /dev/null &
 Alternatively, enter each benchmark directory:
 
 ```bash
-$ cd benchmarks/optimized/secunison/P1
+cd benchmarks/optimized/secunison/P1
 ```
 
 and run the `run.sh` script or the `compile_secunison.sh` script.
@@ -70,40 +70,40 @@ To run the Wang et al. experiments you first need to install their LLVM tool
 from [here](https://github.com/bobowang2333/FSE19)
 
 ```
-$ git clone https://github.com/bobowang2333/FSE19
+git clone https://github.com/bobowang2333/FSE19
 ```
 
 Our repository contains a patch with fixes and modifications (related to commit 781b866ebc72d8d06e6a676f05a4cbae290bd90a in FSE19) for running the tool for MIPS and ARM:
 
 ```bash
-$ cd FSE19
-$ git apply /path/to/this/repo/FSE19_mips_arm_fixes.patch
+cd FSE19
+git apply /path/to/this/repo/FSE19_mips_arm_fixes.patch
 ```
 
 To compile LLVM you need to install the following packages:
 ```bash
-# apt-get install gcc-7 g++-7 c++-7 libzip-dev cmake
+apt-get install g++-7 c++-7 gcc-7 cmake
 ```
 
 To compile the tool, run:
 ```bash
-$ cd FSE19/LLVM
-$ mkdir build
-$ cd build
-$ cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ../llvm
-$ make -j 12
+cd FSE19/LLVM
+mkdir build
+cd build
+cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ../llvm
+make -j 12
 ```
 
 Then, you need the path to the directory you cloned in the following environment variable:
 
 ```bash
-$ export FSE_HOME=/path/to/FSE19
+export FSE_HOME=/path/to/FSE19
 ```
 You also need to build three binary files in `FSE19/common`:
 
 ```bash
-$ cd $FSE_HOME/common
-$ bash run.sh
+cd $FSE_HOME/common
+bash run.sh
 ```
 
 The tool requires also the `z3` solver. 
@@ -111,23 +111,23 @@ We have tested the tool with version 4.8 of z3, [link](https://github.com/Z3Prov
 To install is from the `tar.gz` file:
 
 ```bash
-$ wget https://github.com/Z3Prover/z3/releases/download/z3-4.8.10/z3-solver-4.8.10.0.tar.gz
-$ tar xzfv z3-solver-4.8.10.0.tar.gz
-$ cd z3-solver-4.8.10.0
-# python setup.py install
+wget https://github.com/Z3Prover/z3/releases/download/z3-4.8.10/z3-solver-4.8.10.0.tar.gz
+tar xzfv z3-solver-4.8.10.0.tar.gz
+cd z3-solver-4.8.10.0
+sudo python setup.py install
 ```
 The last instruction may require installing the `python-pip` package.
 
 Then, you may run the experiments for Mips:
 ```bash
-$ cd benchmarks/FSE19/mips
-$ bash run_all.sh
+cd benchmarks/FSE19/mips
+bash run_all.sh
 ```
 
 Similarly for ARM Cortex M0:
 ```bash
-$ cd benchmarks/FSE19/cm0
-$ bash run_all.sh
+cd benchmarks/FSE19/cm0
+bash run_all.sh
 ```
 
 
@@ -137,33 +137,33 @@ To run the LLVM experiments you need to install LLVM-3.8.
 
 To do that you need to install the following packages:
 ```bash
-# apt-get install gcc-7 g++-7 c++-7 libzip-dev cmake
+sudo apt-get install gcc-7 g++-7 c++-7 cmake
 ```
 
 
 For this evaluation, we use the LLVM fork of [Unison](https://github.com/unison-code/llvm.git) and
 checkout at branch *release_38-unison*:
 ```bash
-$ git clone https://github.com/unison-code/llvm.git
-$ cd llvm
-$ git checkout release_38-unison
+git clone https://github.com/unison-code/llvm.git
+cd llvm
+git checkout release_38-unison
 ```
 
 Then compile LLVM:
 ```
-$ mkdir build
-$ cd build
-$ cmake -G "Unix Makefiles"  -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ..
+mkdir build
+cd build
+cmake -G "Unix Makefiles"  -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ..
 ```
 
 Export the directory:
 ```
-$ export LLVM_UNISON_PATH=/path/to/llvm/build
+export LLVM_UNISON_PATH=/path/to/llvm/build
 ```
 
 To run the experiments do:
 
 ```
-$ cd benchmarks/nonoptimized/llvm
-$ bash run_all.sh
+cd benchmarks/nonoptimized/llvm
+bash run_all.sh
 ```
