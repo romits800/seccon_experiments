@@ -73,7 +73,7 @@ from [here](https://github.com/bobowang2333/FSE19)
 $ git clone https://github.com/bobowang2333/FSE19
 ```
 
-Our repository contains a patch with fixes and modifications for running the tool for MIPS and ARM:
+Our repository contains a patch with fixes and modifications (related to commit 781b866ebc72d8d06e6a676f05a4cbae290bd90a in FSE19) for running the tool for MIPS and ARM:
 
 ```bash
 $ cd FSE19
@@ -85,7 +85,7 @@ To compile LLVM you need to install the following packages:
 # apt-get install gcc-7 g++-7 c++-7 libzip-dev cmake
 ```
 
-To compile the tool, run (here we use g++-4.7 but other versions may also work):
+To compile the tool, run:
 ```bash
 $ cd FSE19/LLVM
 $ mkdir build
