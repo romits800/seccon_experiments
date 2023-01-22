@@ -90,7 +90,7 @@ To compile the tool, run:
 cd FSE19/LLVM
 mkdir build
 cd build
-cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ../llvm
+cmake -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="Mips;ARM" -DCMAKE_BUILD_TYPE="Release" -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7  ../llvm
 make
 ```
 
