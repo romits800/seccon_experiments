@@ -82,7 +82,7 @@ git apply /path/to/this/repo/FSE19_mips_arm_fixes.patch
 
 To compile LLVM you need to install the following packages:
 ```bash
-apt-get install g++-7 c++-7 gcc-7 cmake
+sudo apt-get install g++-7 c++-7 gcc-7 cmake
 ```
 
 To compile the tool, run:
