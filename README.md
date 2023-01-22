@@ -116,7 +116,8 @@ tar xzfv z3-solver-4.8.10.0.tar.gz
 cd z3-solver-4.8.10.0
 sudo python setup.py install
 ```
-The last instruction may require installing the `python-pip` package.
+The last instruction may require installing the `python-pip` package: `sudo apt-get install python-pip`
+
 
 Then, you may run the experiments for Mips:
 ```bash
