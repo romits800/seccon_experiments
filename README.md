@@ -2,6 +2,8 @@
 
 
 ## Compile the code
+This evaluation instructions for SecConCG have been tested on Debian 10.
+
 To use SecConCG, clone this repo recursively to clone the submodules.
 
 
