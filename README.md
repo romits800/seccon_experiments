@@ -171,3 +171,10 @@ To run the experiments do:
 cd path/to/seccon_experiments/benchmarks/nonoptimized/llvm
 bash run_all.sh
 ```
+
+## Contact
+
+For any questions or issues on SecConCG contact:
+[Rodothea Myrsini Tsoupidi](https://romits800.github.io/) [<romy.tsoupidi@proton.me>]
+
+
